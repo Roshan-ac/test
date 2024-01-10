@@ -4,7 +4,7 @@ import SectionOne from "./_components/SectionOne";
 
 const page = () => {
   return (
-    <div className="h-full w-full bg-black">
+    <div className="h-full w-full">
       <FilterMenubar />
       <SectionOne />
     </div>
