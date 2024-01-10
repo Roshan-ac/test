@@ -7,8 +7,8 @@ import Sidebar from "../components/Sidebar/Sidebar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Next js starter",
-  description: "Just clone and start",
+  title: "Cashkr - Admin Panel",
+  description: "cashkr admin dashboard",
 };
 
 export default function RootLayout({
