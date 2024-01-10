@@ -7,8 +7,8 @@ import Sidebar from "../components/Sidebar/Sidebar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Next js starter",
-  description: "Just clone and start",
+  title: "Cashkr - Admin Panel",
+  description: "cashkr admin dashboard",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
         <Navbar />
         <div className="flex w-full">
           <Sidebar />
-          <main className=" bg-secondaryBackground text-primaryText h-screen w-full">
+          <main className=" h-screen w-full bg-secondaryBackground text-primaryText">
             {children}
           </main>
         </div>
