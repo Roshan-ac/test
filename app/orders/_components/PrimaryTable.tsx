@@ -11,6 +11,7 @@ import {
 import { TabelPagination } from "./TabelPagination";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { Dispatch, SetStateAction } from "react";
 
 type DataType = {
   order: string;
@@ -78,24 +79,27 @@ const invoices: DataType = [
   },
 ];
 
-export function PrimaryTable() {
+export function PrimaryTable({setIsOpen}:{setIsOpen:Dispatch<SetStateAction<boolean>>}) {
   return (
-    <ScrollArea className="relative h-[60vh] w-max rounded-md">
+    <ScrollArea className="relative h-[60vh] w-full rounded-md">
       <Table>
         <TableHeader className=" dark:hover:bg-hoverColor !sticky left-0 top-0 w-full">
           <TableRow className="bg-tertiaryBackground">
             <TableHead className="w-max">Order Date</TableHead>
             <TableHead>Model</TableHead>
             <TableHead>City</TableHead>
-            <TableHead className="text-right">Type</TableHead>
-            <TableHead className="text-right">Status</TableHead>
+            <TableHead className="text-center">Type</TableHead>
+            <TableHead className="text-center">Status</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody className="w-full">
           {invoices.map((invoice) => (
             <TableRow
-              className=" border-tableSeperator dark:hover:bg-hoverColor cursor-pointer border hover:text-black"
+            onClick={()=>{
+              setIsOpen(prev=>!prev)
+            }}
+              className=" border-tableSeperator dark:hover:bg-hoverColor text-sm cursor-pointer border hover:text-black"
               key={invoice.order}
             >
               <TableCell className="border-r-tableSeperator border-r">
@@ -108,7 +112,7 @@ export function PrimaryTable() {
                 {invoice.city}
               </TableCell>
               <TableCell className="border-r-tableSeperator border-r">
-                <span className="h-max w-max bg-purple-600 p-2 px-4">
+                <span className="h-max w-max bg-purple-600 p-1 px-2">
                   {invoice.type}
                 </span>
               </TableCell>
@@ -127,7 +131,7 @@ export function PrimaryTable() {
                               ? "bg-[#82C43C]"
                               : invoice.status == "Out For Pickup" &&
                                 "bg-[#92B7FF]"
-                  } p-2 px-4 text-black  `}
+                  } p-1 px-2 text-black  `}
                 >
                   {invoice.status}
                 </span>

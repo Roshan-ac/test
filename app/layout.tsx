@@ -22,7 +22,7 @@ export default function RootLayout({
         <Navbar />
         <div className="flex w-full justify-end">
           <Sidebar />
-          <main className="h-full w-[80%] bg-secondaryBackground text-primaryText">
+          <main className="h-full w-[85%] bg-secondaryBackground text-primaryText">
             {children}
           </main>
         </div>
