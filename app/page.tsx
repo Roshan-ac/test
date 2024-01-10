@@ -1,11 +1,14 @@
-import React from "react";
+import { Navbar } from "@/components/Navbar";
+import { Sidebar } from "@/components/Sidebar";
 
-const page = () => {
+export default function Home() {
   return (
-    <div className="flex h-full w-full items-center justify-center">
-      <h1 className="text-3xl">Road Under Maintainence....🚧😆😭😤</h1>
-    </div>
+    <main className="">
+      <Navbar />
+      <div className="flex w-full justify-end">
+        <Sidebar />
+        <main className="h-full w-[80%] bg-secondaryBackground text-primaryText"></main>
+      </div>
+    </main>
   );
-};
-
-export default page;
+}
