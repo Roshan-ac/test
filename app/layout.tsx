@@ -20,9 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        <div className="flex w-full">
+        <div className="flex w-full justify-end">
           <Sidebar />
-          <main className=" bg-secondaryBackground text-primaryText h-screen w-full">
+          <main className="h-full w-[80%] bg-secondaryBackground text-primaryText">
             {children}
           </main>
         </div>
