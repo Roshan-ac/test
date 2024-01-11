@@ -8,7 +8,7 @@ export function SearchBar() {
       <Input
         className=" border-b border-none !bg-transparent"
         type="email"
-        placeholder="Search Something..."
+        placeholder="Search"
       />
     </div>
   );
