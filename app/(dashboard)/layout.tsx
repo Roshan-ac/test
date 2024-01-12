@@ -1,14 +1,19 @@
+import "@/styles/globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
 
-export default function Home() {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <main className="">
+    <main>
       <Navbar />
       <div className="flex w-full justify-end">
         <Sidebar />
-        <main className="h-full w-full bg-secondaryBackground text-primaryText">
-          Hello!
+        <main className=" bg-secondaryBackground text-primaryText">
+          {children}
         </main>
       </div>
     </main>

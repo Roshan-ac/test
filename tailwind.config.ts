@@ -5,6 +5,7 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/(dashboard)/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -16,10 +17,10 @@ const config: Config = {
       colors: {
         primaryBackground: "#1C1C24",
         secondaryBackground: "#13131A",
-        tertiaryBackground:'#292932',
-        tableSeperator: '#393939',
+        tertiaryBackground: "#292932",
+        tableSeperator: "#393939",
         primaryText: "#FAFAFB",
-        hoverColor:'#92929D',
+        hoverColor: "#92929D",
         secondaryText: "#B5B5BE",
       },
     },
