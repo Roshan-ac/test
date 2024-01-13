@@ -18,7 +18,7 @@ function SearchBar() {
       <Input
         className=" border-b border-none !bg-transparent"
         type="email"
-        placeholder="Search Something..."
+        placeholder="Search"
       />
     </div>
   );
@@ -44,7 +44,7 @@ import {
 
 export function FilterMenubar() {
   return (
-    <div className="sticky top-14 z-10 flex  items-center bg-secondaryBackground px-8  h-max">
+    <div className="sticky top-[50px] z-10 flex  items-center bg-secondaryBackground px-8  h-max">
       <div className=" h-[38px] rounded-[16px] !bg-tertiaryBackground px-6">
         <SearchBar />
       </div>

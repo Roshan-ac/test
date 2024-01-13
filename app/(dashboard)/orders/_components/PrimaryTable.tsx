@@ -81,15 +81,15 @@ const invoices: DataType = [
 
 export function PrimaryTable({setIsOpen}:{setIsOpen:Dispatch<SetStateAction<boolean>>}) {
   return (
-    <ScrollArea className="relative h-[60vh] w-full rounded-md">
+    <ScrollArea className="relative h-[70vh] w-full rounded-md">
       <Table>
-        <TableHeader className=" dark:hover:bg-hoverColor !sticky left-0 top-0 w-full">
-          <TableRow className="bg-tertiaryBackground">
+        <TableHeader className=" dark:hover:bg-hoverColor  !sticky left-0 top-0 w-full">
+          <TableRow className="bg-tertiaryBackground ">
             <TableHead className="w-max">Order Date</TableHead>
             <TableHead>Model</TableHead>
             <TableHead>City</TableHead>
             <TableHead className="text-center">Type</TableHead>
-            <TableHead className="text-center">Status</TableHead>
+            <TableHead>Status</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -99,7 +99,7 @@ export function PrimaryTable({setIsOpen}:{setIsOpen:Dispatch<SetStateAction<bool
             onClick={()=>{
               setIsOpen(prev=>!prev)
             }}
-              className=" border-tableSeperator dark:hover:bg-hoverColor text-sm cursor-pointer border hover:text-black"
+              className="border-tableSeperator transition-all duration-300 ease-in-out dark:hover:bg-hoverColor dark:hover:bg-opacity-60 text-sm cursor-pointer border hover:text-black group"
               key={invoice.order}
             >
               <TableCell className="border-r-tableSeperator border-r">
@@ -111,20 +111,20 @@ export function PrimaryTable({setIsOpen}:{setIsOpen:Dispatch<SetStateAction<bool
               <TableCell className="border-r-tableSeperator border-r">
                 {invoice.city}
               </TableCell>
-              <TableCell className="border-r-tableSeperator border-r">
-                <span className="h-max w-max bg-purple-600 p-1 px-2">
+              <TableCell className="border-r-tableSeperator flex justify-center  border-r">
+                <span className="h-max w-max !text-white rounded-[18px] bg-purple-600 p-1 px-4 text-center">
                   {invoice.type}
                 </span>
               </TableCell>
-              <TableCell className=" font-medium">
+              <TableCell className="">
                 <span
-                  className={`inline-block h-max min-w-full  ${
+                  className={`inline-block rounded-[18px] px-4 text-center h-max min-w-[100px]  ${
                     invoice.status == "Generated"
                       ? "bg-white"
                       : invoice.status == "Cancelled"
                         ? "bg-[#FFA0A0]"
                         : invoice.status == "Failed"
-                          ? "bg-[#F64848]"
+                          ? "bg-[#F64848] text-white"
                           : invoice.status == "Assigned"
                             ? "bg-[#FF974A]"
                             : invoice.status == "Completed"
