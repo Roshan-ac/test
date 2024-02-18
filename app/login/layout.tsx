@@ -1,7 +1,8 @@
 import "@/styles/globals.css";
 
 export const metadata = {
-  title: "Cashkr Admin",
+  title: "Admin Login - Cashkr ",
+  description: "Login to Cashkr Admin",
 };
 
 export default function RootLayout({
@@ -11,7 +12,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="bg-secondaryBackground text-primaryText">
+        {children}
+      </body>
     </html>
   );
 }
