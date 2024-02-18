@@ -1,8 +1,10 @@
 "server-only";
 
 import { type NextAuthOptions } from "next-auth";
-import { signOut as nextSignOut } from "next-auth/react";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { redirect } from "next/navigation";
+
+import { cookies } from "next/headers";
 
 const { BACKEND_URL } = process.env;
 
@@ -14,15 +16,6 @@ interface UserType {
   img: string;
   role: "Admin" | "Sales" | "Operation";
 }
-
-export const signOut = async () => {
-  try {
-    await fetch("/api/auth/signoutprovider", { method: "PUT" });
-    return await nextSignOut();
-  } catch (error) {
-    throw new Error((error as Error).message);
-  }
-};
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -109,10 +102,16 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
   },
-  // events: {
-  //   async signOut({ token, session }) {
-  //     console.log('signOut', { token, session });
-  //   },
-  // },
+  events: {
+    signOut: async () => {
+      const cookieStore = cookies();
+
+      cookieStore.getAll().forEach((cookie) => {
+        cookieStore.delete(cookie.name);
+      });
+
+      redirect("/");
+    },
+  },
   debug: process.env.NODE_ENV === "development",
 };
