@@ -94,13 +94,13 @@ export function PrimaryTable({setIsOpen}:{setIsOpen:Dispatch<SetStateAction<bool
         </TableHeader>
 
         <TableBody className="w-full">
-          {invoices.map((invoice) => (
+          {invoices.map((invoice,index) => (
             <TableRow
             onClick={()=>{
               setIsOpen(prev=>!prev)
             }}
               className="border-tableSeperator transition-all duration-300 ease-in-out dark:hover:bg-hoverColor dark:hover:bg-opacity-60 text-sm cursor-pointer border hover:text-black group"
-              key={invoice.order}
+              key={index}
             >
               <TableCell className="border-r-tableSeperator border-r">
                 {invoice.order}
