@@ -1,16 +1,6 @@
-// import React from "react";
 import { Input } from "@/components/ui/input";
 import { Plus, Search } from "lucide-react";
 
-// const FiltersBox = () => {
-//   return (
-//     <div className=" ">
-//       <div className=" w-max bg-tertiaryBackground h-max rounded-[14px] px-8" >
-//         <SearchBar />
-//       </div>
-//     </div>
-//   );
-// };
 function SearchBar() {
   return (
     <div className="flex h-max items-center">
@@ -44,7 +34,7 @@ import {
 
 export function FilterMenubar() {
   return (
-    <div className="sticky top-[50px] z-10 flex  items-center bg-secondaryBackground px-8  h-max">
+    <div className="sticky top-[50px] z-10 flex  h-max items-center bg-secondaryBackground  px-8">
       <div className=" h-[38px] rounded-[16px] !bg-tertiaryBackground px-6">
         <SearchBar />
       </div>
