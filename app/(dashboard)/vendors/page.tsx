@@ -7,9 +7,9 @@ const page = () => {
   return (
     <div className="h-full w-full space-y-2 pb-20">
       <FilterMenubar />
-      <SectionOne varient="orders" />
+      <SectionOne varient={"vendors"} />
       <CardContainer />
-      <SectionOne varient="orders" />
+      <SectionOne varient={"vendors"} />
     </div>
   );
 };
