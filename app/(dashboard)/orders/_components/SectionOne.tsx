@@ -10,7 +10,7 @@ const SectionOne = () => {
     <div className="w-full py-4  rounded-[12px] bg-primaryBackground">
       <PrimaryTable setIsOpen={setIsOpen} />
     </div>
-      <SheetDemo setIsOpen={setIsOpen} isOpen={isOpen} />
+      <SheetDemo varient={"lead"} setIsOpen={setIsOpen} isOpen={isOpen} />
   </div>
   )
 }

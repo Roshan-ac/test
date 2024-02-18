@@ -15,12 +15,15 @@ import { Dispatch, SetStateAction } from "react";
 import { TabelPagination } from "./TabelPagination";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
+import { LeadActions } from "@/components/Internals/LeadActions";
 
 export function SheetDemo({
   isOpen,
+  varient,
   setIsOpen,
 }: {
   isOpen: boolean;
+  varient: "lead" | "orders";
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   return (
@@ -32,7 +35,7 @@ export function SheetDemo({
         <ScrollArea className="!h-[100vh] pb-6">
           <div className=" my-4 space-y-4">
             <div className="flex h-full w-full gap-4">
-              <div className="relative h-[100vh] w-[55%] bg-tertiaryBackground p-4 pt-8 text-hoverColor">
+              <div className="relative h-max w-[55%] bg-tertiaryBackground p-4 pt-8 text-hoverColor">
                 <Badge className=" absolute -top-[10px] left-6 z-10 w-max rounded-none !bg-purple-500 px-6 py-1 !text-white">
                   Phone
                 </Badge>
@@ -105,25 +108,31 @@ export function SheetDemo({
                     </span>
                   </Label>
                 </div>
-                <div className="flex w-full items-center space-x-4 py-8">
+                {varient == "lead" ? (
                   <div>
-                    <Button className=" !h-max rounded-none !bg-[#82C43C] px-8">
-                      Assign
-                    </Button>
+                    <LeadActions />
                   </div>
-                  <div>
-                    <Button className=" !h-max rounded-none !bg-[#FF974A] px-8">
-                      Reschedule
-                    </Button>
+                ) : (
+                  <div className="flex w-full items-center space-x-4 py-8">
+                    <div>
+                      <Button className=" !h-max rounded-none !bg-[#82C43C] px-8">
+                        Assign
+                      </Button>
+                    </div>
+                    <div>
+                      <Button className=" !h-max rounded-none !bg-[#FF974A] px-8">
+                        Reschedule
+                      </Button>
+                    </div>
+                    <div>
+                      <Button className=" !h-max rounded-none !bg-[#FC5A5A] px-8">
+                        Fail Lead
+                      </Button>
+                    </div>
                   </div>
-                  <div>
-                    <Button className=" !h-max rounded-none !bg-[#FC5A5A] px-8">
-                      Fail Lead
-                    </Button>
-                  </div>
-                </div>
+                )}
               </div>
-              <div className="h-[100vh] w-[45%] space-y-4">
+              <div className="h-max w-[45%] space-y-4">
                 <div className="h-max w-full bg-tertiaryBackground px-6 py-4">
                   <div className="my-4 flex flex-col space-y-6 text-hoverColor">
                     <Label htmlFor="terms" className="flex w-full space-x-4  ">
@@ -152,7 +161,7 @@ export function SheetDemo({
                     </Label>
                   </div>
                 </div>
-                <div className="h-[65.6vh] w-full overflow-y-scroll bg-tertiaryBackground  px-6 py-4">
+                <div className="h-max w-full overflow-y-scroll bg-tertiaryBackground  px-6 py-4">
                   <div className="mt-4 flex flex-col space-y-6 text-hoverColor">
                     <Label htmlFor="terms" className="flex w-full space-x-4  ">
                       <span className="inline-block w-[60%]">Name :</span>
