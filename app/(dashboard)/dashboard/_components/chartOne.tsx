@@ -162,9 +162,14 @@ const ChartOne = () => {
           height={450}
         />
       </div>
-      <div className="  flex flex-col relative items-center justify-center rounded-xl bg-primaryBackground ">
-        <div className=" absolute top-4 left-4">
-            <p className=" font-[500] text-[16px] text-primaryText">Credits Earned  <span className=" mx-2 font-medium text-[14px] text-secondaryText">| March 2020</span> </p>
+      <div className="  relative flex flex-col items-center justify-center rounded-xl bg-primaryBackground ">
+        <div className=" absolute left-4 top-4">
+          <p className=" text-[16px] font-[500] text-primaryText">
+            Credits Earned{" "}
+            <span className=" mx-2 text-[14px] font-medium text-secondaryText">
+              | March 2020
+            </span>{" "}
+          </p>
         </div>
         <Chart
           options={{
@@ -204,7 +209,7 @@ const ChartOne = () => {
               text: "Won from 730 Deals",
               offsetX: 20,
               offsetY: 56,
-              margin:1,
+              margin: 1,
               style: { fontSize: "14px", color: "#B5B5BE", fontWeight: 400 },
             },
           }}
