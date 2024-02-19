@@ -1,6 +1,6 @@
 // import React from "react";
 import { Input } from "@/components/ui/input";
-import { Plus, Search } from "lucide-react";
+import { DownloadCloud, Plus, Search } from "lucide-react";
 
 // const FiltersBox = () => {
 //   return (
@@ -42,13 +42,16 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 
-export function FilterMenubar() {
+export function HeadingBar() {
   return (
-    <div className="sticky top-[50px] z-10 flex  h-max items-center bg-secondaryBackground  px-8">
-      <div className=" h-[38px] rounded-[16px] !bg-tertiaryBackground px-6">
-        <SearchBar />
+    <div className="sticky top-[50px] z-10 flex h-max w-full items-center  justify-center bg-secondaryBackground p-2  px-8">
+      <div className=" w-full">
+        <h2 className=" text-lg font-bold text-primaryText">
+          Hi, Resham Acharya
+        </h2>
+        <h3 className=" text-secondaryText">Welcome into Admin Dashboard</h3>
       </div>
-      <Menubar className="grid h-max w-full grid-cols-5 gap-2 border-none !bg-transparent p-8">
+      <Menubar className="grid  h-max w-full grid-cols-3 gap-2 border-none !bg-transparent p-4">
         <MenubarMenu>
           <MenubarTrigger className="flex h-[38px] w-full rounded-[16px] !bg-tertiaryBackground px-4 pr-12">
             <div className="flex w-full items-center gap-2">
@@ -106,45 +109,7 @@ export function FilterMenubar() {
           </MenubarContent>
         </MenubarMenu>
         <MenubarMenu>
-          <MenubarTrigger className="flex h-[38px] w-full rounded-[16px] !bg-tertiaryBackground px-4 pr-12">
-            <div className="flex w-full items-center gap-2">
-              <Plus />
-              <span>Type</span>
-            </div>
-          </MenubarTrigger>
-          <MenubarContent>
-            <MenubarRadioGroup value="benoit">
-              <MenubarRadioItem value="andy">Andy</MenubarRadioItem>
-              <MenubarRadioItem value="benoit">Benoit</MenubarRadioItem>
-              <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
-            </MenubarRadioGroup>
-            <MenubarSeparator />
-            <MenubarItem inset>Edit...</MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem inset>Add Profile...</MenubarItem>
-          </MenubarContent>
-        </MenubarMenu>
-        <MenubarMenu>
-          <MenubarTrigger className="flex h-[38px] w-full rounded-[16px] !bg-tertiaryBackground px-4 pr-12">
-            <div className="flex w-full items-center gap-2">
-              <Plus />
-              <span>Type</span>
-            </div>
-          </MenubarTrigger>
-          <MenubarContent>
-            <MenubarRadioGroup value="benoit">
-              <MenubarRadioItem value="andy">Andy</MenubarRadioItem>
-              <MenubarRadioItem value="benoit">Benoit</MenubarRadioItem>
-              <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
-            </MenubarRadioGroup>
-            <MenubarSeparator />
-            <MenubarItem inset>Edit...</MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem inset>Add Profile...</MenubarItem>
-          </MenubarContent>
-        </MenubarMenu>
-        <MenubarMenu>
-          <MenubarTrigger className="flex h-[38px] w-full rounded-[16px] !bg-tertiaryBackground px-4 pr-12">
+          <MenubarTrigger className="flex h-[38px] w-full rounded-[16px] !bg-tertiaryBackground px-4">
             <div className="flex w-full items-center gap-2">
               <Plus />
               <span>Type</span>
@@ -163,6 +128,9 @@ export function FilterMenubar() {
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
+      <div className="flex h-[38px] w-max items-center justify-center rounded-[16px] !bg-tertiaryBackground p-1 px-4">
+        <DownloadCloud />
+      </div>
     </div>
   );
 }
