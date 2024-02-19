@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -11,13 +12,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { TabelPagination } from "./TabelPagination";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { LeadActions } from "@/components/Internals/LeadActions";
 import { FailedImageGallery } from "./FailedImageCarousel";
 import { VendorDocuments } from "./VendorDocuments";
+import { Progress } from "../ui/progress";
 
 export function SheetDemo({
   isOpen,
@@ -28,8 +30,24 @@ export function SheetDemo({
   varient: "lead" | "orders" | "failed" | "vendors";
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
+  const [progress, setProgress] = useState(13);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const ShowProgress = () => {
+    setIsLoading(true);
+    setProgress(20);
+    setTimeout(() => setProgress(66), 500);
+    setTimeout(() => setProgress(78), 500);
+    setTimeout(() => setProgress(100), 500);
+    setTimeout(() => setIsLoading(false), 1000);
+  };
   return (
     <Sheet open={isOpen}>
+      <Progress
+        hidden={!isLoading}
+        value={progress}
+        className=" fixed  right-0 top-0 z-[80] h-[2px]"
+      />
       <SheetContent
         className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
         setIsOpen={setIsOpen}
@@ -46,7 +64,7 @@ export function SheetDemo({
                   </div>
                   <div>
                     {Array.from({ length: 5 }).map((_, index) => (
-                      <div className=" grid grid-cols-5 border-y border-tableSeperator p-2 px-3 text-[13px] text-secondaryText">
+                      <div key={index} className=" grid grid-cols-5 border-y border-tableSeperator p-2 px-3 text-[13px] text-secondaryText">
                         <span>Alok Timalsina</span>
                         <span>20000</span>
                         <span className=" w-max cursor-pointer hover:underline">
@@ -54,12 +72,18 @@ export function SheetDemo({
                         </span>
                         <div className="col-span-2 flex items-center gap-2">
                           <div>
-                            <Button className=" !h-7 rounded-none !bg-[#82C43C] px-8 !text-xs">
+                            <Button
+                              onClick={ShowProgress}
+                              className=" !h-7 rounded-none !bg-[#82C43C] px-8 !text-xs"
+                            >
                               Approved
                             </Button>
                           </div>
                           <div>
-                            <Button className=" !h-7 rounded-none !bg-[#FC5A5A] px-8 !text-xs">
+                            <Button
+                              onClick={ShowProgress}
+                              className=" !h-7 rounded-none !bg-[#FC5A5A] px-8 !text-xs"
+                            >
                               Reject
                             </Button>
                           </div>
@@ -271,19 +295,27 @@ export function SheetDemo({
                       </Label>
                     </div>
                     <div>
-                    <div><VendorDocuments/></div>
+                      <div>
+                        <VendorDocuments />
+                      </div>
                       <div className="flex  items-center gap-8">
-                          <div>
-                            <Button className=" !h-7 rounded-none !bg-[#82C43C] px-8 !text-xs">
-                              Approved
-                            </Button>
-                          </div>
-                          <div>
-                            <Button className=" !h-7 rounded-none !bg-[#FC5A5A] px-8 !text-xs">
-                              Reject
-                            </Button>
-                          </div>
+                        <div>
+                          <Button
+                            onClick={ShowProgress}
+                            className=" !h-7 rounded-none !bg-[#82C43C] px-8 !text-xs"
+                          >
+                            Approved
+                          </Button>
                         </div>
+                        <div>
+                          <Button
+                            onClick={ShowProgress}
+                            className=" !h-7 rounded-none !bg-[#FC5A5A] px-8 !text-xs"
+                          >
+                            Reject
+                          </Button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -450,17 +482,26 @@ export function SheetDemo({
                   ) : varient == "failed" ? (
                     <div className="flex w-full items-center space-x-4 py-8">
                       <div>
-                        <Button className=" !h-max rounded-none !bg-[#82C43C] px-8">
+                        <Button
+                          onClick={ShowProgress}
+                          className=" !h-max rounded-none !bg-[#82C43C] px-8"
+                        >
                           Accept Failed
                         </Button>
                       </div>
                       <div>
-                        <Button className=" !h-max rounded-none !bg-[#FF974A] px-8">
+                        <Button
+                          onClick={ShowProgress}
+                          className=" !h-max rounded-none !bg-[#FF974A] px-8"
+                        >
                           Reverse Lead
                         </Button>
                       </div>
                       <div>
-                        <Button className=" !h-max rounded-none !bg-[#FC5A5A] px-8">
+                        <Button
+                          onClick={ShowProgress}
+                          className=" !h-max rounded-none !bg-[#FC5A5A] px-8"
+                        >
                           Reject Failed
                         </Button>
                       </div>
@@ -468,17 +509,26 @@ export function SheetDemo({
                   ) : (
                     <div className="flex w-full items-center space-x-4 py-8">
                       <div>
-                        <Button className=" !h-max rounded-none !bg-[#82C43C] px-8">
+                        <Button
+                          onClick={ShowProgress}
+                          className=" !h-max rounded-none !bg-[#82C43C] px-8"
+                        >
                           Assign
                         </Button>
                       </div>
                       <div>
-                        <Button className=" !h-max rounded-none !bg-[#FF974A] px-8">
+                        <Button
+                          onClick={ShowProgress}
+                          className=" !h-max rounded-none !bg-[#FF974A] px-8"
+                        >
                           Reschedule
                         </Button>
                       </div>
                       <div>
-                        <Button className=" !h-max rounded-none !bg-[#FC5A5A] px-8">
+                        <Button
+                          onClick={ShowProgress}
+                          className=" !h-max rounded-none !bg-[#FC5A5A] px-8"
+                        >
                           Fail Lead
                         </Button>
                       </div>

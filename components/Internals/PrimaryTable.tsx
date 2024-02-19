@@ -1,9 +1,7 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -11,45 +9,15 @@ import {
 import { TabelPagination } from "./TabelPagination";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-
-interface DataType {
-  id: string;
-  timestamp: string;
-  devicename: string;
-  city: string | null;
-  devicetype: string;
-  status:
-    | "Generated"
-    | "Cancelled"
-    | "Failed"
-    | "Out For Pickup"
-    | "Assigned"
-    | "Completed"
-    | null;
-}
+import { InvoiceInterface } from "./SectionOne";
 
 export function PrimaryTable({
   setIsOpen,
+  invoices,
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  invoices: InvoiceInterface[];
 }) {
-  const [invoices, setInvoices] = useState<DataType[]>();
-
-  console.log(invoices);
-  useEffect(() => {
-    (async function () {
-      console.log("sushant");
-      const res = await fetch("/api/getallorders", {
-        method: "GET",
-      });
-      if (!res.ok) {
-        console.log("Error :", res);
-      }
-      const data = await res.json();
-      console.log(data);
-    })();
-  });
-
   return (
     <ScrollArea className="relative h-[70vh] w-full rounded-md">
       <Table>
@@ -65,19 +33,19 @@ export function PrimaryTable({
 
         <TableBody className="w-full">
           {invoices &&
-            invoices.map((invoice) => (
+            invoices.map((invoice, index) => (
               <TableRow
                 onClick={() => {
                   setIsOpen((prev) => !prev);
                 }}
                 className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
-                key={invoice.id}
+                key={index}
               >
                 <TableCell className="border-r border-r-tableSeperator">
                   {invoice.timestamp}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
-                  {invoice.devicename}
+                  {invoice.devicetype}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
                   {invoice.city}
@@ -111,7 +79,7 @@ export function PrimaryTable({
             ))}
         </TableBody>
       </Table>
-      <div className="sticky  bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
+      <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
         <TabelPagination />
       </div>
     </ScrollArea>

@@ -6,16 +6,7 @@ import { redirect } from "next/navigation";
 
 import { cookies } from "next/headers";
 
-const { BACKEND_URL } = process.env;
-
-interface UserType {
-  id: number;
-  fullName: string;
-  username: string;
-  email: string;
-  img: string;
-  role: "Admin" | "Sales" | "Operation";
-}
+const { BACKEND_API } = process.env;
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -32,14 +23,13 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         // const { username, password } = credentials;
         try {
-          console.log(BACKEND_URL);
           console.log(
             JSON.stringify({
               username: credentials?.username,
               password: credentials?.password,
             }),
           );
-          const res = await fetch(`${BACKEND_URL}/loginAdmin`, {
+          const res = await fetch(`${BACKEND_API}/loginAdmin`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -82,7 +72,7 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session, token }) {
-      const res = await fetch(`${BACKEND_URL}/getadmininfo`, {
+      const res = await fetch(`${BACKEND_API}/getadmininfo`, {
         headers: {
           Authorization: `Bearer ${token.accessToken}`,
         },

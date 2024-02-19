@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { useRouter } from "next/navigation";
+import Spinner from "@/icons/spinner";
+import { cn } from "@/lib/utils";
 
 interface FormInterface {
   username: string;
@@ -24,13 +26,14 @@ const Page = () => {
     formState: { errors },
   } = useForm<FormInterface>();
 
-  const Router = useRouter();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams?.get("callbackUrl") || "/";
 
   const submitHandler = async (data: FormInterface) => {
+    setIsLoading(true);
     console.log(data);
     const { username, password } = data;
 
@@ -59,7 +62,7 @@ const Page = () => {
       }
     } else {
       // work around
-      Router.push(callbackUrl);
+      router.push(callbackUrl);
     }
     setIsLoading(false);
   };
@@ -113,9 +116,12 @@ const Page = () => {
           )}
           <button
             type="submit"
-            className="w-full rounded border bg-gray-100 py-1 font-medium text-secondaryBackground hover:bg-[#292932] hover:text-gray-100 "
+            className={cn(
+              "w-full rounded border bg-gray-100 py-1 text-center font-medium text-secondaryBackground hover:bg-[#292932] hover:text-gray-100 ",
+              `${isLoading && "bg-[#292932]"}`,
+            )}
           >
-            Login
+            {isLoading ? <Spinner className="inline-block" /> : "Login"}
           </button>
         </form>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { PrimaryTable } from "./PrimaryTable";
-import { SheetDemo } from "./SelectedInfo";
+import { PrimaryTable } from "@/components/Internals/PrimaryTable";
+import { SheetDemo } from "@/components/Internals/SelectedInfo";
 
 export interface InvoiceInterface {
   id: string;

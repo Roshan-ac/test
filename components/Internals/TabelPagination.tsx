@@ -13,62 +13,49 @@ export function TabelPagination() {
   return (
     <Pagination className=" mx-0 w-max px-4 pt-4">
       <PaginationContent>
-        <PaginationItem>
-          <PaginationLink
-            className=" bg-hoverColor h-8 text-black  !rounded-none !dark:hover:bg-hoverColor"
-            href="#"
-          >
-            <ChevronLeft size={18} />
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink
-            className=" bg-hoverColor h-8  text-black !rounded-none !dark:hover:bg-hoverColor"
-            href="#"
-          >
-            1
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink
-            className=" bg-hoverColor h-8  !rounded-none text-black !dark:hover:bg-hoverColor"
-            href="#"
-          >
-            2
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink
-            className=" bg-hoverColor h-8  !rounded-none text-black  !dark:hover:bg-hoverColor"
-            href="#"
-          >
-            3
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink
-            className=" bg-hoverColor h-8  !rounded-none text-black !dark:hover:bg-hoverColor"
-            href="#"
-          >
-            4
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink
-            className=" bg-hoverColor h-8  !rounded-none text-black !dark:hover:bg-hoverColor"
-            href="#"
-          >
-            5
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink
-            className=" bg-hoverColor h-8 !rounded-none text-black !dark:hover:bg-hoverColor"
-            href="#"
-          >
-            <ChevronRight size={18} />
-          </PaginationLink>
-        </PaginationItem>
+        <PaginationLink
+          className=" !dark:hover:bg-hoverColor  group !rounded-none bg-hoverColor text-black"
+          href="#"
+        >
+          <ChevronLeft
+            className=" !dark:hover:bg-hoverColor h-6 w-full !rounded-none text-black  group-hover:!text-hoverColor"
+            size={18}
+          />
+        </PaginationLink>
+
+        <PaginationLink
+          className=" !dark:hover:bg-hoverColor  !rounded-none bg-hoverColor text-black"
+          href="#"
+        >
+          1
+        </PaginationLink>
+        <PaginationLink
+          className=" !dark:hover:bg-hoverColor  !rounded-none bg-hoverColor text-black"
+          href="#"
+        >
+          2
+        </PaginationLink>
+        <PaginationLink
+          className=" !dark:hover:bg-hoverColor  !rounded-none bg-hoverColor text-black"
+          href="#"
+        >
+          3
+        </PaginationLink>
+        <PaginationLink
+          className=" !dark:hover:bg-hoverColor  !rounded-none bg-hoverColor text-black"
+          href="#"
+        >
+          4
+        </PaginationLink>
+        <PaginationLink
+          className=" !dark:hover:bg-hoverColor group  !rounded-none bg-hoverColor text-black"
+          href="#"
+        >
+          <ChevronRight
+            className=" !dark:hover:bg-hoverColor h-6 w-full !rounded-none text-black group-hover:!text-hoverColor"
+            size={18}
+          />
+        </PaginationLink>
       </PaginationContent>
     </Pagination>
   );
