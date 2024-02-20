@@ -8,14 +8,16 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 export function TabelPagination() {
+  const [currentPage, setCurrentPage] = useState(1);
   return (
     <Pagination className=" mx-0 w-max px-4 pt-4">
       <PaginationContent>
         <PaginationLink
           className=" !dark:hover:bg-hoverColor  group !rounded-none bg-hoverColor text-black"
-          href="#"
+          href={``}
         >
           <ChevronLeft
             className=" !dark:hover:bg-hoverColor h-6 w-full !rounded-none text-black  group-hover:!text-hoverColor"
@@ -49,7 +51,7 @@ export function TabelPagination() {
         </PaginationLink>
         <PaginationLink
           className=" !dark:hover:bg-hoverColor group  !rounded-none bg-hoverColor text-black"
-          href="#"
+          href={`?page=${currentPage}`}
         >
           <ChevronRight
             className=" !dark:hover:bg-hoverColor h-6 w-full !rounded-none text-black group-hover:!text-hoverColor"

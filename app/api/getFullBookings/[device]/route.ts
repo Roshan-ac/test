@@ -1,7 +1,6 @@
 const { BACKEND_API } = process.env;
 const POST = async (req: any, device: { params: { device: string } }) => {
   const { leadId } = await req.json();
-  console.log(leadId, device);
   const devicetype = device.params.device;
   try {
     const response = await fetch(

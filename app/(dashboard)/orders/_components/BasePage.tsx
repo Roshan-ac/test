@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { PrimaryTable } from "@/components/Internals/PrimaryTable";
-import { SheetDemo } from "@/components/Internals/SelectedInfo";
 import SecondaryTable from "./SecondaryTable";
 import { CardContainer } from "./CardContainer";
+import { SheetDemo } from "./sheet";
 
 export interface InvoiceInterface {
   success: boolean;
@@ -84,10 +84,7 @@ const BasePage = () => {
         </div>
 
         <SheetDemo
-          lead={fetchFullBokkings({
-            lead: SelectedRow.lead,
-            devicetype: SelectedRow.devicetype,
-          })}
+          SelectedRow={SelectedRow}
           varient={"orders"}
           setIsOpen={setIsOpen}
           isOpen={isOpen}
@@ -97,23 +94,3 @@ const BasePage = () => {
 };
 
 export default BasePage;
-
-const fetchFullBokkings = async ({
-  lead,
-  devicetype,
-}: {
-  lead: string;
-  devicetype: string;
-}) => {
-  const res = await fetch(`/api/getFullBookings/${devicetype}`, {
-    method: "POST",
-    body: JSON.stringify({
-      leadId: lead,
-    }),
-  });
-  if (!res.ok) {
-    console.log("Error :", res);
-  }
-  const data = await res.json();
-  return data;
-};
