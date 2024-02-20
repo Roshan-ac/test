@@ -22,7 +22,6 @@ const page = async () => {
       <div className="h-full w-full space-y-2 pb-20">
         <FilterMenubar />
         <SectionOne varient="lead" />
-        <CardContainer />
       </div>
     );
   else {

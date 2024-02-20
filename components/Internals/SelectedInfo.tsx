@@ -35,6 +35,8 @@ export function SheetDemo({
   const [progress, setProgress] = useState(13);
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log(lead);
+
   useEffect(() => {
     (async function () {})();
   }, []);
@@ -113,14 +115,13 @@ export function SheetDemo({
                   <div className="my-6 flex flex-col space-y-6">
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
                       <span className="inline-block w-[40%]">Order ID :</span>
-                      <span className="inline-block w-full">
-                        CK-MO-Pun-853211703827976
-                      </span>
+                      <span className="inline-block w-full">{lead.id}</span>
                     </Label>
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
                       <span className="inline-block w-[40%]">Pickup :</span>
                       <span className="inline-block w-full">
-                        2023/12/29 10:00 AM - 01:00 PM
+                        7{lead.timestamp}
+                        {/* 2023/12/29 10:00 AM - 01:00 PM */}
                       </span>
                     </Label>
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
@@ -196,15 +197,6 @@ export function SheetDemo({
                         className=" flex w-full space-x-4  "
                       >
                         <span className="inline-block w-[80%]">
-                          Quoted Price :
-                        </span>
-                        <span className="inline-block w-full">18000/-</span>
-                      </Label>
-                      <Label
-                        htmlFor="terms"
-                        className=" flex w-full space-x-4  "
-                      >
-                        <span className="inline-block w-[80%]">
                           Requote Price :
                         </span>
                         <span className="inline-block w-full">14000/-</span>
@@ -228,7 +220,7 @@ export function SheetDemo({
                       >
                         <span className="inline-block w-[60%]">Name :</span>
                         <span className="inline-block w-full">
-                          Akshay salunke
+                          {lead.ownername}
                         </span>
                       </Label>
                       <Label
@@ -237,7 +229,7 @@ export function SheetDemo({
                       >
                         <span className="inline-block w-[60%]">Email :</span>
                         <span className="inline-block w-full">
-                          salunkeakshay48@gmail.com
+                          {lead.owneremail}
                         </span>
                       </Label>
                       <Label
@@ -246,7 +238,7 @@ export function SheetDemo({
                       >
                         <span className="inline-block w-[60%]">Phone :</span>
                         <span className="inline-block w-full">
-                          919767774963
+                          {lead.ownerphoneno}
                         </span>
                       </Label>
                       <Label
@@ -257,7 +249,9 @@ export function SheetDemo({
                           Alternate :
                         </span>
                         <span className="inline-block w-full">
-                          919767774963
+                          {lead.alternateno
+                            ? lead.alternateno
+                            : lead.ownerphoneno}
                         </span>
                       </Label>
                       <Label
@@ -277,8 +271,7 @@ export function SheetDemo({
                           Main Address :
                         </span>
                         <span className="inline-block w-full leading-6">
-                          Flat no 12, Waterlily C,Sukhwani Campus, vallabhn,oppo
-                          to Vallabhnagar Bus
+                          {lead.addresshome}
                         </span>
                       </Label>
                       <Label
@@ -286,21 +279,28 @@ export function SheetDemo({
                         className=" flex w-full space-x-4  "
                       >
                         <span className="inline-block w-[60%]">Pincode :</span>
-                        <span className="inline-block w-full">411018</span>
+                        <span className="inline-block w-full">
+                          {lead.pincode}
+                        </span>
                       </Label>
                       <Label
                         htmlFor="terms"
                         className=" flex w-full space-x-4  "
                       >
                         <span className="inline-block w-[60%]">City :</span>
-                        <span className="inline-block w-full">Pune</span>
+                        <span className="inline-block w-full">
+                          {" "}
+                          {lead.city}
+                        </span>
                       </Label>
                       <Label
                         htmlFor="terms"
                         className=" flex w-full space-x-4  "
                       >
                         <span className="inline-block w-[60%]">Payment :</span>
-                        <span className="inline-block w-full">UPI</span>
+                        <span className="inline-block w-full">
+                          {lead.payment}
+                        </span>
                       </Label>
                     </div>
                     <div>
@@ -334,6 +334,7 @@ export function SheetDemo({
                   <div>
                     <h1>Leads Logs :</h1>
                   </div>
+                  {/* Lead Logs here */}
                   <div className="my-6 flex flex-col space-y-6">
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
                       <span className="inline-block w-[40%]">

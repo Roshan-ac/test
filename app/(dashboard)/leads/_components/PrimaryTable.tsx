@@ -12,7 +12,7 @@ import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { InvoiceInterface } from "./sectionOne";
-import { SheetDemo } from "@/components/Internals/SelectedInfo";
+import { SheetDemo } from "./Sheet";
 import { deviceType } from "@/interfaces";
 
 export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
@@ -35,9 +35,10 @@ export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
 
     const data = await res.json();
     console.log(data);
-
-    // setLeadDetails(data);
+    setLeadDetails(data.myBookings);
   };
+
+  console.log(leadDetails);
 
   return (
     <>
@@ -80,7 +81,8 @@ export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
                   <TableCell className="">
                     <span
                       className={`inline-block h-max min-w-[100px] rounded-[18px] px-4 text-center  ${
-                        invoice.status.startsWith("cn")
+                        invoice.status?.startsWith("cn") ||
+                        invoice.status === null
                           ? "bg-white"
                           : invoice.status == "Cancelled"
                             ? "bg-[#FFA0A0]"
@@ -94,7 +96,7 @@ export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
                                     "bg-[#92B7FF]"
                       } p-1 px-2 text-black  `}
                     >
-                      {/*  */}
+                      {invoice.status === null && "Generated"}
                       {invoice.status}
                     </span>
                   </TableCell>
