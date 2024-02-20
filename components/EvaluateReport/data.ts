@@ -1,4 +1,3 @@
-import { deviceType } from "@/interfaces/devicelist";
 
 // type issueTypes = bodycondition || screencondition ||  accessoriesunavailable || cameralens;
 

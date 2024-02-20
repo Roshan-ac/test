@@ -22,7 +22,7 @@ const page = async () => {
       <div className="h-full w-full space-y-2 pb-20">
         <FilterMenubar />
         <SectionOne varient={"vendors"} />
-        <CardContainer />
+        {/* <CardContainer /> */}
         <SectionOne varient={"vendors"} />
       </div>
     );

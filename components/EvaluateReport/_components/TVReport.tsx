@@ -1,6 +1,7 @@
-import { TvBookingsInterface } from "@/interfaces/FullBookings/FullTVBookings";
+import { TvFullBookingsInterface } from "@/interfaces/FullBookings";
 
-const TVReport = ({ formData }: { formData: TvBookingsInterface }) => {
+
+const TVReport = ({ formData }: { formData: TvFullBookingsInterface }) => {
   const { bodycondition, screencondition, screentype, resolution, deviceType } =
     formData;
 

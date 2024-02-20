@@ -171,7 +171,7 @@ const ChartTwo = () => {
         </div>
         <div className=" w-full h-full my-20 p-4 grid grid-cols-4 grid-rows-4 gap-4 gap-y-12">
           {Array.from({ length: 12 }).map((_, index) => (
-            <div className=" w-full h-full">
+            <div key={index} className=" w-full h-full">
               <h2 className="text-xl font-bold">219/350</h2>
               <h3 className=" text-base">Phone</h3>
             </div>

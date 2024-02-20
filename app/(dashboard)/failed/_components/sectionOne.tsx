@@ -47,9 +47,9 @@ const SectionOne = ({
     return (
       <div className="flex w-full gap-4 px-8">
         <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-          <PrimaryTable setIsOpen={setIsOpen} invoices={invoices} />
+          {/* <PrimaryTable setIsOpen={setIsOpen} invoices={invoices} /> */}
         </div>
-        <SheetDemo varient={varient} setIsOpen={setIsOpen} isOpen={isOpen} />
+        {/* <SheetDemo varient={varient} setIsOpen={setIsOpen} isOpen={isOpen} /> */}
       </div>
     );
 };

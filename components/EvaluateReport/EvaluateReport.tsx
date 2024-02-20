@@ -7,10 +7,10 @@ import { HeadphoneFullBookingsInterface } from "@/interfaces/FullBookings/FullHe
 import { LaptopFullBookingsInterface } from "@/interfaces/FullBookings/FullLaptopBookings";
 import { MacFullBookingsInterface } from "@/interfaces/FullBookings/FullMacBookings";
 import { MobileFullBookingsInterface } from "@/interfaces/FullBookings/FullMobileBookings";
-import { TvBookingsInterface } from "@/interfaces/FullBookings/FullTVBookings";
+
 import { TabletFullBookingsInterface } from "@/interfaces/FullBookings/FullTabletBookings";
 import { WatchFullBookingsInterface } from "@/interfaces/FullBookings/FullWatchBookings";
-import { deviceType } from "@/interfaces/devicelist";
+
 
 import MobileReport from "./_components/MobileReport";
 import TabletReport from "./_components/TabletReport";
@@ -24,6 +24,8 @@ import DesktopReport from "./_components/DesktopReport";
 import DroneReport from "./_components/DroneReport";
 import HeadphoneReport from "./_components/HeadphoneReport";
 import TVReport from "./_components/TVReport";
+import { deviceType } from "@/interfaces";
+import { TvFullBookingsInterface } from "@/interfaces/FullBookings";
 
 const EvaluationReport = ({
   devicetype,
@@ -42,7 +44,7 @@ const EvaluationReport = ({
     | CameraFullBookingsInterface
     | HeadphoneFullBookingsInterface
     | ACFullBookingsInterface
-    | TvBookingsInterface;
+    | TvFullBookingsInterface;
 }) => {
   if (devicetype === "mobile") {
     return (
@@ -86,7 +88,7 @@ const EvaluationReport = ({
         <CameraReport formData={formData as CameraFullBookingsInterface} />
       </div>
     );
-  } else if (devicetype === "ac") {
+  } else if (devicetype === "air-conditioner") {
     return (
       <div>
         <ACReport formData={formData as ACFullBookingsInterface} />
@@ -115,7 +117,7 @@ const EvaluationReport = ({
   } else if (devicetype === "tv") {
     return (
       <div>
-        <TVReport formData={formData as TvBookingsInterface} />
+        <TVReport formData={formData as TvFullBookingsInterface} />
       </div>
     );
   }
