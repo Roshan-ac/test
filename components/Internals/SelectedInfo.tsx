@@ -25,13 +25,19 @@ export function SheetDemo({
   isOpen,
   varient,
   setIsOpen,
+  lead,
 }: {
   isOpen: boolean;
   varient: "lead" | "orders" | "failed" | "vendors";
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  lead: any;
 }) {
   const [progress, setProgress] = useState(13);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    (async function () {})();
+  }, []);
 
   const ShowProgress = () => {
     setIsLoading(true);
@@ -64,7 +70,10 @@ export function SheetDemo({
                   </div>
                   <div>
                     {Array.from({ length: 5 }).map((_, index) => (
-                      <div key={index} className=" grid grid-cols-5 border-y border-tableSeperator p-2 px-3 text-[13px] text-secondaryText">
+                      <div
+                        key={index}
+                        className=" grid grid-cols-5 border-y border-tableSeperator p-2 px-3 text-[13px] text-secondaryText"
+                      >
                         <span>Alok Timalsina</span>
                         <span>20000</span>
                         <span className=" w-max cursor-pointer hover:underline">

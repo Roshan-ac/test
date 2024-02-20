@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { PrimaryTable } from "@/components/Internals/PrimaryTable";
+import { PrimaryTable } from "./PrimaryTable";
 import { SheetDemo } from "@/components/Internals/SelectedInfo";
 
 export interface InvoiceInterface {
   id: string;
-  timestamp: string;
+  pickupdate: string;
   devicename: string;
-  city: string | null;
+  pickuptime: string;
   devicetype: string;
   status:
     | "Generated"
@@ -17,6 +17,7 @@ export interface InvoiceInterface {
     | "Assigned"
     | "Completed"
     | null;
+  assignedvendor: string | null;
 }
 
 const SectionOne = ({
@@ -24,22 +25,20 @@ const SectionOne = ({
 }: {
   varient: "lead" | "orders" | "failed" | "vendors";
 }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
   const [invoices, setInvoices] = useState<InvoiceInterface[]>();
 
   console.log(invoices);
   useEffect(() => {
     (async function () {
-      const res = await fetch("/api/getallorders", {
+      const res = await fetch("/api/getallleads", {
         method: "GET",
       });
       if (!res.ok) {
         console.log("Error :", res);
       }
       const data = await res.json();
-      setInvoices(data.orders);
-      console.log(data);
+      setInvoices(data.leads);
+      // console.log(data);
     })();
   }, []);
 
@@ -47,9 +46,8 @@ const SectionOne = ({
     return (
       <div className="flex w-full gap-4 px-8">
         <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-          <PrimaryTable setIsOpen={setIsOpen} invoices={invoices} />
+          <PrimaryTable invoices={invoices} />
         </div>
-        <SheetDemo varient={varient} setIsOpen={setIsOpen} isOpen={isOpen} />
       </div>
     );
 };
