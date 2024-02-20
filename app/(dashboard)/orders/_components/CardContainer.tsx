@@ -12,8 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-
-export function CardContainer() {
+type cardData = {
+  completedOrdersCount: number;
+  availableOrdersCount: number;
+  assignedOrdersCount: number;
+}
+export function CardContainer({cardsValues}:{cardsValues:cardData}) {
   return (
     <div className="grid h-[40vh] grid-cols-3 gap-6">
       <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
@@ -28,7 +32,7 @@ export function CardContainer() {
             />
           </div>
           <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">34</h1>
+            <h1 className=" text-5xl font-medium">{cardsValues.availableOrdersCount}</h1>
             <h6 className=" text-xl text-secondaryText">Available</h6>
           </div>
         </div>
@@ -45,7 +49,7 @@ export function CardContainer() {
             />
           </div>
           <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">34</h1>
+            <h1 className=" text-5xl font-medium">{cardsValues.completedOrdersCount}</h1>
             <h6 className=" text-xl text-secondaryText">Completed</h6>
           </div>
         </div>
@@ -62,7 +66,7 @@ export function CardContainer() {
             />
           </div>
           <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">34</h1>
+            <h1 className=" text-5xl font-medium">{cardsValues.assignedOrdersCount}</h1>
             <h6 className=" text-xl text-secondaryText">Assigned</h6>
           </div>
         </div>

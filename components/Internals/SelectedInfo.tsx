@@ -28,16 +28,18 @@ export function SheetDemo({
   lead,
 }: {
   isOpen: boolean;
-  varient: "lead" | "orders" | "failed" | "vendors";
+  varient: "leads" | "orders" | "failed" | "vendors";
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  lead: any;
+  lead: Promise<any>;
 }) {
   const [progress, setProgress] = useState(13);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    (async function () {})();
-  }, []);
+    lead.then((data) => {
+      
+    });
+  }, [lead]);
 
   const ShowProgress = () => {
     setIsLoading(true);
@@ -484,7 +486,7 @@ export function SheetDemo({
                       </span>
                     </Label>
                   </div>
-                  {varient == "lead" ? (
+                  {varient == "leads" ? (
                     <div>
                       <LeadActions />
                     </div>

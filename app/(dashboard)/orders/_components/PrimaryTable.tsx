@@ -6,20 +6,35 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TabelPagination } from "./TabelPagination";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { InvoiceInterface } from "./SectionOne";
-import { parseISO, format } from "date-fns";
+import { parseISO, format } from 'date-fns';
+import { InvoiceInterface } from "./BasePage";
+import { TabelPagination } from "@/components/Internals/TabelPagination";
+
+type ordersData = {
+  id: string;
+  timestamp: string;
+  devicename: string;
+  city: string | null;
+  devicetype: string;
+  status:
+    | "Generated"
+    | "Cn-Cancelled by Customer"
+    | "Failed"
+    | "Out For Pickup"
+    | "Assigned"
+    | "Completed"
+    | null;
+}
+
 
 export function PrimaryTable({
   setIsOpen,
-  SetSelectedRow,
   invoices,
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  SetSelectedRow: Dispatch<SetStateAction<object>>;
-  invoices: InvoiceInterface[];
+  invoices: ordersData[];
 }) {
   return (
     <ScrollArea className="relative h-[70vh] w-full rounded-md">
@@ -39,17 +54,13 @@ export function PrimaryTable({
             invoices.map((invoice, index) => (
               <TableRow
                 onClick={() => {
-                  SetSelectedRow({
-                    lead: invoice.id,
-                    devicetype: invoice.devicetype,
-                  });
                   setIsOpen((prev) => !prev);
                 }}
                 className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
                 key={index}
               >
                 <TableCell className="border-r border-r-tableSeperator">
-                  <Date dateString={invoice.timestamp} />
+                  <Date dateString={invoice.timestamp}/>
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
                   {invoice.devicetype}
@@ -65,7 +76,7 @@ export function PrimaryTable({
                 <TableCell className="">
                   <span
                     className={`inline-block h-max min-w-[100px] rounded-[18px] px-4 text-center  ${
-                      invoice.status == "Generated" || invoice.status == null
+                      invoice.status == "Generated" || invoice.status== null
                         ? "bg-white"
                         : invoice.status == "Cn-Cancelled by Customer"
                           ? "bg-[#FFA0A0]"
@@ -79,7 +90,7 @@ export function PrimaryTable({
                                   "bg-[#92B7FF]"
                     } p-1 px-2 text-black  `}
                   >
-                    {invoice.status == null ? "Generated" : invoice.status}
+                    {invoice.status==null?'Generated':invoice.status}
                   </span>
                 </TableCell>
               </TableRow>
@@ -93,7 +104,9 @@ export function PrimaryTable({
   );
 }
 
-function Date({ dateString }: { dateString: string }) {
+
+
+export function Date({ dateString }:{dateString:string}) {
   const date = parseISO(dateString);
-  return <time dateTime={dateString}>{format(date, "LLLL d, yyyy")}</time>;
+  return <time dateTime={dateString}>{format(date, 'LLLL d, yyyy')}</time>;
 }
