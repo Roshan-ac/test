@@ -1,7 +1,9 @@
-import { FilterMenubar } from "@/components/FilterMenubar";
 import React from "react";
-import SectionOne from "../../../components/Internals/SectionOne";
-import { CardContainer } from "../../../components/Internals/CardContainer";
+
+import SectionOne from "./_components/sectionOne";
+
+import { FilterMenubar } from "@/components/FilterMenubar";
+import { CardContainer } from "@/components/Internals/CardContainer";
 
 const page = () => {
   return (

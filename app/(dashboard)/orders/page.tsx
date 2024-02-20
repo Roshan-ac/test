@@ -1,9 +1,13 @@
 import React from "react";
-import { FilterMenubar } from "@/components/FilterMenubar";
-import SectionOne from "../../../components/Internals/SectionOne";
-import { CardContainer } from "../../../components/Internals/CardContainer";
+
 import { redirect } from "next/navigation";
+
 import { UserType, getCurrentUser } from "@/lib/session";
+
+import { FilterMenubar } from "@/components/FilterMenubar";
+import SectionOne from "./_components/sectionOne";
+import { CardContainer } from "../../../components/Internals/CardContainer";
+
 import PageNotAccessible from "@/components/Internals/PageNotAccessible";
 
 const page = async () => {

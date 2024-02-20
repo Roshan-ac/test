@@ -1,10 +1,13 @@
-import { FilterMenubar } from "@/components/FilterMenubar";
 import React from "react";
-import SectionOne from "./SectionOne";
-import { CardContainer } from "../../../components/Internals/CardContainer";
-import { UserType, getCurrentUser } from "@/lib/session";
-import PageNotAccessible from "@/components/Internals/PageNotAccessible";
 import { redirect } from "next/navigation";
+
+import { UserType, getCurrentUser } from "@/lib/session";
+
+import { FilterMenubar } from "@/components/FilterMenubar";
+import SectionOne from "./_components/sectionOne";
+import { CardContainer } from "../../../components/Internals/CardContainer";
+
+import PageNotAccessible from "@/components/Internals/PageNotAccessible";
 
 const page = async () => {
   const user: UserType = await getCurrentUser();
