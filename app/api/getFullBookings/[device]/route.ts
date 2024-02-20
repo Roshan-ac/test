@@ -25,7 +25,7 @@ const POST = async (req: any, device: { params: { device: string } }) => {
     }
 
     const data = await response.json();
-    // console.log(data);
+  
     return new Response(JSON.stringify(data));
   } catch (error) {
     // console.error(error);

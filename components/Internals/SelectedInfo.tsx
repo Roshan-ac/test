@@ -28,9 +28,9 @@ export function SheetDemo({
   lead,
 }: {
   isOpen: boolean;
-  varient: "lead" | "orders" | "failed" | "vendors";
+  varient: "leads" | "orders" | "failed" | "vendors";
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  lead: any;
+  lead: Promise<any>;
 }) {
   const [progress, setProgress] = useState(13);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,8 +38,8 @@ export function SheetDemo({
   console.log(lead);
 
   useEffect(() => {
-    (async function () {})();
-  }, []);
+    lead.then((data) => {});
+  }, [lead]);
 
   const ShowProgress = () => {
     setIsLoading(true);
@@ -249,9 +249,9 @@ export function SheetDemo({
                           Alternate :
                         </span>
                         <span className="inline-block w-full">
-                          {lead.alternateno
-                            ? lead.alternateno
-                            : lead.ownerphoneno}
+                          {lead?.alternateno
+                            ? lead?.alternateno
+                            : lead?.ownerphoneno}
                         </span>
                       </Label>
                       <Label
@@ -271,7 +271,7 @@ export function SheetDemo({
                           Main Address :
                         </span>
                         <span className="inline-block w-full leading-6">
-                          {lead.addresshome}
+                          {lead?.addresshome}
                         </span>
                       </Label>
                       <Label
@@ -280,7 +280,7 @@ export function SheetDemo({
                       >
                         <span className="inline-block w-[60%]">Pincode :</span>
                         <span className="inline-block w-full">
-                          {lead.pincode}
+                          {lead?.pincode}
                         </span>
                       </Label>
                       <Label
@@ -290,7 +290,7 @@ export function SheetDemo({
                         <span className="inline-block w-[60%]">City :</span>
                         <span className="inline-block w-full">
                           {" "}
-                          {lead.city}
+                          {lead?.city}
                         </span>
                       </Label>
                       <Label
@@ -299,7 +299,7 @@ export function SheetDemo({
                       >
                         <span className="inline-block w-[60%]">Payment :</span>
                         <span className="inline-block w-full">
-                          {lead.payment}
+                          {lead?.payment}
                         </span>
                       </Label>
                     </div>
@@ -485,7 +485,7 @@ export function SheetDemo({
                       </span>
                     </Label>
                   </div>
-                  {varient == "lead" ? (
+                  {varient == "leads" ? (
                     <div>
                       <LeadActions />
                     </div>

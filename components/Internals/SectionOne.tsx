@@ -11,7 +11,7 @@ export interface InvoiceInterface {
   devicetype: string;
   status:
     | "Generated"
-    | "Cancelled"
+    | "Cn-Cancelled by Customer"
     | "Failed"
     | "Out For Pickup"
     | "Assigned"
@@ -22,7 +22,7 @@ export interface InvoiceInterface {
 const SectionOne = ({
   varient,
 }: {
-  varient: "lead" | "orders" | "failed" | "vendors";
+  varient: "leads" | "orders" | "failed" | "vendors";
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -49,7 +49,7 @@ const SectionOne = ({
         <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
           <PrimaryTable setIsOpen={setIsOpen} invoices={invoices} />
         </div>
-        <SheetDemo varient={varient} setIsOpen={setIsOpen} isOpen={isOpen} />
+        <SheetDemo lead={""} varient={varient} setIsOpen={setIsOpen} isOpen={isOpen} />
       </div>
     );
 };
