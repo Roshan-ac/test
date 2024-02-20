@@ -39,8 +39,8 @@ export function CardContainer({
             />
           </div>
           <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">34</h1>
-            <h6 className=" text-xl text-secondaryText">{available}</h6>
+            <h1 className=" text-5xl font-medium">{available}</h1>
+            <h6 className=" text-xl text-secondaryText">Available</h6>
           </div>
         </div>
       </Card>
@@ -56,8 +56,8 @@ export function CardContainer({
             />
           </div>
           <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">34</h1>
-            <h6 className=" text-xl text-secondaryText">{completed}</h6>
+            <h1 className=" text-5xl font-medium">{completed}</h1>
+            <h6 className=" text-xl text-secondaryText">Completed</h6>
           </div>
         </div>
       </Card>
@@ -73,8 +73,8 @@ export function CardContainer({
             />
           </div>
           <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">34</h1>
-            <h6 className=" text-xl text-secondaryText">{assigned}</h6>
+            <h1 className=" text-5xl font-medium">{assigned}</h1>
+            <h6 className=" text-xl text-secondaryText">Assigned</h6>
           </div>
         </div>
       </Card>
