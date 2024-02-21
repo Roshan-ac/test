@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
+import { AssignDialog } from "./AssignDialog";
+import { useRouter } from "next/navigation";
 
 type OrderDetails = {
   success: boolean;
@@ -76,8 +78,6 @@ export function SheetDemo({
   const [isLoading, setIsLoading] = useState(false);
   const [orderDetails, setOrderDetails] = useState<OrderDetails>();
 
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-
   useEffect(() => {
     (async function () {
       console.log(SelectedRow.devicetype);
@@ -94,9 +94,9 @@ export function SheetDemo({
       console.log(orderDetails);
       setOrderDetails(orderDetails);
       setIsLoading(false);
+      console.log(orderDetails.myBookings);
     })();
   }, [SelectedRow]);
-  // console.log(orderDetails.myBookings);
 
   const ShowProgress = () => {
     setIsLoading(true);
@@ -106,12 +106,15 @@ export function SheetDemo({
     setTimeout(() => setProgress(100), 500);
     setTimeout(() => setIsLoading(false), 1000);
   };
+
+  
+
   return (
     <Sheet open={isOpen}>
       <Progress
         hidden={!isLoading}
         value={progress}
-        className=" fixed  right-0 top-0 z-[80] h-[2px]"
+        className=" absolute  right-0 -top-6 z-[80] h-[2px]"
       />
       <SheetContent
         className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
@@ -203,12 +206,10 @@ export function SheetDemo({
 
                   <div className="flex w-full items-center space-x-4 py-8">
                     <div>
-                      <Button
-                        onClick={ShowProgress}
-                        className=" !h-max rounded-none !bg-[#82C43C] px-8"
-                      >
-                        Assign
-                      </Button>
+                      <AssignDialog
+                        isAssigned={orderDetails.myBookings.assignedvendor!==null}
+                        data={{creditpoints:orderDetails.myBookings.creditpoints,leadid:orderDetails.myBookings.id}}
+                      />
                     </div>
                     <div>
                       <Button
@@ -266,92 +267,88 @@ export function SheetDemo({
                       </Label>
                     </div>
                   </div>
-                  <div className="h-max w-full overflow-y-scroll bg-tertiaryBackground  px-6 py-4">
+                  <div className="h-max overflow-x-hidden overflow-y-scroll break-words bg-tertiaryBackground py-4 pl-4 pr-3">
                     <div className="mt-4 flex flex-col space-y-6 text-hoverColor">
                       <Label
                         htmlFor="terms"
-                        className="flex w-full space-x-4  "
+                        className=" grid w-full grid-cols-3 items-center"
                       >
-                        <span className="inline-block w-[60%]">Name :</span>
-                        <span className="inline-block w-full">
+                        <p className="inline-block min-w-max"> Name :</p>
+                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
                           {orderDetails.myBookings.ownername}
-                        </span>
+                        </p>
                       </Label>
                       <Label
                         htmlFor="terms"
-                        className=" flex w-full space-x-4  "
+                        className=" grid w-full grid-cols-3 items-center"
                       >
-                        <span className="inline-block w-[60%]">Email :</span>
-                        <span className="inline-block w-full">
+                        <p className="inline-block min-w-max"> Email :</p>
+                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
                           {orderDetails.myBookings.owneremail}
-                        </span>
+                        </p>
                       </Label>
                       <Label
                         htmlFor="terms"
-                        className=" flex w-full space-x-4  "
+                        className=" grid w-full grid-cols-3 items-center"
                       >
-                        <span className="inline-block w-[60%]">Phone :</span>
-                        <span className="inline-block w-full">
+                        <p className="inline-block min-w-max"> Phone :</p>
+                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
                           {orderDetails.myBookings.ownerphoneno}
-                        </span>
+                        </p>
                       </Label>
                       <Label
                         htmlFor="terms"
-                        className=" flex w-full space-x-4  "
+                        className=" grid w-full grid-cols-3 items-center"
                       >
-                        <span className="inline-block w-[60%]">
-                          Alternate :
-                        </span>
-                        <span className="inline-block w-full">{""}</span>
+                        <p className="inline-block min-w-max"> Alternate :</p>
+                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
+                          {""}
+                        </p>
                       </Label>
                       <Label
                         htmlFor="terms"
-                        className=" flex w-full space-x-4  "
+                        className="  grid w-full  grid-cols-3 space-x-4  "
                       >
-                        <span className="inline-block w-[60%]">
-                          Address Type :
-                        </span>
-                        <span className="inline-block w-full">{""}</span>
+                        <p className="inline-block">Address Type :</p>
+                        <p className=" col-span-2 inline-block w-full">{""}</p>
                       </Label>
                       <Label
                         htmlFor="terms"
-                        className=" flex w-full space-x-4  "
+                        className=" grid w-full grid-cols-3 items-center"
                       >
-                        <span className="inline-block w-[60%]">
-                          Main Address :
-                        </span>
-                        <span className="inline-block w-full leading-6">
+                        <p className="inline-block min-w-max">Main Address :</p>
+                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
                           {orderDetails.myBookings.owneraddress}
-                        </span>
+                        </p>
                       </Label>
                       <Label
                         htmlFor="terms"
-                        className=" flex w-full space-x-4  "
+                        className=" grid w-full grid-cols-3 items-center"
                       >
-                        <span className="inline-block w-[60%]">Pincode :</span>
-                        <span className="inline-block w-full">
+                        <p className="inline-block min-w-max"> Pincode :</p>
+                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
                           {orderDetails.myBookings.owneraddress
                             .split(", ")
                             .pop()}
-                        </span>
+                        </p>
                       </Label>
                       <Label
                         htmlFor="terms"
-                        className=" flex w-full space-x-4  "
+                        className=" grid w-full grid-cols-3 items-center"
                       >
-                        <span className="inline-block w-[60%]">City :</span>
-                        <span className="inline-block w-full">
+                        <p className="inline-block min-w-max"> City :</p>
+                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
                           {orderDetails.myBookings.owneraddress.split(", ")[5]}
-                        </span>
+                        </p>
                       </Label>
                       <Label
                         htmlFor="terms"
-                        className=" flex w-full space-x-4  "
+                        className=" grid w-full grid-cols-3 items-center"
                       >
-                        <span className="inline-block w-[60%]">Payment :</span>
-                        <span className="inline-block w-full">
+                        <p className="inline-block min-w-max"> Payment :</p>
+                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
                           {orderDetails.myBookings.paymentmode}
-                        </span>
+                        </p>
                       </Label>
                     </div>
                   </div>
@@ -363,69 +360,35 @@ export function SheetDemo({
                     <h1>Leads Logs :</h1>
                   </div>
                   <div className="my-6 flex flex-col space-y-6">
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">
+                    <Label
+                      htmlFor="terms"
+                      className=" grid w-full grid-cols-5 items-center"
+                    >
+                      <p className="inline-block min-w-max">
+                        {" "}
                         11:12:24 15/09/2023 :
-                      </span>
-                      <span className="inline-block w-full">
+                      </p>
+                      <p className=" col-span-4  w-full  whitespace-pre-wrap text-left leading-6">
                         Called Customer - Told To Reschedule
-                      </span>
+                      </p>
                     </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">
+                    <Label
+                      htmlFor="terms"
+                      className=" grid w-full grid-cols-5 items-center"
+                    >
+                      <p className="inline-block min-w-max">
+                        {" "}
                         11:12:24 15/09/2023 :
-                      </span>
-                      <span className="inline-block w-full">
-                        Rescheduled For 2023/12/29 10:00 AM - 01:00 PM
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">
-                        11:12:24 15/09/2023 :
-                      </span>
-                      <span className="inline-block w-full">
-                        Called Customer - Pickup Confirmed
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">
-                        11:12:24 15/09/2023:
-                      </span>
-                      <span className="inline-block w-full">
-                        Out For Pickup
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">
-                        11:12:24 15/09/2023 :
-                      </span>
-                      <span className="inline-block w-full">
-                        Requote - Box, Charger, Below Average
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">
-                        11:12:24 15/09/2023 :
-                      </span>
-                      <span className="inline-block w-full">
-                        Requote - Box, Charger, Below Average, Screen Scratches
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">
-                        11:12:24 15/09/2023 :
-                      </span>
-                      <span className="inline-block w-full">
-                        Failed - Requote Price Not Accepted
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">
-                        11:12:24 15/09/2023 :
-                      </span>
-                      <span className="inline-block w-full">
-                        Failed Confirmed - Photos Accepted
-                      </span>
+                      </p>
+                      <p className=" col-span-4  w-full  whitespace-pre-wrap text-left leading-6">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing
+                        elit. Neque exercitationem, pariatur laborum
+                        reprehenderit iure in a consequuntur, fuga aut magni
+                        minus porro delectus dignissimos consectetur maxime
+                        aperiam vero. Quae mollitia, asperiores beatae ipsum
+                        debitis quos alias doloribus accusantium laudantium
+                        molestiae ad voluptatibus aliquam id adipisci.
+                      </p>
                     </Label>
                   </div>
                 </div>

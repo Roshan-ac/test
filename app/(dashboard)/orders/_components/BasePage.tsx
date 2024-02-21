@@ -38,7 +38,6 @@ export interface InvoiceInterface {
 
 const BasePage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
   const [invoices, setInvoices] = useState<InvoiceInterface>();
   const [SelectedRow, SetSelectedRow] = useState<{
     lead: string;
@@ -46,6 +45,7 @@ const BasePage = () => {
   }>({
     lead: "",
     devicetype: "",
+
   });
   console.log(invoices);
   useEffect(() => {
@@ -61,36 +61,47 @@ const BasePage = () => {
       console.log(data);
     })();
   }, []);
+console.log(invoices)
+  return (
+    <div className=" w-full gap-4 space-y-6 px-8">
+      <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
 
-  if (invoices)
-    return (
-      <div className=" w-full gap-4 space-y-6 px-8">
-        <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
+        {
+          invoices &&
           <PrimaryTable
-            SetSelectedRow={SetSelectedRow}
-            setIsOpen={setIsOpen}
-            invoices={invoices.orders}
-          />
-        </div>
-        <CardContainer
-          cardsValues={{
-            completedOrdersCount: invoices.completedOrdersCount,
-            assignedOrdersCount: invoices.assignedOrdersCount,
-            availableOrdersCount: invoices.availableOrdersCount,
-          }}
-        />
-        <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-          <SecondaryTable leads={invoices.leads} />
-        </div>
-
-        <SheetDemo
-          SelectedRow={SelectedRow}
-          varient={"orders"}
+          SetSelectedRow={SetSelectedRow}
           setIsOpen={setIsOpen}
-          isOpen={isOpen}
+          invoices={invoices.orders}
         />
+        }
       </div>
-    );
+      {
+        invoices &&
+    
+      <CardContainer
+        cardsValues={{
+          completedOrdersCount: invoices.completedOrdersCount,
+          assignedOrdersCount: invoices.assignedOrdersCount,
+          availableOrdersCount: invoices.availableOrdersCount,
+        }}
+      />
+    }
+      <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
+      
+        {
+          invoices &&
+          <SecondaryTable leads={invoices.leads} />
+        }
+      </div>
+
+      <SheetDemo
+        SelectedRow={SelectedRow}
+        varient={"orders"}
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+      />
+    </div>
+  );
 };
 
 export default BasePage;

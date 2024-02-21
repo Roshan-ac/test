@@ -13,8 +13,6 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
 
-import DialogPopup from "../ui/Dialog/dialog";
-
 interface DispositionInterface {
   disposition1: string;
   disposition2: string;
@@ -32,14 +30,14 @@ export function LeadActions() {
 
   const [isDialogOpen, setDialogOpen] = React.useState<boolean>(false);
 
-  console.log(select);
+  // console.log(select);
 
   if (select.disposition1 === "create lead") {
     setDialogOpen(true);
   }
 
   const submitHandler = (data: DispositionInterface) => {
-    console.log(data);
+    // console.log(data);
   };
 
   return (
@@ -115,9 +113,9 @@ export function LeadActions() {
         </Select>
       )}
 
-      {/* make it "create lead" */}
-      {select.disposition1 === "create leads" && isDialogOpen && (
-        <DialogPopup
+      {/* changes here*/}
+      {/* {select.disposition1 === "create leads" && isDialogOpen && (
+        <Dialog
           title="Create Lead"
           isOpen={isDialogOpen}
           setIsOpen={setDialogOpen}
@@ -155,8 +153,8 @@ export function LeadActions() {
               </select>
             </label>
           </div>
-        </DialogPopup>
-      )}
+        </Dialog>
+      )} */}
 
       <Textarea
         placeholder="Remarks"
