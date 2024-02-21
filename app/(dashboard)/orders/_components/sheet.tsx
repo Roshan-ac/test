@@ -104,7 +104,7 @@ export function SheetDemo({
       setIsLoading(false);
     })();
   }, [SelectedRow]);
-console.log(orderDetails.myBookings)
+
   const ShowProgress = () => {
     setIsLoading(true);
     setProgress(20);
