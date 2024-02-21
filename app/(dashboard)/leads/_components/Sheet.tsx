@@ -1,26 +1,15 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { LeadActions } from "@/components/Internals/LeadActions";
-import { FailedImageGallery } from "@/components/Internals/FailedImageCarousel";
 import { VendorDocuments } from "@/components/Internals/VendorDocuments";
 import { Progress } from "@/ui/progress";
 import LeadLogs from "./LeadLogs";
+import EvaluationReport from "@/components/EvaluateReport/EvaluateReport";
 
 export function SheetDemo({
   isOpen,
@@ -62,8 +51,8 @@ export function SheetDemo({
         setIsOpen={setIsOpen}
       >
         <ScrollArea className="!h-[100vh] pb-6">
-          <div className=" my-4 space-y-4">
-            <div className=" rounded border border-hoverColor border-opacity-50">
+          <div className="my-4 space-y-4">
+            <div className="rounded border border-hoverColor border-opacity-50">
               <div className=" bg-tertiaryBackground">
                 <div className=" grid grid-cols-5 p-2 px-3 text-sm text-secondaryText">
                   <span>Vendor Name</span>
@@ -110,7 +99,7 @@ export function SheetDemo({
                   Phone
                 </Badge>
                 <div>
-                  <h1>OnePlus 9 Pro 5G 128/8 (70)</h1>
+                  <h1>{lead?.devicename}</h1>
                 </div>
                 <div className="my-6 flex flex-col space-y-6">
                   <Label htmlFor="terms" className=" flex w-full space-x-4  ">
@@ -126,52 +115,13 @@ export function SheetDemo({
                   </Label>
 
                   {/* From here */}
-                  <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                    <span className="inline-block w-[40%]">Warranty :</span>
-                    <span className="inline-block w-full">
-                      CK-MO-Pun-853211703827976
-                    </span>
-                  </Label>
-                  <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                    <span className="inline-block w-[40%]">Screen :</span>
-                    <span className="inline-block w-full">
-                      CK-MO-Pun-853211703827976
-                    </span>
-                  </Label>
-                  <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                    <span className="inline-block w-[40%]">Body :</span>
-                    <span className="inline-block w-full">
-                      CK-MO-Pun-853211703827976
-                    </span>
-                  </Label>
-                  <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                    <span className="inline-block w-[40%]">Accessories :</span>
-                    <span className="inline-block w-full">CK</span>
-                  </Label>
-                  <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                    <span className="inline-block w-[40%]">Issues :</span>
-                    <span className="inline-block w-full">
-                      CK-MO-Pun-853211703827976
-                    </span>
-                  </Label>
-                  <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                    <span className="inline-block w-[40%]">Processor :</span>
-                    <span className="inline-block w-full">
-                      CK-MO-Pun-853211703827976
-                    </span>
-                  </Label>
-                  <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                    <span className="inline-block w-[40%]">Ram :</span>
-                    <span className="inline-block w-full">
-                      CK-MO-Pun-853211703827976
-                    </span>
-                  </Label>
-                  <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                    <span className="inline-block w-[40%]">Storage :</span>
-                    <span className="inline-block w-full">
-                      CK-MO-Pun-853211703827976
-                    </span>
-                  </Label>
+                  {lead && (
+                    <EvaluationReport
+                      formData={lead}
+                      devicetype={lead.devicetype}
+                    />
+                  )}
+
                   <Label htmlFor="terms" className=" flex w-full space-x-4  ">
                     <span className="inline-block w-[40%]">Vendor :</span>
                     <span className="inline-block w-full">

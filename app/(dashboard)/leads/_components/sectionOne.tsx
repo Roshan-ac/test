@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { PrimaryTable } from "./PrimaryTable";
-import { SheetDemo } from "@/components/Internals/SelectedInfo";
 import { CardContainer } from "@/components/Internals/CardContainer";
 
 export interface LeadInterface {

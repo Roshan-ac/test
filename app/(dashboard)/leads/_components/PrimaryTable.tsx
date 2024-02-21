@@ -10,10 +10,9 @@ import {
 } from "@/components/ui/table";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useState } from "react";
 import { InvoiceInterface } from "./sectionOne";
 import { SheetDemo } from "./Sheet";
-import { deviceType } from "@/interfaces";
 
 export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);

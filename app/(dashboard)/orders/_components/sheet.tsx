@@ -1,21 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { LeadActions } from "@/components/Internals/LeadActions";
 import { Progress } from "@/components/ui/progress";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 
@@ -72,7 +61,6 @@ type OrderDetails = {
 
 export function SheetDemo({
   isOpen,
-
   setIsOpen,
   SelectedRow,
 }: {
@@ -88,8 +76,11 @@ export function SheetDemo({
   const [isLoading, setIsLoading] = useState(false);
   const [orderDetails, setOrderDetails] = useState<OrderDetails>();
 
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+
   useEffect(() => {
     (async function () {
+      console.log(SelectedRow.devicetype);
       const res = await fetch(
         `/api/getFullBookings/${SelectedRow.devicetype}`,
         {
@@ -99,12 +90,14 @@ export function SheetDemo({
           }),
         },
       );
-      const OrderDetails = await res.json();
-      setOrderDetails(OrderDetails);
+      const orderDetails = await res.json();
+      console.log(orderDetails);
+      setOrderDetails(orderDetails);
       setIsLoading(false);
     })();
   }, [SelectedRow]);
-console.log(orderDetails.myBookings)
+  // console.log(orderDetails.myBookings);
+
   const ShowProgress = () => {
     setIsLoading(true);
     setProgress(20);
@@ -337,7 +330,9 @@ console.log(orderDetails.myBookings)
                       >
                         <span className="inline-block w-[60%]">Pincode :</span>
                         <span className="inline-block w-full">
-                          {orderDetails.myBookings.owneraddress.split(", ").pop()}
+                          {orderDetails.myBookings.owneraddress
+                            .split(", ")
+                            .pop()}
                         </span>
                       </Label>
                       <Label
