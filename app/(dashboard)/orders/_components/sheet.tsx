@@ -1,23 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { LeadActions } from "@/components/Internals/LeadActions";
 import { Progress } from "@/components/ui/progress";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
+import { AssignDialog } from "./AssignDialog";
+import { useRouter } from "next/navigation";
 
 type OrderDetails = {
   success: boolean;
@@ -72,7 +63,6 @@ type OrderDetails = {
 
 export function SheetDemo({
   isOpen,
-
   setIsOpen,
   SelectedRow,
 }: {
@@ -90,6 +80,7 @@ export function SheetDemo({
 
   useEffect(() => {
     (async function () {
+      console.log(SelectedRow.devicetype);
       const res = await fetch(
         `/api/getFullBookings/${SelectedRow.devicetype}`,
         {
@@ -99,9 +90,11 @@ export function SheetDemo({
           }),
         },
       );
-      const OrderDetails = await res.json();
-      setOrderDetails(OrderDetails);
+      const orderDetails = await res.json();
+      console.log(orderDetails);
+      setOrderDetails(orderDetails);
       setIsLoading(false);
+      console.log(orderDetails.myBookings);
     })();
   }, [SelectedRow]);
 
@@ -113,12 +106,15 @@ export function SheetDemo({
     setTimeout(() => setProgress(100), 500);
     setTimeout(() => setIsLoading(false), 1000);
   };
+
+  
+
   return (
     <Sheet open={isOpen}>
       <Progress
         hidden={!isLoading}
         value={progress}
-        className=" fixed  right-0 top-0 z-[80] h-[2px]"
+        className=" absolute  right-0 -top-6 z-[80] h-[2px]"
       />
       <SheetContent
         className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
@@ -210,12 +206,10 @@ export function SheetDemo({
 
                   <div className="flex w-full items-center space-x-4 py-8">
                     <div>
-                      <Button
-                        onClick={ShowProgress}
-                        className=" !h-max rounded-none !bg-[#82C43C] px-8"
-                      >
-                        Assign
-                      </Button>
+                      <AssignDialog
+                        isAssigned={orderDetails.myBookings.assignedvendor!==null}
+                        data={{creditpoints:orderDetails.myBookings.creditpoints,leadid:orderDetails.myBookings.id}}
+                      />
                     </div>
                     <div>
                       <Button
@@ -387,7 +381,13 @@ export function SheetDemo({
                         11:12:24 15/09/2023 :
                       </p>
                       <p className=" col-span-4  w-full  whitespace-pre-wrap text-left leading-6">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque exercitationem, pariatur laborum reprehenderit iure in a consequuntur, fuga aut magni minus porro delectus dignissimos consectetur maxime aperiam vero. Quae mollitia, asperiores beatae ipsum debitis quos alias doloribus accusantium laudantium molestiae ad voluptatibus aliquam id adipisci.
+                        Lorem ipsum dolor sit amet consectetur, adipisicing
+                        elit. Neque exercitationem, pariatur laborum
+                        reprehenderit iure in a consequuntur, fuga aut magni
+                        minus porro delectus dignissimos consectetur maxime
+                        aperiam vero. Quae mollitia, asperiores beatae ipsum
+                        debitis quos alias doloribus accusantium laudantium
+                        molestiae ad voluptatibus aliquam id adipisci.
                       </p>
                     </Label>
                   </div>

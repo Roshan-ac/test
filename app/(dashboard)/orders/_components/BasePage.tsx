@@ -38,7 +38,6 @@ export interface InvoiceInterface {
 
 const BasePage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
   const [invoices, setInvoices] = useState<InvoiceInterface>();
   const [SelectedRow, SetSelectedRow] = useState<{
     lead: string;
@@ -46,6 +45,7 @@ const BasePage = () => {
   }>({
     lead: "",
     devicetype: "",
+
   });
   console.log(invoices);
   useEffect(() => {
@@ -61,7 +61,7 @@ const BasePage = () => {
       console.log(data);
     })();
   }, []);
-
+console.log(invoices)
   return (
     <div className=" w-full gap-4 space-y-6 px-8">
       <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
