@@ -6,10 +6,10 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { VendorDocuments } from "@/components/Internals/VendorDocuments";
 import { Progress } from "@/ui/progress";
 import LeadLogs from "./LeadLogs";
 import EvaluationReport from "@/components/EvaluateReport/EvaluateReport";
+import { LeadActions } from "@/components/Internals/LeadActions";
 
 export function SheetDemo({
   isOpen,
@@ -26,10 +26,6 @@ export function SheetDemo({
   const [isLoading, setIsLoading] = useState(false);
 
   console.log(lead);
-
-  useEffect(() => {
-    (async function () {})();
-  }, []);
 
   const ShowProgress = () => {
     setIsLoading(true);
@@ -51,55 +47,14 @@ export function SheetDemo({
         setIsOpen={setIsOpen}
       >
         <ScrollArea className="!h-[100vh] pb-6">
-          <div className="my-4 space-y-4">
-            <div className="rounded border border-hoverColor border-opacity-50">
-              <div className=" bg-tertiaryBackground">
-                <div className=" grid grid-cols-5 p-2 px-3 text-sm text-secondaryText">
-                  <span>Vendor Name</span>
-                  <span>Amount</span>
-                  <span>Screenshot</span>
-                </div>
-                <div>
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <div
-                      key={index}
-                      className=" grid grid-cols-5 border-y border-tableSeperator p-2 px-3 text-[13px] text-secondaryText"
-                    >
-                      <span>Alok Timalsina</span>
-                      <span>20000</span>
-                      <span className=" w-max cursor-pointer hover:underline">
-                        View
-                      </span>
-                      <div className="col-span-2 flex items-center gap-2">
-                        <div>
-                          <Button
-                            onClick={ShowProgress}
-                            className=" !h-7 rounded-none !bg-[#82C43C] px-8 !text-xs"
-                          >
-                            Approved
-                          </Button>
-                        </div>
-                        <div>
-                          <Button
-                            onClick={ShowProgress}
-                            className=" !h-7 rounded-none !bg-[#FC5A5A] px-8 !text-xs"
-                          >
-                            Reject
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <div className=" my-4 space-y-4">
             <div className="flex h-full w-full gap-4">
               <div className="relative h-max w-[55%] bg-tertiaryBackground p-4 pt-8 text-hoverColor">
                 <Badge className=" absolute -top-[10px] left-6 z-10 w-max rounded-none !bg-purple-500 px-6 py-1 !text-white">
                   Phone
                 </Badge>
                 <div>
-                  <h1>{lead?.devicename}</h1>
+                  <h1 className="text-center">{lead?.devicename}</h1>
                 </div>
                 <div className="my-6 flex flex-col space-y-6">
                   <Label htmlFor="terms" className=" flex w-full space-x-4  ">
@@ -109,12 +64,12 @@ export function SheetDemo({
                   <Label htmlFor="terms" className=" flex w-full space-x-4  ">
                     <span className="inline-block w-[40%]">Pickup :</span>
                     <span className="inline-block w-full">
-                      {lead?.timestamp}
-                      {/* 2023/12/29 10:00 AM - 01:00 PM */}
+                      {lead?.pickupdate}
                     </span>
                   </Label>
 
-                  {/* From here */}
+                  {/* From Here */}
+
                   {lead && (
                     <EvaluationReport
                       formData={lead}
@@ -129,124 +84,94 @@ export function SheetDemo({
                     </span>
                   </Label>
                 </div>
-              </div>
 
-              <div className="h-max w-[45%] space-y-4">
-                <div className="h-max w-full bg-tertiaryBackground px-6 py-4">
-                  <div className="my-4 flex flex-col space-y-6 text-hoverColor">
-                    <Label htmlFor="terms" className="flex w-full space-x-4  ">
-                      <span className="inline-block w-[80%]">
-                        Quoted Price :
-                      </span>
-                      <span className="inline-block w-full">18000/-</span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[80%]">
-                        Requote Price :
-                      </span>
-                      <span className="inline-block w-full">14000/-</span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[80%]">
-                        Final Price :
-                      </span>
-                      <span className="inline-block w-full">15500/-</span>
-                    </Label>
-                  </div>
+                <div>
+                  <LeadActions />
                 </div>
-                <div className="h-max w-full overflow-y-scroll bg-tertiaryBackground  px-6 py-4">
-                  <div className="mt-4 flex flex-col space-y-6 text-hoverColor">
-                    <Label htmlFor="terms" className="flex w-full space-x-4  ">
-                      <span className="inline-block w-[60%]">Name :</span>
-                      <span className="inline-block w-full">
-                        {lead?.ownername}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[60%]">Email :</span>
-                      <span className="inline-block w-full">
-                        {lead?.owneremail}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[60%]">Phone :</span>
-                      <span className="inline-block w-full">
-                        {lead?.ownerphoneno}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[60%]">Alternate :</span>
-                      <span className="inline-block w-full">
-                        {lead?.alternateno
-                          ? lead.alternateno
-                          : lead?.ownerphoneno}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[60%]">
-                        Address Type :
-                      </span>
-                      <span className="inline-block w-full">Home</span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[60%]">
-                        Main Address :
-                      </span>
-                      <span className="inline-block w-full leading-6">
-                        {lead?.addresshome}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[60%]">Pincode :</span>
-                      <span className="inline-block w-full">
-                        {lead?.pincode}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[60%]">City :</span>
-                      <span className="inline-block w-full"> {lead?.city}</span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[60%]">Payment :</span>
-                      <span className="inline-block w-full">
-                        {lead?.payment}
-                      </span>
-                    </Label>
-                  </div>
-                  <div>
-                    <div>
-                      <VendorDocuments />
-                    </div>
-                    <div className="flex  items-center gap-8">
-                      <div>
-                        <Button
-                          onClick={ShowProgress}
-                          className=" !h-7 rounded-none !bg-[#82C43C] px-8 !text-xs"
-                        >
-                          Approved
-                        </Button>
-                      </div>
-                      <div>
-                        <Button
-                          onClick={ShowProgress}
-                          className=" !h-7 rounded-none !bg-[#FC5A5A] px-8 !text-xs"
-                        >
-                          Reject
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
+
+                <div className="flex justify-center">
+                  <TabelPagination />
                 </div>
               </div>
+              <ExtraInfo lead={lead} />
             </div>
 
             <LeadLogs />
-            <div className="flex justify-center">
-              <TabelPagination />
-            </div>
           </div>
         </ScrollArea>
       </SheetContent>
     </Sheet>
   );
 }
+
+const ExtraInfo = (lead: any) => {
+  return (
+    <div className="h-max w-[45%] space-y-4">
+      <div className="h-max w-full bg-tertiaryBackground px-6 py-4">
+        <div className="my-4 flex flex-col space-y-6 text-hoverColor">
+          <Label htmlFor="terms" className="flex w-full space-x-4  ">
+            <span className="inline-block w-[80%]">Quoted Price :</span>
+            <span className="inline-block w-full">
+              {lead.deviceoriginalprice}
+            </span>
+          </Label>
+
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[80%]">Requote Price :</span>
+            <span className="inline-block w-full">
+              {lead.devicegeneratedprice}/
+            </span>
+          </Label>
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[80%]">Final Price :</span>
+            <span className="inline-block w-full">
+              {lead.devicefinalprice}/
+            </span>
+          </Label>
+        </div>
+      </div>
+      <div className="h-max w-full overflow-y-auto bg-tertiaryBackground  px-6 py-4">
+        <div className="mt-4 flex flex-col space-y-6 text-hoverColor">
+          <Label htmlFor="terms" className="flex w-full space-x-4  ">
+            <span className="inline-block w-[60%]">Name :</span>
+            <span className="inline-block w-full">{lead.ownername}</span>
+          </Label>
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[60%]">Email :</span>
+            <span className="inline-block w-full">{lead.owneremail}</span>
+          </Label>
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[60%]">Phone :</span>
+            <span className="inline-block w-full">{lead.owneraddress}</span>
+          </Label>
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[60%]">Alternate :</span>
+            <span className="inline-block w-full">919767774963</span>
+          </Label>
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[60%]">Address Type :</span>
+            <span className="inline-block w-full">Home</span>
+          </Label>
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[60%]">Main Address :</span>
+            <span className="inline-block w-full leading-6">
+              {lead.owneraddress}
+            </span>
+          </Label>
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[60%]">Pincode :</span>
+            <span className="inline-block w-full">{lead.pincode}</span>
+          </Label>
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[60%]">City :</span>
+            <span className="inline-block w-full">{lead.city}</span>
+          </Label>
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[60%]">Payment :</span>
+            <span className="inline-block w-full">{lead.paymentmode}</span>
+          </Label>
+        </div>
+      </div>
+    </div>
+  );
+};

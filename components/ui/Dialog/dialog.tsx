@@ -10,7 +10,6 @@ import {
 
 export interface DialogInterface {
   children: ReactNode;
-  className: string;
   title: string;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -18,7 +17,6 @@ export interface DialogInterface {
 
 const DialogPopup = ({
   children,
-  className,
   isOpen,
   setIsOpen,
   title,
