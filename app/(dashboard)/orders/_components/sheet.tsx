@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { AssignDialog } from "./AssignDialog";
 import { useRouter } from "next/navigation";
+import { ReschedulePickup } from "./ReschedulePickup";
 
 type OrderDetails = {
   success: boolean;
@@ -77,6 +78,26 @@ export function SheetDemo({
   const [progress, setProgress] = useState(13);
   const [isLoading, setIsLoading] = useState(false);
   const [orderDetails, setOrderDetails] = useState<OrderDetails>();
+  const router = useRouter();
+  const FailedLead = async () => {
+    const res = await fetch(`/api/failedLead`, {
+      method: "POST",
+      body: JSON.stringify({
+        vendorid: orderDetails.myBookings.assignedvendor,
+        creditpoints: orderDetails.myBookings.creditpoints,
+        label: "deduct",
+        description: `Refund for ${orderDetails.myBookings.devicename}`,
+        leadid: SelectedRow.lead,
+        statustype: "Cn",
+        statuscode: "Cancelled by Cashkr",
+      }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      ShowProgress();
+      router.refresh();
+    }
+  };
 
   useEffect(() => {
     (async function () {
@@ -107,14 +128,12 @@ export function SheetDemo({
     setTimeout(() => setIsLoading(false), 1000);
   };
 
-  
-
   return (
     <Sheet open={isOpen}>
       <Progress
         hidden={!isLoading}
         value={progress}
-        className=" absolute  right-0 -top-6 z-[80] h-[2px]"
+        className=" absolute  -top-6 right-0 z-[80] h-[2px]"
       />
       <SheetContent
         className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
@@ -207,21 +226,29 @@ export function SheetDemo({
                   <div className="flex w-full items-center space-x-4 py-8">
                     <div>
                       <AssignDialog
-                        isAssigned={orderDetails.myBookings.assignedvendor!==null}
-                        data={{creditpoints:orderDetails.myBookings.creditpoints,leadid:orderDetails.myBookings.id}}
+                        isAssigned={
+                          orderDetails.myBookings.assignedvendor !== null
+                        }
+                        data={{
+                          creditpoints: orderDetails.myBookings.creditpoints,
+                          leadid: orderDetails.myBookings.id,
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <ReschedulePickup
+                        data={{
+                          creditpoints: orderDetails.myBookings.creditpoints,
+                          leadid: orderDetails.myBookings.id,
+                        }}
                       />
                     </div>
                     <div>
                       <Button
-                        onClick={ShowProgress}
-                        className=" !h-max rounded-none !bg-[#FF974A] px-8"
-                      >
-                        Reschedule
-                      </Button>
-                    </div>
-                    <div>
-                      <Button
-                        onClick={ShowProgress}
+                        disabled={orderDetails.myBookings.status !== null}
+                        onClick={() => {
+                          FailedLead();
+                        }}
                         className=" !h-max rounded-none !bg-[#FC5A5A] px-8"
                       >
                         Fail Lead

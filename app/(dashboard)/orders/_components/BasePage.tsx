@@ -45,7 +45,6 @@ const BasePage = () => {
   }>({
     lead: "",
     devicetype: "",
-
   });
   console.log(invoices);
   useEffect(() => {
@@ -61,37 +60,29 @@ const BasePage = () => {
       console.log(data);
     })();
   }, []);
-console.log(invoices)
+  console.log(invoices);
   return (
     <div className=" w-full gap-4 space-y-6 px-8">
       <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-
-        {
-          invoices &&
+        {invoices && (
           <PrimaryTable
-          SetSelectedRow={SetSelectedRow}
-          setIsOpen={setIsOpen}
-          invoices={invoices.orders}
-        />
-        }
+            SetSelectedRow={SetSelectedRow}
+            setIsOpen={setIsOpen}
+            invoices={invoices.orders}
+          />
+        )}
       </div>
-      {
-        invoices &&
-    
-      <CardContainer
-        cardsValues={{
-          completedOrdersCount: invoices.completedOrdersCount,
-          assignedOrdersCount: invoices.assignedOrdersCount,
-          availableOrdersCount: invoices.availableOrdersCount,
-        }}
-      />
-    }
+      {invoices && (
+        <CardContainer
+          cardsValues={{
+            completedOrdersCount: invoices.completedOrdersCount,
+            assignedOrdersCount: invoices.assignedOrdersCount,
+            availableOrdersCount: invoices.availableOrdersCount,
+          }}
+        />
+      )}
       <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-      
-        {
-          invoices &&
-          <SecondaryTable leads={invoices.leads} />
-        }
+        {invoices && <SecondaryTable leads={invoices.leads} />}
       </div>
 
       <SheetDemo
