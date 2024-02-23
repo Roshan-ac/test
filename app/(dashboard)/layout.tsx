@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function DashboardLayout({
   children,
@@ -9,6 +10,7 @@ export default function DashboardLayout({
 }) {
   return (
     <main>
+      <Toaster />
       <Navbar />
       <div className="flex w-full justify-end">
         <Sidebar />

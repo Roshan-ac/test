@@ -11,46 +11,23 @@ import {
 import { SelectVendor } from "./SelectVendor";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import  {PickupNewDateTime}  from "./PickupNewDateTime";
+import { FormSchema, PickupNewDateTime } from "./PickupNewDateTime";
+import { z } from "zod";
 type AssignData = {
   leadid: string;
   creditpoints: number;
+  deviceType: string;
 };
-export function ReschedulePickup({
-data,
-}: {
-  data: AssignData;
-}) {
-  const [vendorId, setVendorId] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const handleAssign = async (vendorId: string) => {
-    console.log(vendorId);
-    setIsLoading(true);
-    const res = await fetch(`api/reschedulePickup`, {
-      method: "POST",
-      body: JSON.stringify({
-        leadid: "LD1707722461",
-        newPickupDate: "2024/02/15",
-        newPickupTime: "05:00 PM - 08:00 PM",
-        deviceType: "Console",
-      }),
-    });
 
-    const result = await res.json();
-    if (result.success) {
-      setIsLoading(false);
-      router.refresh();
-    } else {
-    }
-    // location.reload()
-  };
+export function ReschedulePickup({
+  ReschedulePickupDateTime,
+}: {
+  ReschedulePickupDateTime: (data: z.infer<typeof FormSchema>) => {};
+}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          className=" !h-max rounded-none !bg-[#FF974A] px-8"
-        >
+        <Button className=" !h-max rounded-none !bg-[#FF974A] px-8">
           Reschedule
         </Button>
       </DialogTrigger>
@@ -59,7 +36,9 @@ data,
           <DialogTitle>Reschedule Pickup</DialogTitle>
         </DialogHeader>
         <div className="">
-          <PickupNewDateTime />
+          <PickupNewDateTime
+            ReschedulePickupDateTime={ReschedulePickupDateTime}
+          />
         </div>
       </DialogContent>
     </Dialog>

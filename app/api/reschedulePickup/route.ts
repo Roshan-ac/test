@@ -1,9 +1,9 @@
 const { BACKEND_API } = process.env;
 
 const POST = async (req: any) => {
-  const { leadid, vendorid, newPickupDate, newPickupTime, deviceType } =
+  const { leadid, newPickupDate, newPickupTime, deviceType } =
     await req.json();
-  console.log(leadid, vendorid, newPickupDate, newPickupTime, deviceType);
+  console.log(leadid, newPickupDate, newPickupTime, deviceType);
   try {
     const res = await fetch(`${BACKEND_API}/reschedulePickupCustomer`, {
       method: "POST",

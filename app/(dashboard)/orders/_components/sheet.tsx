@@ -10,7 +10,9 @@ import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { AssignDialog } from "./AssignDialog";
 import { useRouter } from "next/navigation";
 import { ReschedulePickup } from "./ReschedulePickup";
-
+import { FormSchema } from "./PickupNewDateTime";
+import { z } from "zod";
+import { toast } from "@/components/ui/use-toast";
 type OrderDetails = {
   success: boolean;
   myBookings: {
@@ -75,11 +77,12 @@ export function SheetDemo({
     devicetype: string;
   };
 }) {
-  const [progress, setProgress] = useState(13);
+  const [progress, setProgress] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [orderDetails, setOrderDetails] = useState<OrderDetails>();
   const router = useRouter();
   const FailedLead = async () => {
+    ShowProgress();
     const res = await fetch(`/api/failedLead`, {
       method: "POST",
       body: JSON.stringify({
@@ -94,10 +97,50 @@ export function SheetDemo({
     });
     const data = await res.json();
     if (data.success) {
-      ShowProgress();
+      toast({
+        title: "Success",
+        description: (
+          <p className=" text-green-500">Lead status successfully changed</p>
+        ),
+      });
       router.refresh();
     }
   };
+
+  async function ReschedulePickupDateTime(data: z.infer<typeof FormSchema>) {
+    ShowProgress();
+    const res = await fetch(`api/reschedulePickup`, {
+      method: "POST",
+      body: JSON.stringify({
+        leadid: SelectedRow.lead,
+        newPickupDate: data.newpickupdate.toLocaleDateString("en-GB"),
+        newPickupTime: data.newpickuptime,
+        deviceType: SelectedRow.devicetype,
+      }),
+    });
+    const result = await res.json();
+    if (result.success) {
+      ShowProgress();
+      toast({
+        title: "Success",
+        description: (
+          <p className=" text-green-500">
+            Pickup Date and Time succesfully updated
+          </p>
+        ),
+      });
+      router.refresh();
+    } else {
+      toast({
+        title: "Unable to Update",
+        description: (
+          <p className=" text-[#dd9999]">
+            We are unable to update pickup time and date at the moment.
+          </p>
+        ),
+      });
+    }
+  }
 
   useEffect(() => {
     (async function () {
@@ -113,17 +156,21 @@ export function SheetDemo({
       );
       const orderDetails = await res.json();
       console.log(orderDetails);
+
       setOrderDetails(orderDetails);
       setIsLoading(false);
       console.log(orderDetails.myBookings);
     })();
-  }, [SelectedRow]);
+  }, [SelectedRow, isLoading]);
 
   const ShowProgress = () => {
     setIsLoading(true);
-    setProgress(20);
-    setTimeout(() => setProgress(66), 500);
-    setTimeout(() => setProgress(78), 500);
+    setProgress(8);
+    setTimeout(() => setProgress(32), 500);
+    setTimeout(() => setProgress(52), 500);
+    setTimeout(() => setProgress(67), 500);
+    setTimeout(() => setProgress(79), 500);
+    setTimeout(() => setProgress(94), 500);
     setTimeout(() => setProgress(100), 500);
     setTimeout(() => setIsLoading(false), 1000);
   };
@@ -237,10 +284,7 @@ export function SheetDemo({
                     </div>
                     <div>
                       <ReschedulePickup
-                        data={{
-                          creditpoints: orderDetails.myBookings.creditpoints,
-                          leadid: orderDetails.myBookings.id,
-                        }}
+                        ReschedulePickupDateTime={ReschedulePickupDateTime}
                       />
                     </div>
                     <div>

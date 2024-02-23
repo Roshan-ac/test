@@ -2,7 +2,7 @@ const { BACKEND_API } = process.env;
 
 const GET = async () => {
   try {
-    const res = await fetch(`${BACKEND_API}/getAllOrders?page=3`, {
+    const res = await fetch(`${BACKEND_API}/getAllOrders?page=2`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

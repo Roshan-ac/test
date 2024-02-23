@@ -32,36 +32,42 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const FormSchema = z.object({
-  dob: z.date({
+export const FormSchema = z.object({
+  newpickupdate: z.date({
     required_error: "A new pickup date is required.",
+  }),
+  newpickuptime: z.string({
+    required_error: "A new pickup time is required.",
   }),
 });
 
-export function PickupNewDateTime() {
+export function PickupNewDateTime({
+  ReschedulePickupDateTime,
+}: {
+  ReschedulePickupDateTime: (data: z.infer<typeof FormSchema>) => {};
+}) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState<boolean>();
+  const router = useRouter();
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setIsLoading(true);
+    const res = await ReschedulePickupDateTime(data);
+    setIsLoading(false);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="dob"
+          name="newpickupdate"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>New Pickup Date</FormLabel>
@@ -95,9 +101,19 @@ export function PickupNewDateTime() {
                   />
                 </PopoverContent>
               </Popover>
+              <FormDescription></FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="newpickuptime"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
               <FormLabel>New Pickup Time</FormLabel>
-              <Select>
-                <SelectTrigger className="w-full">
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger className="flex items-center justify-between border border-neutral-200 bg-white hover:bg-neutral-100 hover:text-neutral-900 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 px-4 py-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors !focus-visible:outline-none  focus-visible:ring-neutral-950  disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300">
                   <SelectValue placeholder="Select a pickuptime" />
                 </SelectTrigger>
                 <SelectContent>
@@ -119,7 +135,7 @@ export function PickupNewDateTime() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button disabled={isLoading} className="w-full font-semibold" type="submit">{isLoading ? "Processing" : "Update"}</Button>
       </form>
     </Form>
   );
