@@ -85,7 +85,7 @@ export function SheetDemo({
   varient: "leads" | "orders" | "failed" | "vendors";
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   SelectedRow: {
-    lead: string;
+    lead: number;
     devicetype: deviceType;
   };
 }) {

@@ -4,6 +4,7 @@ import { PrimaryTable } from "@/components/Internals/PrimaryTable";
 import SecondaryTable from "./SecondaryTable";
 import { CardContainer } from "./CardContainer";
 import { SheetDemo } from "./sheet";
+import { deviceType } from "@/interfaces";
 
 export interface InvoiceInterface {
   success: boolean;
@@ -40,12 +41,9 @@ const BasePage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [invoices, setInvoices] = useState<InvoiceInterface>();
   const [SelectedRow, SetSelectedRow] = useState<{
-    lead: string;
-    devicetype: string;
-  }>({
-    lead: "",
-    devicetype: "",
-  });
+    lead: number;
+    devicetype: deviceType;
+  }>();
   console.log(invoices);
   useEffect(() => {
     (async function () {
