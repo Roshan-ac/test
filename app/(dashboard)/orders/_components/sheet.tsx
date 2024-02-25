@@ -457,21 +457,25 @@ export function SheetDemo({
                     <h1>Leads Logs :</h1>
                   </div>
                   <div className="my-6 flex flex-col space-y-6">
-                    {LogDetails.data.map((item) => (
-                      <Label
-                        key={item.id}
-                        htmlFor="terms"
-                        className=" grid w-full grid-cols-5 items-center"
-                      >
-                        <p className="inline-block min-w-max">
-                          {" "}
-                          {item.time} {item.date} :
-                        </p>
-                        <p className=" col-span-4  w-full  whitespace-pre-wrap text-left leading-6">
-                          {item.description}
-                        </p>
-                      </Label>
-                    ))}
+                    {LogDetails && (
+                      <>
+                        {LogDetails.data.map((item) => (
+                          <Label
+                            key={item.id}
+                            htmlFor="terms"
+                            className=" grid w-full grid-cols-5 items-center"
+                          >
+                            <p className="inline-block min-w-max">
+                              {" "}
+                              {item.time} {item.date} :
+                            </p>
+                            <p className=" col-span-4  w-full  whitespace-pre-wrap text-left leading-6">
+                              {item.description}
+                            </p>
+                          </Label>
+                        ))}
+                      </>
+                    )}
                   </div>
                 </div>
                 <div className="flex justify-center">
