@@ -13,25 +13,27 @@ import { ReschedulePickup } from "./ReschedulePickup";
 import { FormSchema } from "./PickupNewDateTime";
 import { z } from "zod";
 import { toast } from "@/components/ui/use-toast";
+import EvaluationReport from "@/components/EvaluateReport/EvaluateReport";
+import { deviceType } from "@/interfaces";
 type OrderDetails = {
   success: boolean;
   myBookings: {
-    id: string;
+    id: number;
     timestamp: string;
     devicename: string;
     devicebrandname: string;
     deviceimg: string;
-    devicetype: string;
-    deviceoriginalprice: string;
-    devicegeneratedprice: string;
-    devicefinalprice: number;
-    deviceimei: number;
+    devicetype: deviceType;
+    deviceoriginalprice: number;
+    devicegeneratedprice: number;
+    devicefinalprice: string;
+    deviceimei: string;
     ownername: string;
     owneraddress: string;
     city: string;
     ownerphoneno: string;
     owneremail: string;
-    pincode: string;
+    pincode: number;
     paymentmode: string;
     ordertype: string;
     assignedvendor: string;
@@ -41,7 +43,7 @@ type OrderDetails = {
     pickupdate: string;
     pickuptime: string;
     upino: string;
-    bankacno: number;
+    bankacno: string;
     bankbeneficiaryname: string;
     bankifsccode: string;
     bankname: string;
@@ -56,12 +58,22 @@ type OrderDetails = {
     physicalcondition: string[];
     accessoriesunavailable: string[];
     screencondition: string[];
-    devicestorage: string[];
-    deviceram: string[];
-    warrantystatus: string[];
-    bodycondition: string[];
-    deviceclassid: string[];
+    devicestorage: string;
+    deviceram: string;
+    warrantystatus: string;
+    bodycondition: string;
+    deviceclassid: number;
   };
+};
+
+type LogDetails = {
+  success: boolean;
+  data: {
+    id: number;
+    date: string;
+    time: string;
+    description: string;
+  }[];
 };
 
 export function SheetDemo({
@@ -74,12 +86,13 @@ export function SheetDemo({
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   SelectedRow: {
     lead: string;
-    devicetype: string;
+    devicetype: deviceType;
   };
 }) {
   const [progress, setProgress] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [orderDetails, setOrderDetails] = useState<OrderDetails>();
+  const [LogDetails, setLogDetails] = useState<LogDetails>();
   const router = useRouter();
   const FailedLead = async () => {
     ShowProgress();
@@ -144,7 +157,6 @@ export function SheetDemo({
 
   useEffect(() => {
     (async function () {
-      console.log(SelectedRow.devicetype);
       const res = await fetch(
         `/api/getFullBookings/${SelectedRow.devicetype}`,
         {
@@ -156,10 +168,18 @@ export function SheetDemo({
       );
       const orderDetails = await res.json();
       console.log(orderDetails);
-
       setOrderDetails(orderDetails);
-      setIsLoading(false);
       console.log(orderDetails.myBookings);
+      const res2 = await fetch(`/api/getLeadLogs`, {
+        method: "POST",
+        body: JSON.stringify({
+          leadId: SelectedRow.lead,
+        }),
+      });
+      const LeadLogs = await res2.json();
+      console.log(LeadLogs);
+      setLogDetails(LeadLogs);
+      setIsLoading(false);
     })();
   }, [SelectedRow, isLoading]);
 
@@ -211,7 +231,7 @@ export function SheetDemo({
                         {orderDetails.myBookings.pickuptime}
                       </span>
                     </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+                    {/* <Label htmlFor="terms" className=" flex w-full space-x-4  ">
                       <span className="inline-block w-[40%]">Warranty :</span>
                       <span className="inline-block w-full">
                         {orderDetails.myBookings.warrantystatus}
@@ -241,8 +261,14 @@ export function SheetDemo({
                       <span className="inline-block w-[40%]">Issues :</span>
                       <span className="inline-block w-full">
                         {/* {myBookings.} */}
-                      </span>
-                    </Label>
+                    {/* </span> */}
+                    {/* </Label> */}
+                    {SelectedRow.lead && (
+                      <EvaluationReport
+                        formData={orderDetails.myBookings}
+                        devicetype={SelectedRow.devicetype}
+                      />
+                    )}
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
                       <span className="inline-block w-[40%]">Vendor :</span>
                       <span className="inline-block w-full">
@@ -431,36 +457,21 @@ export function SheetDemo({
                     <h1>Leads Logs :</h1>
                   </div>
                   <div className="my-6 flex flex-col space-y-6">
-                    <Label
-                      htmlFor="terms"
-                      className=" grid w-full grid-cols-5 items-center"
-                    >
-                      <p className="inline-block min-w-max">
-                        {" "}
-                        11:12:24 15/09/2023 :
-                      </p>
-                      <p className=" col-span-4  w-full  whitespace-pre-wrap text-left leading-6">
-                        Called Customer - Told To Reschedule
-                      </p>
-                    </Label>
-                    <Label
-                      htmlFor="terms"
-                      className=" grid w-full grid-cols-5 items-center"
-                    >
-                      <p className="inline-block min-w-max">
-                        {" "}
-                        11:12:24 15/09/2023 :
-                      </p>
-                      <p className=" col-span-4  w-full  whitespace-pre-wrap text-left leading-6">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Neque exercitationem, pariatur laborum
-                        reprehenderit iure in a consequuntur, fuga aut magni
-                        minus porro delectus dignissimos consectetur maxime
-                        aperiam vero. Quae mollitia, asperiores beatae ipsum
-                        debitis quos alias doloribus accusantium laudantium
-                        molestiae ad voluptatibus aliquam id adipisci.
-                      </p>
-                    </Label>
+                    {LogDetails.data.map((item) => (
+                      <Label
+                        key={item.id}
+                        htmlFor="terms"
+                        className=" grid w-full grid-cols-5 items-center"
+                      >
+                        <p className="inline-block min-w-max">
+                          {" "}
+                          {item.time} {item.date} :
+                        </p>
+                        <p className=" col-span-4  w-full  whitespace-pre-wrap text-left leading-6">
+                          {item.description}
+                        </p>
+                      </Label>
+                    ))}
                   </div>
                 </div>
                 <div className="flex justify-center">

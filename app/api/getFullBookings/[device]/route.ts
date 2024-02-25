@@ -2,6 +2,7 @@ const { BACKEND_API } = process.env;
 const POST = async (req: any, device: { params: { device: string } }) => {
   const { leadId } = await req.json();
   const devicetype = device.params.device;
+  console.log(devicetype, leadId);
   try {
     const response = await fetch(
       `${BACKEND_API}/get${devicetype}FullBookingDetails`,
@@ -16,7 +17,8 @@ const POST = async (req: any, device: { params: { device: string } }) => {
         body: JSON.stringify({
           leadid: leadId,
         }),
-      }
+        cache: "no-cache",
+      },
     );
 
     if (!response.ok) {
@@ -24,10 +26,9 @@ const POST = async (req: any, device: { params: { device: string } }) => {
     }
 
     const data = await response.json();
-  
     return new Response(JSON.stringify(data));
   } catch (error) {
-    // console.error(error);
+    console.error(error);
     return new Response(JSON.stringify(error));
   }
 };

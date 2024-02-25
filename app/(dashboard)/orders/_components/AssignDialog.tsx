@@ -11,10 +11,12 @@ import {
 import { SelectVendor } from "./SelectVendor";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
 type AssignData = {
-  leadid: string;
+  leadid: number;
   creditpoints: number;
 };
+
 export function AssignDialog({
   isAssigned,
   data,
@@ -42,8 +44,8 @@ export function AssignDialog({
       setIsLoading(false);
       router.refresh();
     } else {
+      // location.reload()
     }
-    // location.reload()
   };
   return (
     <Dialog>
