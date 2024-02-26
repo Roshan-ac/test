@@ -8,33 +8,10 @@ import { deviceType } from "@/interfaces";
 
 export interface InvoiceInterface {
   success: boolean;
-  orders: {
-    id: string;
-    timestamp: string;
-    devicename: string;
-    city: string | null;
-    devicetype: string;
-    status:
-      | "Generated"
-      | "Cn-Cancelled by Customer"
-      | "Failed"
-      | "Out For Pickup"
-      | "Assigned"
-      | "Completed"
-      | null;
-  }[];
-  leads: {
-    id: string;
-    pickupdate: string;
-    devicename: string;
-    pickuptime: string;
-    devicetype: string;
-    status: string | null;
-    assignedvendor: string;
-  }[];
-  completedOrdersCount: number;
-  availableOrdersCount: number;
-  assignedOrdersCount: number;
+  leads: [any];
+  rejectedLeads: number;
+  acceptedLeads: number;
+  pendingLeads: number;
 }
 
 const BasePage = () => {
@@ -47,7 +24,7 @@ const BasePage = () => {
   console.log(invoices);
   useEffect(() => {
     (async function () {
-      const res = await fetch("/api/getallorders", {
+      const res = await fetch("/api/getAllFailedLeads", {
         method: "GET",
       });
       if (!res.ok) {
@@ -66,26 +43,23 @@ const BasePage = () => {
           <PrimaryTable
             SetSelectedRow={SetSelectedRow}
             setIsOpen={setIsOpen}
-            invoices={invoices.orders}
+            invoices={invoices.leads}
           />
         )}
       </div>
       {invoices && (
         <CardContainer
           cardsValues={{
-            completedOrdersCount: invoices.completedOrdersCount,
-            assignedOrdersCount: invoices.assignedOrdersCount,
-            availableOrdersCount: invoices.availableOrdersCount,
+            acceptedLeads: invoices.acceptedLeads,
+            pendingLeads: invoices.pendingLeads,
+            rejectedLeads: invoices.rejectedLeads,
           }}
         />
       )}
-      <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-        {invoices && <SecondaryTable leads={invoices.leads} />}
-      </div>
       {SelectedRow && (
         <SheetDemo
           SelectedRow={SelectedRow}
-          varient={"orders"}
+          varient={"failed"}
           setIsOpen={setIsOpen}
           isOpen={isOpen}
         />
