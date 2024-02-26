@@ -109,7 +109,7 @@ export function SheetDemo({
       }),
     });
     const data = await res.json();
-    console.log(data)
+    console.log(data);
     if (data.success) {
       toast({
         title: "Success",
@@ -155,6 +155,38 @@ export function SheetDemo({
       });
     }
   }
+
+  const handleAssign = async (vendorId: string) => {
+    setIsLoading(true);
+    ShowProgress();
+    const res = await fetch(`api/assignVendor`, {
+      method: "POST",
+      body: JSON.stringify({
+        vendorid: vendorId,
+        creditpoints: orderDetails.myBookings.creditpoints,
+        leadid: orderDetails.myBookings.id,
+      }),
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      ShowProgress();
+      toast({
+        title: "Success",
+        description: (
+          <p className=" text-green-500">Vendor is successfully assigned</p>
+        ),
+      });
+      router.refresh();
+    } else {
+      toast({
+        title: "Unable to Assign",
+        description: (
+          <p className=" text-[#dd9999]">We are unable to assign vendor</p>
+        ),
+      });
+    }
+  };
 
   useEffect(() => {
     (async function () {
@@ -280,7 +312,6 @@ export function SheetDemo({
                         devicetype={SelectedRow.devicetype}
                       />
                     )}
-            
 
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
                       <span className="inline-block w-[40%]">Processor :</span>
@@ -308,10 +339,7 @@ export function SheetDemo({
                         isAssigned={
                           orderDetails.myBookings.assignedvendor !== null
                         }
-                        data={{
-                          creditpoints: orderDetails.myBookings.creditpoints,
-                          leadid: orderDetails.myBookings.id,
-                        }}
+                        handleAssign={handleAssign}
                       />
                     </div>
                     <div>
@@ -321,7 +349,10 @@ export function SheetDemo({
                     </div>
                     <div>
                       <Button
-                        disabled={orderDetails.myBookings.status !== null}
+                        disabled={
+                          orderDetails.myBookings.assignedvendor == null ||
+                          orderDetails.myBookings.status !== null
+                        }
                         onClick={() => {
                           FailedLead();
                         }}

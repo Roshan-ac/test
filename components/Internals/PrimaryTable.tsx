@@ -56,7 +56,6 @@ export function PrimaryTable({
             invoices.map((invoice, index) => (
               <TableRow
                 onClick={() => {
-                  console.log(invoice.id,invoice.devicetype)
                   SetSelectedRow({
                     lead: invoice.id,
                     devicetype: invoice.devicetype,
