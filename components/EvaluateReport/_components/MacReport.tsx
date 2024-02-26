@@ -37,7 +37,7 @@ const MacReport = ({ formData }: { formData: MacFullBookingsInterface }) => {
         <ul className=" w-full">
           <>
             {physicalcondition.map((item, index) => (
-              <span className="caption text-surface-text text-sm">
+              <span key={index} className="caption text-surface-text text-sm">
                 {item == "P1"
                   ? "Spots on display"
                   : item == "P2"

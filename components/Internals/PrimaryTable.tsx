@@ -12,6 +12,23 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { InvoiceInterface } from "./SectionOne";
 import { parseISO, format } from "date-fns";
 
+type OrdersData = {
+    id: string;
+    timestamp: string;
+    devicename: string;
+    city: string | null;
+    devicetype: string;
+    status:
+      | "Generated"
+      | "Cn-Cancelled by Customer"
+      | "Failed"
+      | "Out For Pickup"
+      | "Assigned"
+      | "Completed"
+      | null;
+  
+}
+
 export function PrimaryTable({
   setIsOpen,
   SetSelectedRow,
@@ -19,7 +36,7 @@ export function PrimaryTable({
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   SetSelectedRow: Dispatch<SetStateAction<object>>;
-  invoices: [any];
+  invoices: OrdersData[];
 }) {
   return (
     <ScrollArea className="relative h-[70vh] w-full rounded-md">
