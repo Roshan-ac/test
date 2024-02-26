@@ -8,32 +8,28 @@ import {
 } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { parseISO, format } from 'date-fns';
+import { parseISO, format } from "date-fns";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
+import { InvoiceInterface } from "./BasePage";
 
-type ordersData = {
+type leads = {
   id: string;
-  timestamp: string;
+  pickupdate: string;
   devicename: string;
-  city: string | null;
+  pickuptime: string;
   devicetype: string;
-  status:
-    | "Generated"
-    | "Cn-Cancelled by Customer"
-    | "Failed"
-    | "Out For Pickup"
-    | "Assigned"
-    | "Completed"
-    | null;
+  status: string;
+  assignedvendor: string;
 }
-
 
 export function PrimaryTable({
   setIsOpen,
   invoices,
+  SetSelectedRow
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  invoices: ordersData[];
+  invoices: leads[];
+  SetSelectedRow: Dispatch<SetStateAction<object>>;
 }) {
   return (
     <ScrollArea className="relative h-[70vh] w-full rounded-md">
@@ -53,20 +49,25 @@ export function PrimaryTable({
           {invoices &&
             invoices.map((invoice, index) => (
               <TableRow
-                onClick={() => {
-                  setIsOpen((prev) => !prev);
-                }}
+              onClick={() => {
+                console.log(invoice.id,invoice.devicetype)
+                SetSelectedRow({
+                  lead: invoice.id,
+                  devicetype: invoice.devicetype,
+                });
+                setIsOpen((prev) => !prev);
+              }}
                 className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
                 key={index}
               >
                 <TableCell className="border-r border-r-tableSeperator">
-                  <Date dateString={invoice.timestamp}/>
+                  {/* <Date dateString={invoice.timestamp}/> */}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
-                  {invoice.devicetype}
+                  {invoice.assignedvendor}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
-                  {invoice.city}
+                  {invoice.devicename}
                 </TableCell>
                 <TableCell className="flex justify-center border-r  border-r-tableSeperator">
                   <span className="h-max w-max rounded-[18px] bg-purple-600 p-1 px-4 text-center !text-white">
@@ -76,7 +77,7 @@ export function PrimaryTable({
                 <TableCell className="">
                   <span
                     className={`inline-block h-max min-w-[100px] rounded-[18px] px-4 text-center  ${
-                      invoice.status == "Generated" || invoice.status== null
+                      invoice.status == "Generated" || invoice.status == null
                         ? "bg-white"
                         : invoice.status == "Cn-Cancelled by Customer"
                           ? "bg-[#FFA0A0]"
@@ -90,7 +91,7 @@ export function PrimaryTable({
                                   "bg-[#92B7FF]"
                     } p-1 px-2 text-black  `}
                   >
-                    {invoice.status==null?'Generated':invoice.status}
+                    {invoice.status == null ? "Generated" : invoice.status}
                   </span>
                 </TableCell>
               </TableRow>
@@ -104,9 +105,7 @@ export function PrimaryTable({
   );
 }
 
-
-
-export function Date({ dateString }:{dateString:string}) {
+export function Date({ dateString }: { dateString: string }) {
   const date = parseISO(dateString);
-  return <time dateTime={dateString}>{format(date, 'LLLL d, yyyy')}</time>;
+  return <time dateTime={dateString}>{format(date, "LLLL d, yyyy")}</time>;
 }

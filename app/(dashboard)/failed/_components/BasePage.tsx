@@ -1,14 +1,23 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { PrimaryTable } from "@/components/Internals/PrimaryTable";
+
 import SecondaryTable from "./SecondaryTable";
 import { CardContainer } from "./CardContainer";
 import { SheetDemo } from "./sheet";
 import { deviceType } from "@/interfaces";
+import { PrimaryTable } from "./PrimaryTable";
 
 export interface InvoiceInterface {
   success: boolean;
-  leads: [any];
+  leads: {
+    id: string;
+    pickupdate: string;
+    devicename: string;
+    pickuptime: string;
+    devicetype: string;
+    status: string;
+    assignedvendor: string;
+  }[];
   rejectedLeads: number;
   acceptedLeads: number;
   pendingLeads: number;

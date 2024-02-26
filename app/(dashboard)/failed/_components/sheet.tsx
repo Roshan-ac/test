@@ -15,6 +15,7 @@ import { z } from "zod";
 import { toast } from "@/components/ui/use-toast";
 import EvaluationReport from "@/components/EvaluateReport/EvaluateReport";
 import { deviceType } from "@/interfaces";
+import { FailedImageGallery } from "@/components/Internals/FailedImageCarousel";
 type OrderDetails = {
   success: boolean;
   myBookings: {
@@ -94,66 +95,66 @@ export function SheetDemo({
   const [orderDetails, setOrderDetails] = useState<OrderDetails>();
   const [LogDetails, setLogDetails] = useState<LogDetails>();
   const router = useRouter();
-  const FailedLead = async () => {
-    ShowProgress();
-    const res = await fetch(`/api/failedLead`, {
-      method: "POST",
-      body: JSON.stringify({
-        vendorid: orderDetails.myBookings.assignedvendor,
-        creditpoints: orderDetails.myBookings.creditpoints,
-        label: "deduct",
-        description: `Refund for ${orderDetails.myBookings.devicename}`,
-        leadid: SelectedRow.lead,
-        statustype: "Cn",
-        statuscode: "Cancelled by Cashkr",
-      }),
-    });
-    const data = await res.json();
-    if (data.success) {
-      toast({
-        title: "Success",
-        description: (
-          <p className=" text-green-500">Lead status successfully changed</p>
-        ),
-      });
-      router.refresh();
-    }
-  };
+  // const FailedLead = async () => {
+  //   ShowProgress();
+  //   const res = await fetch(`/api/failedLead`, {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       vendorid: orderDetails.myBookings.assignedvendor,
+  //       creditpoints: orderDetails.myBookings.creditpoints,
+  //       label: "deduct",
+  //       description: `Refund for ${orderDetails.myBookings.devicename}`,
+  //       leadid: SelectedRow.lead,
+  //       statustype: "Cn",
+  //       statuscode: "Cancelled by Cashkr",
+  //     }),
+  //   });
+  //   const data = await res.json();
+  //   if (data.success) {
+  //     toast({
+  //       title: "Success",
+  //       description: (
+  //         <p className=" text-green-500">Lead status successfully changed</p>
+  //       ),
+  //     });
+  //     router.refresh();
+  //   }
+  // };
 
-  async function ReschedulePickupDateTime(data: z.infer<typeof FormSchema>) {
-    ShowProgress();
-    const res = await fetch(`api/reschedulePickup`, {
-      method: "POST",
-      body: JSON.stringify({
-        leadid: SelectedRow.lead,
-        newPickupDate: data.newpickupdate.toLocaleDateString("en-GB"),
-        newPickupTime: data.newpickuptime,
-        deviceType: SelectedRow.devicetype,
-      }),
-    });
-    const result = await res.json();
-    if (result.success) {
-      ShowProgress();
-      toast({
-        title: "Success",
-        description: (
-          <p className=" text-green-500">
-            Pickup Date and Time succesfully updated
-          </p>
-        ),
-      });
-      router.refresh();
-    } else {
-      toast({
-        title: "Unable to Update",
-        description: (
-          <p className=" text-[#dd9999]">
-            We are unable to update pickup time and date at the moment.
-          </p>
-        ),
-      });
-    }
-  }
+  // async function ReschedulePickupDateTime(data: z.infer<typeof FormSchema>) {
+  //   ShowProgress();
+  //   const res = await fetch(`api/reschedulePickup`, {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       leadid: SelectedRow.lead,
+  //       newPickupDate: data.newpickupdate.toLocaleDateString("en-GB"),
+  //       newPickupTime: data.newpickuptime,
+  //       deviceType: SelectedRow.devicetype,
+  //     }),
+  //   });
+  //   const result = await res.json();
+  //   if (result.success) {
+  //     ShowProgress();
+  //     toast({
+  //       title: "Success",
+  //       description: (
+  //         <p className=" text-green-500">
+  //           Pickup Date and Time succesfully updated
+  //         </p>
+  //       ),
+  //     });
+  //     router.refresh();
+  //   } else {
+  //     toast({
+  //       title: "Unable to Update",
+  //       description: (
+  //         <p className=" text-[#dd9999]">
+  //           We are unable to update pickup time and date at the moment.
+  //         </p>
+  //       ),
+  //     });
+  //   }
+  // }
 
   useEffect(() => {
     (async function () {
@@ -194,6 +195,31 @@ export function SheetDemo({
     setTimeout(() => setIsLoading(false), 1000);
   };
 
+  const UpdateFailedCounts = async ({ accepted, rejected, pending }) => {
+    ShowProgress();
+    setIsLoading(true);
+    const res = await fetch("api/updateFailedCounts", {
+      method: "POST",
+      cache: "no-cache",
+      body: JSON.stringify({
+        accepted: accepted,
+        rejected: rejected,
+        pending: pending,
+      }),
+    });
+
+    const result = await res.json();
+    console.log(result);
+    if (result.success) {
+      setIsLoading(false);
+      toast({
+        title: "Success",
+        description: <p className=" text-green-500">{result.message}</p>,
+      });
+      router.refresh();
+    }
+  };
+
   return (
     <Sheet open={isOpen}>
       <Progress
@@ -230,52 +256,26 @@ export function SheetDemo({
                         {orderDetails.myBookings.pickuptime}
                       </span>
                     </Label>
-                    {/* <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Warranty :</span>
-                      <span className="inline-block w-full">
-                        {orderDetails.myBookings.warrantystatus}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Screen :</span>
-                      <span className="inline-block w-full">
-                        {orderDetails.myBookings.screencondition}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Body :</span>
-                      <span className="inline-block w-full">
-                        {orderDetails.myBookings.bodycondition}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">
-                        Accessories :
-                      </span>
-                      <span className="inline-block w-full">
-                        {orderDetails.myBookings.accessoriesunavailable}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Issues :</span>
-                      <span className="inline-block w-full">
-                        {/* {myBookings.} */}
-                    {/* </span> */}
-                    {/* </Label> */}
+                    {orderDetails.myBookings.assignedvendor && (
+                      <Label
+                        htmlFor="terms"
+                        className={`flex w-full space-x-4  `}
+                      >
+                        <span className="inline-block w-[40%]">Vendor :</span>
+                        <span className="inline-block w-full">
+                          {orderDetails.myBookings.assignedvendor}
+                        </span>
+                      </Label>
+                    )}
+
                     {SelectedRow.lead && (
                       <EvaluationReport
                         formData={orderDetails.myBookings}
                         devicetype={SelectedRow.devicetype}
                       />
                     )}
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Vendor :</span>
-                      <span className="inline-block w-full">
-                        {orderDetails.myBookings.assignedvendor}
-                      </span>
-                    </Label>
 
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+                    {/* <Label htmlFor="terms" className=" flex w-full space-x-4  ">
                       <span className="inline-block w-[40%]">Processor :</span>
                       <span className="inline-block w-full">
                         CK-MO-Pun-853211703827976
@@ -292,35 +292,50 @@ export function SheetDemo({
                       <span className="inline-block w-full">
                         CK-MO-Pun-853211703827976
                       </span>
-                    </Label>
+                    </Label> */}
                   </div>
 
                   <div className="flex w-full items-center space-x-4 py-8">
                     <div>
-                      <AssignDialog
-                        isAssigned={
-                          orderDetails.myBookings.assignedvendor !== null
-                        }
-                        data={{
-                          creditpoints: orderDetails.myBookings.creditpoints,
-                          leadid: orderDetails.myBookings.id,
+                      <Button
+                        onClick={() => {
+                          UpdateFailedCounts({
+                            accepted: 0,
+                            rejected: 0,
+                            pending: 1,
+                          });
                         }}
-                      />
-                    </div>
-                    <div>
-                      <ReschedulePickup
-                        ReschedulePickupDateTime={ReschedulePickupDateTime}
-                      />
+                        className=" !h-max rounded-none !bg-[#82C43C] px-8"
+                      >
+                        Accept Fail
+                      </Button>
                     </div>
                     <div>
                       <Button
-                        disabled={orderDetails.myBookings.status !== null}
                         onClick={() => {
-                          FailedLead();
+                          UpdateFailedCounts({
+                            accepted: 1,
+                            rejected: 0,
+                            pending: 0,
+                          });
+                        }}
+                        className=" !h-max rounded-none !bg-[#FF974A] px-8"
+                      >
+                        Reverse Lead
+                      </Button>
+                    </div>
+                    <div>
+                      <Button
+                        onClick={() => {
+                          UpdateFailedCounts({
+                            accepted: 0,
+                            rejected: 1,
+                            pending: 0,
+                          });
                         }}
                         className=" !h-max rounded-none !bg-[#FC5A5A] px-8"
                       >
-                        Fail Lead
+                        Reject Fail
                       </Button>
                     </div>
                   </div>
@@ -414,7 +429,7 @@ export function SheetDemo({
                       >
                         <p className="inline-block min-w-max">Main Address :</p>
                         <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
-                          {orderDetails.myBookings.owneraddress}
+                          {/* {orderDetails.myBookings.owneraddress ??''} */}
                         </p>
                       </Label>
                       <Label
@@ -423,9 +438,9 @@ export function SheetDemo({
                       >
                         <p className="inline-block min-w-max"> Pincode :</p>
                         <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
-                          {orderDetails.myBookings.owneraddress
+                          {/* {orderDetails.myBookings.owneraddress
                             .split(", ")
-                            .pop()}
+                            .pop()} */}
                         </p>
                       </Label>
                       <Label
@@ -434,7 +449,7 @@ export function SheetDemo({
                       >
                         <p className="inline-block min-w-max"> City :</p>
                         <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
-                          {orderDetails.myBookings.owneraddress.split(", ")[5]}
+                          {/* {orderDetails.myBookings.owneraddress.split(", ")[5]} */}
                         </p>
                       </Label>
                       <Label
@@ -450,6 +465,18 @@ export function SheetDemo({
                   </div>
                 </div>
               </div>
+
+              <div>
+                <div className=" bg-tertiaryBackground text-primaryText">
+                  <h2 className=" font-secondary p-4 text-2xl font-bold">
+                    Sold Device Elsewhere
+                  </h2>
+                </div>
+                <div className="my-2 w-full">
+                  <FailedImageGallery />
+                </div>
+              </div>
+
               <div className="h-max w-full bg-tertiaryBackground pb-4">
                 <div className="p-6 text-hoverColor">
                   <div>

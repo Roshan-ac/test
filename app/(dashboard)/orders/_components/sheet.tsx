@@ -263,18 +263,24 @@ export function SheetDemo({
                         {/* {myBookings.} */}
                     {/* </span> */}
                     {/* </Label> */}
+                    {orderDetails.myBookings.assignedvendor && (
+                      <Label
+                        htmlFor="terms"
+                        className={`flex w-full space-x-4  `}
+                      >
+                        <span className="inline-block w-[40%]">Vendor :</span>
+                        <span className="inline-block w-full">
+                          {orderDetails.myBookings.assignedvendor}
+                        </span>
+                      </Label>
+                    )}
                     {SelectedRow.lead && (
                       <EvaluationReport
                         formData={orderDetails.myBookings}
                         devicetype={SelectedRow.devicetype}
                       />
                     )}
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Vendor :</span>
-                      <span className="inline-block w-full">
-                        {orderDetails.myBookings.assignedvendor}
-                      </span>
-                    </Label>
+            
 
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
                       <span className="inline-block w-[40%]">Processor :</span>

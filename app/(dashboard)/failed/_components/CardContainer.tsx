@@ -24,45 +24,7 @@ export function CardContainer({ cardsValues }: { cardsValues: cardData }) {
         <div className="flex space-x-10">
           <div>
             <Image
-              src={"/Images/Ok.svg"}
-              width={60}
-              quality={200}
-              height={60}
-              alt=""
-            />
-          </div>
-          <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">
-              {cardsValues.acceptedLeads}
-            </h1>
-            <h6 className=" text-xl text-secondaryText">Available</h6>
-          </div>
-        </div>
-      </Card>
-      <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
-        <div className="flex space-x-10">
-          <div>
-            <Image
-              src={"/Images/Refresh.svg"}
-              width={60}
-              quality={200}
-              height={60}
-              alt=""
-            />
-          </div>
-          <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">
-              {cardsValues.pendingLeads}
-            </h1>
-            <h6 className=" text-xl text-secondaryText">Completed</h6>
-          </div>
-        </div>
-      </Card>
-      <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
-        <div className="flex space-x-10">
-          <div>
-            <Image
-              src={"/Images/call.svg"}
+              src={"/Images/Cancel.svg"}
               width={60}
               quality={200}
               height={60}
@@ -73,7 +35,45 @@ export function CardContainer({ cardsValues }: { cardsValues: cardData }) {
             <h1 className=" text-5xl font-medium">
               {cardsValues.rejectedLeads}
             </h1>
-            <h6 className=" text-xl text-secondaryText">Assigned</h6>
+            <h6 className=" text-xl text-secondaryText">Rejected</h6>
+          </div>
+        </div>
+      </Card>
+      <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
+        <div className="flex space-x-10">
+          <div>
+            <Image
+              src={"/Images/Return.svg"}
+              width={60}
+              quality={200}
+              height={60}
+              alt=""
+            />
+          </div>
+          <div className="space-y-4 py-1">
+            <h1 className=" text-5xl font-medium">
+              {cardsValues.acceptedLeads}
+            </h1>
+            <h6 className=" text-xl text-secondaryText">Reversed</h6>
+          </div>
+        </div>
+      </Card>
+      <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
+        <div className="flex space-x-10">
+          <div>
+            <Image
+              src={"/Images/Clock.svg"}
+              width={60}
+              quality={200}
+              height={60}
+              alt=""
+            />
+          </div>
+          <div className="space-y-4 py-1">
+            <h1 className=" text-5xl font-medium">
+              {cardsValues.pendingLeads}
+            </h1>
+            <h6 className=" text-xl text-secondaryText">Pending</h6>
           </div>
         </div>
       </Card>
