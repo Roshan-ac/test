@@ -25,8 +25,6 @@ export function SheetDemo({
   const [progress, setProgress] = useState(13);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(lead);
-
   const ShowProgress = () => {
     setIsLoading(true);
     setProgress(20);
@@ -86,7 +84,10 @@ export function SheetDemo({
                 </div>
 
                 <div>
-                  <LeadActions />
+                  {
+                    lead &&
+                  <LeadActions leadId={lead.id} />
+                  }
                 </div>
 
                 <div className="flex justify-center">

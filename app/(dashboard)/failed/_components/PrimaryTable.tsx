@@ -20,12 +20,12 @@ type leads = {
   devicetype: string;
   status: string;
   assignedvendor: string;
-}
+};
 
 export function PrimaryTable({
   setIsOpen,
   invoices,
-  SetSelectedRow
+  SetSelectedRow,
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: leads[];
@@ -49,14 +49,14 @@ export function PrimaryTable({
           {invoices &&
             invoices.map((invoice, index) => (
               <TableRow
-              onClick={() => {
-                console.log(invoice.id,invoice.devicetype)
-                SetSelectedRow({
-                  lead: invoice.id,
-                  devicetype: invoice.devicetype,
-                });
-                setIsOpen((prev) => !prev);
-              }}
+                onClick={() => {
+                  console.log(invoice.id, invoice.devicetype);
+                  SetSelectedRow({
+                    lead: invoice.id,
+                    devicetype: invoice.devicetype,
+                  });
+                  setIsOpen((prev) => !prev);
+                }}
                 className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
                 key={index}
               >
@@ -107,5 +107,10 @@ export function PrimaryTable({
 
 export function Date({ dateString }: { dateString: string }) {
   const date = parseISO(dateString);
-  return <time dateTime={dateString}>{format(date, "LLLL d, yyyy")}</time>;
+  return (
+    <time dateTime={dateString}>
+      {format(date, "LLLL d, yyyy")}
+      {date.getTime()}
+    </time>
+  );
 }

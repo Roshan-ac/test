@@ -12,6 +12,8 @@ import {
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
+import { toast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
 
 interface DispositionInterface {
   disposition1: string;
@@ -19,9 +21,11 @@ interface DispositionInterface {
   remarks: string;
 }
 
-export function LeadActions() {
+export function LeadActions({ leadId }: { leadId: string }) {
   const { register, handleSubmit } = useForm<DispositionInterface>();
-
+  const [progress, setProgress] = React.useState(1);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const router = useRouter();
   const [select, setSelect] = React.useState<DispositionInterface>({
     disposition1: "",
     disposition2: "",
@@ -36,8 +40,42 @@ export function LeadActions() {
     setDialogOpen(true);
   }
 
-  const submitHandler = (data: DispositionInterface) => {
-    // console.log(data);
+  const submitHandler = async (data: DispositionInterface) => {
+    console.log(leadId);
+    const desposition = `${select.disposition1}-${select.disposition2}-(${data.remarks.length > 0 ? data.remarks : "no remarks"})`;
+    const res = await fetch("/api/updateDesposition", {
+      method: "POST",
+      body: JSON.stringify({
+        leadid: leadId,
+        desposition: desposition,
+      }),
+    });
+    const result = await res.json();
+    if (result.success) {
+      ShowProgress();
+      toast({
+        title: "Success",
+        description: <p className=" text-green-500">{result.message}</p>,
+      });
+      router.refresh();
+    } else {
+      toast({
+        title: "Unable to update",
+        description: <p className=" text-[#dd9999]">{result.message}</p>,
+      });
+    }
+  };
+
+  const ShowProgress = () => {
+    setIsLoading(true);
+    setProgress(8);
+    setTimeout(() => setProgress(32), 500);
+    setTimeout(() => setProgress(52), 500);
+    setTimeout(() => setProgress(67), 500);
+    setTimeout(() => setProgress(79), 500);
+    setTimeout(() => setProgress(94), 500);
+    setTimeout(() => setProgress(100), 500);
+    setTimeout(() => setIsLoading(false), 1000);
   };
 
   return (
@@ -46,9 +84,8 @@ export function LeadActions() {
         // {...register("disposition1")}
         onValueChange={(value) =>
           setSelect({
+            ...select,
             disposition1: value as string,
-            disposition2: "" as string,
-            remarks: "" as string,
           })
         }
       >
@@ -65,7 +102,14 @@ export function LeadActions() {
       </Select>
 
       {select.disposition1 === "connected" && (
-        <Select>
+        <Select
+          onValueChange={(value) =>
+            setSelect({
+              ...select,
+              disposition2: value as string,
+            })
+          }
+        >
           <SelectTrigger className="dark:!bg-primary w-full">
             <SelectValue
               {...register("disposition2")}
@@ -96,7 +140,14 @@ export function LeadActions() {
       )}
 
       {select.disposition1 === "not connected" && (
-        <Select>
+        <Select
+          onValueChange={(value) =>
+            setSelect({
+              ...select,
+              disposition2: value as string,
+            })
+          }
+        >
           <SelectTrigger className="dark:!bg-primary w-full">
             <SelectValue placeholder="Disposition 2" />
           </SelectTrigger>
@@ -161,8 +212,11 @@ export function LeadActions() {
         className="resize-none"
         {...register("remarks")}
       />
-      <Button className=" !h-7 rounded-md !bg-[#82C43C] px-8 !text-xs">
-        Update
+      <Button
+        disabled={select.disposition1 == "" || select.disposition2 == ""}
+        className=" !h-max rounded-none !bg-[#82C43C] px-8"
+      >
+        {isLoading ? "Updating" : "Update"}
       </Button>
     </form>
   );
