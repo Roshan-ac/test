@@ -19,34 +19,15 @@ type AssignData = {
 
 export function AssignDialog({
   isAssigned,
-  data,
+  handleAssign,
 }: {
   isAssigned: boolean;
-  data: AssignData;
+  handleAssign: (vendorId: string) => {};
 }) {
   const [vendorId, setVendorId] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const handleAssign = async (vendorId: string) => {
-    console.log(vendorId);
-    setIsLoading(true);
-    const res = await fetch(`api/assignVendor`, {
-      method: "POST",
-      body: JSON.stringify({
-        leadid: data.leadid,
-        vendorid: vendorId,
-        creditpoints: data.creditpoints,
-      }),
-    });
 
-    const result = await res.json();
-    if (result.success) {
-      setIsLoading(false);
-      router.refresh();
-    } else {
-      // location.reload()
-    }
-  };
   return (
     <Dialog>
       <DialogTrigger asChild>

@@ -14,6 +14,7 @@ export interface LeadInterface {
 export interface InvoiceInterface {
   id: string;
   pickupdate: string;
+  timestamp:string;
   devicename: string;
   pickuptime: string;
   devicetype: string;

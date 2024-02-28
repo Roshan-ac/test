@@ -13,6 +13,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from "react";
 import { InvoiceInterface } from "./sectionOne";
 import { SheetDemo } from "./Sheet";
+import { Date } from "../../orders/_components/PrimaryTable";
 
 export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -64,7 +65,7 @@ export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
                   key={index}
                 >
                   <TableCell className="border-r border-r-tableSeperator">
-                    {invoice.pickupdate ? invoice.pickupdate : "null"}
+                    <Date dateString={invoice.timestamp} />
                   </TableCell>
                   <TableCell className="border-r border-r-tableSeperator">
                     {invoice.devicetype}
