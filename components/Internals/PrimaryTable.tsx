@@ -23,6 +23,7 @@ type OrdersData = {
     | "Cn-Cancelled by Customer"
     | "Failed"
     | "Out For Pickup"
+    | "Cn-Cancelled by Cashkr"
     | "Assigned"
     | "Completed"
     | null;
@@ -86,7 +87,9 @@ export function PrimaryTable({
                       invoice.status == "Generated" || invoice.status == null
                         ? "bg-white"
                         : invoice.status == "Cn-Cancelled by Customer"
-                          ? "bg-[#FFA0A0]"
+                          ? "bg-[#FFA0A0] text-[#222222]"
+                        : invoice.status == "Cn-Cancelled by Cashkr"
+                          ? " bg-[#0ed380] text-[#111a1c]"
                           : invoice.status == "Failed"
                             ? "bg-[#F64848] text-white"
                             : invoice.status == "Assigned"

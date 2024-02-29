@@ -31,7 +31,7 @@ const BasePage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [invoices, setInvoices] = useState<VendorsInterface[]>();
   const [SelectedRow, SetSelectedRow] = useState<VendorsInterface>();
-  
+
   console.log(invoices);
   useEffect(() => {
     (async function () {

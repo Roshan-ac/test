@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { toast } from "@/components/ui/use-toast";
 
 interface VendorPaymentInterface {
   id: number;
@@ -76,6 +77,12 @@ const VendorPayment = () => {
     const data = await res.json();
     console.log(data);
     if ((await data.success) === true) {
+      toast({
+        title: "Success",
+        description: (
+          <p className=" text-green-500">Vendor Payements Status Changed</p>
+        ),
+      });
       router.refresh();
     }
     setIsLoading(false);

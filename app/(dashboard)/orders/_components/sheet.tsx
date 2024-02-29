@@ -94,6 +94,7 @@ export function SheetDemo({
   const [orderDetails, setOrderDetails] = useState<OrderDetails>();
   const [LogDetails, setLogDetails] = useState<LogDetails>();
   const router = useRouter();
+
   const FailedLead = async () => {
     ShowProgress();
     const res = await fetch(`/api/failedLead`, {
@@ -214,7 +215,7 @@ export function SheetDemo({
       setIsLoading(false);
     })();
   }, [SelectedRow, isLoading]);
-
+  console.log(orderDetails);
   const ShowProgress = () => {
     setIsLoading(true);
     setProgress(8);
@@ -312,25 +313,6 @@ export function SheetDemo({
                         devicetype={SelectedRow.devicetype}
                       />
                     )}
-
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Processor :</span>
-                      <span className="inline-block w-full">
-                        CK-MO-Pun-853211703827976
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Ram :</span>
-                      <span className="inline-block w-full">
-                        CK-MO-Pun-853211703827976
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Storage :</span>
-                      <span className="inline-block w-full">
-                        CK-MO-Pun-853211703827976
-                      </span>
-                    </Label>
                   </div>
 
                   <div className="flex w-full items-center space-x-4 py-8">

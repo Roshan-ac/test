@@ -17,15 +17,13 @@ import { useRouter } from "next/navigation";
 import { Dialog } from "../../../../components/ui/dialog";
 import LeadDialog from "@/app/(dashboard)/leads/_components/LeadDialog";
 
-
-interface DispositionInterface {
+export interface DispositionInterface {
   disposition1: string;
   disposition2: string;
   remarks: string;
 }
 
 export function LeadActions({ lead }: { lead: any }) {
-
   const { register, handleSubmit } = useForm<DispositionInterface>();
   const [progress, setProgress] = React.useState(1);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -80,118 +78,118 @@ export function LeadActions({ lead }: { lead: any }) {
 
   return (
     <>
-    <form onSubmit={handleSubmit(submitHandler)} className=" space-y-2 py-2">
-      <Select
-        // {...register("disposition1")}
-        onValueChange={(value) => {
-          setSelect({
-            ...select,
-            disposition1: value as string,
-          });
-          console.log(value);
-          if (value === "create lead") {
-            setDialogOpen(true);
-          }
-        }}
-      >
-        <SelectTrigger className="dark:!bg-primary w-full">
-          <SelectValue placeholder="Disposition 1" />
-        </SelectTrigger>
-        <SelectContent className="">
-          <SelectGroup {...register("disposition1")}>
-            <SelectItem value="connected">Connected</SelectItem>
-            <SelectItem value="not connected">Not Connected</SelectItem>
-            <SelectItem value="create lead">Create Lead</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-
-      {select.disposition1 === "connected" && (
+      <form onSubmit={handleSubmit(submitHandler)} className=" space-y-2 py-2">
         <Select
-          onValueChange={(value) =>
+          // {...register("disposition1")}
+          onValueChange={(value) => {
             setSelect({
               ...select,
-              disposition2: value as string,
-            })
-          }
+              disposition1: value as string,
+            });
+            console.log(value);
+            if (value === "create lead") {
+              setDialogOpen(true);
+            }
+          }}
         >
           <SelectTrigger className="dark:!bg-primary w-full">
-            <SelectValue
-              {...register("disposition2")}
-              placeholder="Disposition 2"
-            />
+            <SelectValue placeholder="Disposition 1" />
           </SelectTrigger>
           <SelectContent className="">
-            <SelectGroup>
-              <SelectItem value="Callback">Callback</SelectItem>
-              <SelectItem value="Sold Elsewhere">Sold Elsewhere</SelectItem>
-
-              <SelectItem value="Getting Better Price Elsewhere">
-                Getting Better Price Elsewhere
-              </SelectItem>
-              <SelectItem value="Higher Expectations">
-                Higher Expectations
-              </SelectItem>
-              <SelectItem value="Was Just Checking">
-                Was Just Checking
-              </SelectItem>
-              <SelectItem value="Do not Want to Sell it Anymore">
-                Do not Want to Sell it Anymore
-              </SelectItem>
-              <SelectItem value="Out of Town">Out of Town</SelectItem>
+            <SelectGroup {...register("disposition1")}>
+              <SelectItem value="connected">Connected</SelectItem>
+              <SelectItem value="not connected">Not Connected</SelectItem>
+              <SelectItem value="create lead">Create Lead</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
-      )}
 
-      {select.disposition1 === "not connected" && (
-        <Select
-          onValueChange={(value) =>
-            setSelect({
-              ...select,
-              disposition2: value as string,
-            })
-          }
-        >
-          <SelectTrigger className="dark:!bg-primary w-full">
-            <SelectValue placeholder="Disposition 2" />
-          </SelectTrigger>
-          <SelectContent className="">
-            <SelectGroup {...register("disposition2")}>
-              <SelectItem value="swiched off">Swiched Off</SelectItem>
-              <SelectItem value="not reachable">Not Reachable</SelectItem>
-
-              <SelectItem value="ringing">Ringing</SelectItem>
-
-              <SelectItem value="wrong number">Wrong Number</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      )}
-
-      {!isDialogOpen && (
-        <>
-          <Textarea
-            placeholder="Remarks"
-            className="resize-none"
-            {...register("remarks")}
-          />
-          <Button
-            disabled={select.disposition1 == "" || select.disposition2 == ""}
-            className=" !h-max rounded-none !bg-[#82C43C] px-8"
+        {select.disposition1 === "connected" && (
+          <Select
+            onValueChange={(value) =>
+              setSelect({
+                ...select,
+                disposition2: value as string,
+              })
+            }
           >
-            {isLoading ? "Updating" : "Update"}
-          </Button>
-        </>
-      )}
-    </form>
+            <SelectTrigger className="dark:!bg-primary w-full">
+              <SelectValue
+                {...register("disposition2")}
+                placeholder="Disposition 2"
+              />
+            </SelectTrigger>
+            <SelectContent className="">
+              <SelectGroup>
+                <SelectItem value="Callback">Callback</SelectItem>
+                <SelectItem value="Sold Elsewhere">Sold Elsewhere</SelectItem>
+
+                <SelectItem value="Getting Better Price Elsewhere">
+                  Getting Better Price Elsewhere
+                </SelectItem>
+                <SelectItem value="Higher Expectations">
+                  Higher Expectations
+                </SelectItem>
+                <SelectItem value="Was Just Checking">
+                  Was Just Checking
+                </SelectItem>
+                <SelectItem value="Do not Want to Sell it Anymore">
+                  Do not Want to Sell it Anymore
+                </SelectItem>
+                <SelectItem value="Out of Town">Out of Town</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        )}
+
+        {select.disposition1 === "not connected" && (
+          <Select
+            onValueChange={(value) =>
+              setSelect({
+                ...select,
+                disposition2: value as string,
+              })
+            }
+          >
+            <SelectTrigger className="dark:!bg-primary w-full">
+              <SelectValue placeholder="Disposition 2" />
+            </SelectTrigger>
+            <SelectContent className="">
+              <SelectGroup {...register("disposition2")}>
+                <SelectItem value="swiched off">Swiched Off</SelectItem>
+                <SelectItem value="not reachable">Not Reachable</SelectItem>
+
+                <SelectItem value="ringing">Ringing</SelectItem>
+
+                <SelectItem value="wrong number">Wrong Number</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        )}
+
+        {!isDialogOpen && (
+          <>
+            <Textarea
+              placeholder="Remarks"
+              className="resize-none"
+              {...register("remarks")}
+            />
+            <Button
+              disabled={select.disposition1 == "" || select.disposition2 == ""}
+              className=" !h-max rounded-none !bg-[#82C43C] px-8"
+            >
+              {isLoading ? "Updating" : "Update"}
+            </Button>
+          </>
+        )}
+      </form>
       <LeadDialog
         title="Create Lead"
         lead={lead}
+        setSelect={setSelect}
         isDialogOpen={isDialogOpen}
         setDialogOpen={setDialogOpen}
       />
-      
-      </>
+    </>
   );
 }

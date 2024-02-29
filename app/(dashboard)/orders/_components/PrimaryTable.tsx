@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { parseISO, format } from 'date-fns';
+import { parseISO, format } from "date-fns";
 import { InvoiceInterface } from "./BasePage";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 
@@ -21,13 +21,13 @@ type ordersData = {
   status:
     | "Generated"
     | "Cn-Cancelled by Customer"
+    | "Cn-Cancelled by Cashkr"
     | "Failed"
     | "Out For Pickup"
     | "Assigned"
     | "Completed"
     | null;
-}
-
+};
 
 export function PrimaryTable({
   setIsOpen,
@@ -36,6 +36,7 @@ export function PrimaryTable({
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: ordersData[];
 }) {
+  console.log(invoices)
   return (
     <ScrollArea className="relative h-[70vh] w-full rounded-md">
       <Table>
@@ -60,7 +61,7 @@ export function PrimaryTable({
                 key={index}
               >
                 <TableCell className="border-r border-r-tableSeperator">
-                  <Date dateString={invoice.timestamp}/>
+                  <Date dateString={invoice.timestamp} />
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
                   {invoice.devicetype}
@@ -76,21 +77,23 @@ export function PrimaryTable({
                 <TableCell className="">
                   <span
                     className={`inline-block h-max min-w-[100px] rounded-[18px] px-4 text-center  ${
-                      invoice.status == "Generated" || invoice.status== null
+                      invoice.status == "Generated" || invoice.status == null
                         ? "bg-white"
                         : invoice.status == "Cn-Cancelled by Customer"
-                          ? "bg-[#FFA0A0]"
-                          : invoice.status == "Failed"
-                            ? "bg-[#F64848] text-white"
-                            : invoice.status == "Assigned"
-                              ? "bg-[#FF974A]"
-                              : invoice.status == "Completed"
-                                ? "bg-[#82C43C]"
-                                : invoice.status == "Out For Pickup" &&
-                                  "bg-[#92B7FF]"
+                          ? "bg-[#FFA0A0] text-white"
+                          : invoice.status == "Cn-Cancelled by Cashkr"
+                            ? "bg-[#FFA0A0]"
+                            : invoice.status == "Failed"
+                              ? "bg-[#F64848] text-white"
+                              : invoice.status == "Assigned"
+                                ? "bg-[#FF974A]"
+                                : invoice.status == "Completed"
+                                  ? "bg-[#82C43C]"
+                                  : invoice.status == "Out For Pickup" &&
+                                    "bg-[#92B7FF]"
                     } p-1 px-2 text-black  `}
                   >
-                    {invoice.status==null?'Generated':invoice.status}
+                    {invoice.status == null ? "Generated" : invoice.status}
                   </span>
                 </TableCell>
               </TableRow>
@@ -103,9 +106,6 @@ export function PrimaryTable({
     </ScrollArea>
   );
 }
-
-
-
 
 function Date({ dateString }: { dateString: string }) {
   const date = parseISO(dateString);

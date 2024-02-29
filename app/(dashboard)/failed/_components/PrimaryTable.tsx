@@ -19,6 +19,7 @@ type leads = {
   pickuptime: string;
   devicetype: string;
   status: string;
+  city:string;
   assignedvendor: string;
 };
 
@@ -67,11 +68,16 @@ export function PrimaryTable({
                   {invoice.assignedvendor}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
-                  {invoice.devicename}
+                  {invoice.city}
                 </TableCell>
                 <TableCell className="flex justify-center border-r  border-r-tableSeperator">
                   <span className="h-max w-max rounded-[18px] bg-purple-600 p-1 px-4 text-center !text-white">
                     {invoice.devicetype}
+                  </span>
+                </TableCell>
+                <TableCell className="flex justify-center border-r  border-r-tableSeperator">
+                  <span className="h-max w-max rounded-[18px] bg-purple-600 p-1 px-4 text-center !text-white">
+                    {invoice.status}
                   </span>
                 </TableCell>
                 <TableCell className="">
