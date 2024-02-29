@@ -14,6 +14,8 @@ import { deviceType } from "@/interfaces";
 import { FailedImageGallery } from "@/components/Internals/FailedImageCarousel";
 import { VendorsInterface } from "./BasePage";
 import PincodeTextArea from "./PincodeTextArea";
+import VendorPayment from "./VendorPayment";
+
 type OrderDetails = {
   success: boolean;
   myBookings: {
@@ -87,8 +89,32 @@ export function SheetDemo({
 }) {
   const [progress, setProgress] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [LogDetails, setLogDetails] = useState<LogDetails>();
-  const router = useRouter();
+  const [logDetails, setLogDetails] = useState<LogDetails>();
+
+  useEffect(() => {
+    async function getVendorLogs() {
+      const res = await fetch("/api/getvendorcreditlogs", {
+        method: "POST",
+        body: JSON.stringify({
+          vendorid: SelectedRow.id,
+        }),
+      });
+
+      if (!res.ok) {
+        console.log("error");
+      }
+
+      const data = await res.json();
+      console.log(data);
+
+      if (data) {
+        setLogDetails(data.data);
+      }
+    }
+    if (!logDetails) {
+      getVendorLogs();
+    }
+  }, [SelectedRow, logDetails]);
 
   const ShowProgress = () => {
     setIsLoading(true);
@@ -102,31 +128,6 @@ export function SheetDemo({
     setTimeout(() => setIsLoading(false), 1000);
   };
 
-  const UpdateFailedCounts = async ({ accepted, rejected, pending }) => {
-    ShowProgress();
-    setIsLoading(true);
-    const res = await fetch("api/updateFailedCounts", {
-      method: "POST",
-      cache: "no-cache",
-      body: JSON.stringify({
-        accepted: accepted,
-        rejected: rejected,
-        pending: pending,
-      }),
-    });
-
-    const result = await res.json();
-    console.log(result);
-    if (result.success) {
-      setIsLoading(false);
-      toast({
-        title: "Success",
-        description: <p className=" text-green-500">{result.message}</p>,
-      });
-      router.refresh();
-    }
-  };
-
   console.log(SelectedRow);
 
   return (
@@ -136,10 +137,12 @@ export function SheetDemo({
         value={progress}
         className=" absolute -top-6 right-0 z-[80] h-[2px]"
       />
+
       <SheetContent
         className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
         setIsOpen={setIsOpen}
       >
+        <VendorPayment />
         <ScrollArea className="!h-[100vh] pb-6">
           {SelectedRow && (
             <div className="my-4 space-y-4">
@@ -189,11 +192,11 @@ export function SheetDemo({
                     </div>
                   </div>
 
-                  <div className="h-max overflow-x-hidden overflow-y-scroll break-words bg-tertiaryBackground py-4 pl-4 pr-3">
+                  <div className="h-max overflow-y-auto overflow-x-hidden break-words bg-tertiaryBackground py-4 pl-4 pr-3">
                     <div className="mt-4 flex flex-col space-y-6 text-hoverColor">
                       <Label
                         htmlFor="terms"
-                        className=" grid w-full grid-cols-3 items-center"
+                        className="grid w-full grid-cols-3 items-center"
                       >
                         <p className="inline-block min-w-max"> Name :</p>
                         <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
@@ -223,26 +226,28 @@ export function SheetDemo({
                         className=" grid w-full grid-cols-3 items-center"
                       >
                         <p className="inline-block min-w-max"> Alternate :</p>
-                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
+                        <p className="col-span-2 w-full whitespace-pre-wrap text-left leading-6">
                           {/* Alternate no here */}
                           {SelectedRow.phone}
                         </p>
                       </Label>
+
                       <Label
                         htmlFor="terms"
-                        className="  grid w-full  grid-cols-3 space-x-4  "
+                        className="grid w-full grid-cols-3"
                       >
                         <p className="inline-block">Home Address :</p>
-                        <p className=" col-span-2 inline-block w-full">
+                        <p className="col-span-2 inline-block w-full">
                           {SelectedRow.address}
                         </p>
                       </Label>
+
                       <Label
                         htmlFor="terms"
-                        className=" grid w-full grid-cols-3 items-center"
+                        className="grid w-full grid-cols-3 items-center"
                       >
                         <p className="inline-block min-w-max">Shop Address :</p>
-                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
+                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-wrap text-left leading-6">
                           {/* Shop Address here */}
                           {SelectedRow.address}
                         </p>
@@ -294,9 +299,9 @@ export function SheetDemo({
                     <h1>Leads Logs :</h1>
                   </div>
                   <div className="my-6 flex flex-col space-y-6">
-                    {LogDetails && (
+                    {logDetails && (
                       <>
-                        {LogDetails.data.map((item) => (
+                        {logDetails.data.map((item) => (
                           <Label
                             key={item.id}
                             htmlFor="terms"
@@ -313,6 +318,9 @@ export function SheetDemo({
                         ))}
                       </>
                     )}
+                    {!logDetails && 
+                    <p> No Logs Found</p>
+                    }
                   </div>
                 </div>
                 <div className="flex justify-center">
