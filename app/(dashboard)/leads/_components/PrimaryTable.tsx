@@ -13,7 +13,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from "react";
 import { InvoiceInterface } from "./sectionOne";
 import { SheetDemo } from "./Sheet";
-import { Date } from "../../orders/_components/PrimaryTable";
+import { Date } from "@/components/Internals/PrimaryTable";
+
 
 export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -67,8 +68,8 @@ export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
                   <TableCell className="border-r border-r-tableSeperator">
                     <Date dateString={invoice.timestamp} />
                   </TableCell>
-                  <TableCell className="border-r border-r-tableSeperator">
-                    {invoice.devicetype}
+                  <TableCell className="border-r max-w-[260px] break-words border-r-tableSeperator">
+                    {invoice.devicename}
                   </TableCell>
                   <TableCell className="border-r border-r-tableSeperator">
                     {"Mumbai"}

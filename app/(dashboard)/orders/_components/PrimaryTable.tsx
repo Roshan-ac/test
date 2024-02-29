@@ -106,7 +106,22 @@ export function PrimaryTable({
 
 
 
-export function Date({ dateString }:{dateString:string}) {
+
+function Date({ dateString }: { dateString: string }) {
   const date = parseISO(dateString);
-  return <time dateTime={dateString}>{format(date, 'LLLL d, yyyy')}</time>;
+  // Extract components
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Months are zero-based
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const hour = String(date.getUTCHours()).padStart(2, "0");
+  const minute = String(date.getUTCMinutes()).padStart(2, "0");
+  const adjustedHour = (date.getUTCHours() + 5) % 24;
+  const adjustedMinute = String((date.getUTCMinutes() + 45) % 60).padStart(
+    2,
+    "0",
+  );
+  // Construct the formatted string
+  const formattedDateTime = `${year}-${month}-${day} - ${adjustedHour}:${adjustedMinute}`;
+  console.log(formattedDateTime);
+  return <time dateTime={dateString}>{formattedDateTime}</time>;
 }

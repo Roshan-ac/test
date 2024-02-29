@@ -13,21 +13,20 @@ import { InvoiceInterface } from "./SectionOne";
 import { parseISO, format } from "date-fns";
 
 type OrdersData = {
-    id: string;
-    timestamp: string;
-    devicename: string;
-    city: string | null;
-    devicetype: string;
-    status:
-      | "Generated"
-      | "Cn-Cancelled by Customer"
-      | "Failed"
-      | "Out For Pickup"
-      | "Assigned"
-      | "Completed"
-      | null;
-  
-}
+  id: string;
+  timestamp: string;
+  devicename: string;
+  city: string | null;
+  devicetype: string;
+  status:
+    | "Generated"
+    | "Cn-Cancelled by Customer"
+    | "Failed"
+    | "Out For Pickup"
+    | "Assigned"
+    | "Completed"
+    | null;
+};
 
 export function PrimaryTable({
   setIsOpen,
@@ -41,13 +40,13 @@ export function PrimaryTable({
   return (
     <ScrollArea className="relative h-[70vh] w-full rounded-md">
       <Table>
-        <TableHeader className=" !sticky  left-0 top-0 w-full dark:hover:bg-hoverColor">
+        <TableHeader className=" !sticky z-[1]  left-0 top-0 w-full dark:hover:bg-hoverColor">
           <TableRow className="bg-tertiaryBackground ">
             <TableHead className="w-max">Order Date</TableHead>
             <TableHead>Model</TableHead>
-            <TableHead>City</TableHead>
+            <TableHead className="">City</TableHead>
             <TableHead className="text-center">Type</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead className="text-center">Status</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -68,20 +67,22 @@ export function PrimaryTable({
                 <TableCell className="border-r border-r-tableSeperator">
                   <Date dateString={invoice.timestamp} />
                 </TableCell>
-                <TableCell className="border-r border-r-tableSeperator">
-                  {invoice.devicetype}
+                <TableCell className="max-w-[260px] break-words border-r border-r-tableSeperator">
+                  {invoice.devicename}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
-                  {invoice.city}
+                  {invoice.city ?? "null"}
                 </TableCell>
-                <TableCell className="flex justify-center border-r  border-r-tableSeperator">
-                  <span className="h-max w-max rounded-[18px] bg-purple-600 p-1 px-4 text-center !text-white">
+                <TableCell className="border-r border-r-tableSeperator">
+                  <span
+                    className={`inline-block h-max min-w-full rounded-[18px] bg-purple-600 p-1 px-2 text-center !text-white opacity-90`}
+                  >
                     {invoice.devicetype}
                   </span>
                 </TableCell>
-                <TableCell className="">
+                <TableCell className="w-max">
                   <span
-                    className={`inline-block h-max min-w-[100px] rounded-[18px] px-4 text-center  ${
+                    className={`inline-block h-max min-w-full rounded-[18px] px-4 text-center opacity-90  ${
                       invoice.status == "Generated" || invoice.status == null
                         ? "bg-white"
                         : invoice.status == "Cn-Cancelled by Customer"
@@ -110,7 +111,21 @@ export function PrimaryTable({
   );
 }
 
-function Date({ dateString }: { dateString: string }) {
+export function Date({ dateString }: { dateString: string }) {
   const date = parseISO(dateString);
-  return <time dateTime={dateString}>{format(date, "LLLL d, yyyy")}</time>;
+  // Extract components
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Months are zero-based
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const hour = String(date.getUTCHours()).padStart(2, "0");
+  const minute = String(date.getUTCMinutes()).padStart(2, "0");
+  const adjustedHour = (date.getUTCHours() + 5) % 24;
+  const adjustedMinute = String((date.getUTCMinutes() + 45) % 60).padStart(
+    2,
+    "0",
+  );
+  // Construct the formatted string
+  const formattedDateTime = `${year}-${month}-${day} - ${adjustedHour}:${adjustedMinute}`;
+  console.log(formattedDateTime);
+  return <time dateTime={dateString}>{formattedDateTime}</time>;
 }
