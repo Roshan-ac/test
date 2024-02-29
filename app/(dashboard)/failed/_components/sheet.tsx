@@ -473,7 +473,7 @@ export function SheetDemo({
                   </h2>
                 </div>
                 <div className="my-2 w-full">
-                  <FailedImageGallery />
+                  <FailedImageGallery images={[orderDetails.myBookings.deviceimg]} />
                 </div>
               </div>
 
