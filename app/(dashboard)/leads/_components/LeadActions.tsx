@@ -9,11 +9,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
+import { Textarea } from "../../../../components/ui/textarea";
+import { Button } from "../../../../components/ui/button";
 import { useForm } from "react-hook-form";
-import { toast } from "../ui/use-toast";
+import { toast } from "../../../../components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { Dialog } from "../../../../components/ui/dialog";
+import LeadDialog from "@/app/(dashboard)/leads/_components/LeadDialog";
+
 
 interface DispositionInterface {
   disposition1: string;
@@ -21,7 +24,8 @@ interface DispositionInterface {
   remarks: string;
 }
 
-export function LeadActions({ leadId }: { leadId: string }) {
+export function LeadActions({ lead }: { lead: any }) {
+
   const { register, handleSubmit } = useForm<DispositionInterface>();
   const [progress, setProgress] = React.useState(1);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -36,17 +40,13 @@ export function LeadActions({ leadId }: { leadId: string }) {
 
   // console.log(select);
 
-  if (select.disposition1 === "create lead") {
-    setDialogOpen(true);
-  }
-
   const submitHandler = async (data: DispositionInterface) => {
-    console.log(leadId);
+    console.log(lead.id);
     const desposition = `${select.disposition1}-${select.disposition2}-(${data.remarks.length > 0 ? data.remarks : "no remarks"})`;
     const res = await fetch("/api/updateDesposition", {
       method: "POST",
       body: JSON.stringify({
-        leadid: leadId,
+        leadid: lead.id,
         desposition: desposition,
       }),
     });
@@ -79,15 +79,20 @@ export function LeadActions({ leadId }: { leadId: string }) {
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit(submitHandler)} className=" space-y-2 py-2">
       <Select
         // {...register("disposition1")}
-        onValueChange={(value) =>
+        onValueChange={(value) => {
           setSelect({
             ...select,
             disposition1: value as string,
-          })
-        }
+          });
+          console.log(value);
+          if (value === "create lead") {
+            setDialogOpen(true);
+          }
+        }}
       >
         <SelectTrigger className="dark:!bg-primary w-full">
           <SelectValue placeholder="Disposition 1" />
@@ -164,60 +169,29 @@ export function LeadActions({ leadId }: { leadId: string }) {
         </Select>
       )}
 
-      {/* changes here*/}
-      {/* {select.disposition1 === "create leads" && isDialogOpen && (
-        <Dialog
-          title="Create Lead"
-          isOpen={isDialogOpen}
-          setIsOpen={setDialogOpen}
-        >
-          <div className="flex flex-col gap-3">
-            <label>
-              Owner Address
-              <input
-                placeholder=""
-                //  value={lead.owneraddress}
-              />
-            </label>
-
-            <label>
-              Final Price
-              <input placeholder="give final price" />
-            </label>
-
-            <label>
-              Pickup Date
-              <input placeholder="give final price" type="date" />
-            </label>
-
-            <label>
-              Pickuptime
-              <select>
-                <option selected> Select Pickup time</option>
-              </select>
-            </label>
-
-            <label>
-              Payment Method
-              <select>
-                <option selected> Select Payment Method</option>
-              </select>
-            </label>
-          </div>
-        </Dialog>
-      )} */}
-
-      <Textarea
-        placeholder="Remarks"
-        className="resize-none"
-        {...register("remarks")}
-      />
-      <Button
-        disabled={select.disposition1 == "" || select.disposition2 == ""}
-        className=" !h-max rounded-none !bg-[#82C43C] px-8"
-      >
-        {isLoading ? "Updating" : "Update"}
-      </Button>
+      {!isDialogOpen && (
+        <>
+          <Textarea
+            placeholder="Remarks"
+            className="resize-none"
+            {...register("remarks")}
+          />
+          <Button
+            disabled={select.disposition1 == "" || select.disposition2 == ""}
+            className=" !h-max rounded-none !bg-[#82C43C] px-8"
+          >
+            {isLoading ? "Updating" : "Update"}
+          </Button>
+        </>
+      )}
     </form>
+      <LeadDialog
+        title="Create Lead"
+        lead={lead}
+        isDialogOpen={isDialogOpen}
+        setDialogOpen={setDialogOpen}
+      />
+      
+      </>
   );
 }

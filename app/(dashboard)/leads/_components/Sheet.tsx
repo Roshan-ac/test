@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Progress } from "@/ui/progress";
 import LeadLogs from "./LeadLogs";
 import EvaluationReport from "@/components/EvaluateReport/EvaluateReport";
-import { LeadActions } from "@/components/Internals/LeadActions";
+import { LeadActions } from "@/app/(dashboard)/leads/_components/LeadActions";
 
 export function SheetDemo({
   isOpen,
@@ -86,7 +86,7 @@ export function SheetDemo({
                 <div>
                   {
                     lead &&
-                  <LeadActions leadId={lead.id} />
+                  <LeadActions lead={lead} />
                   }
                 </div>
 

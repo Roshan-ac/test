@@ -35,6 +35,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
 
 export const FormSchema = z.object({
   newpickupdate: z.date({
@@ -43,13 +44,19 @@ export const FormSchema = z.object({
   newpickuptime: z.string({
     required_error: "A new pickup time is required.",
   }),
+  owneraddress: z.string({
+    required_error: "Owner Address is required.",
+  }),
+  finalprice: z.string({
+    required_error: "Final Price is required.",
+  }),
+  paymentmethod: z.string({
+    required_error: "Payment Method is required.",
+  }),
 });
 
-export function PickupNewDateTime({
-  ReschedulePickupDateTime,
-}: {
-  ReschedulePickupDateTime: (data: z.infer<typeof FormSchema>) => {};
-}) {
+export function CreateLeadForm({ lead }: { lead: any }) {
+  console.log(lead);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -58,13 +65,73 @@ export function PickupNewDateTime({
   const router = useRouter();
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
-    const res = await ReschedulePickupDateTime(data);
+    const res = await fetch(`/api/completeMyLead`, {
+      method: "POST",
+      body: JSON.stringify({
+        request: {
+          customerid: lead.assignedvendor,
+          leadid: lead.id,
+          isCompleted: lead.isCompleted,
+          pincode: lead.pincode,
+          upino: lead.upino,
+          bankacno: lead.bankacno,
+          bankifsccode: lead.bankifscode,
+          bankbeneficiaryname: lead.bankbeneficiaryname,
+          bankname: lead.bankname,
+          devicefinalprice: data.finalprice,
+          owneraddress: data.owneraddress,
+          paymentmode: data.paymentmethod,
+          pickupdate: data.newpickupdate.toLocaleDateString("en-US"),
+          pickuptime: data.newpickuptime,
+        },
+      }),
+    });
+    const result = await res.json();
+    console.log(result);
     setIsLoading(false);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+        <FormField
+          control={form.control}
+          name="owneraddress"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Owner Address</FormLabel>
+              <Input
+                id="owneraddress"
+                // defaultValue="Pune Hills, India"
+                onChange={field.onChange}
+                value={field.value}
+                placeholder="Shivajinagar, Pune 411005, India"
+                className="col-span-2"
+              />
+              <FormDescription></FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="finalprice"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Final Price</FormLabel>
+              <Input
+                id="owneraddress"
+                // onSelec={field.onChange}
+                onChange={field.onChange}
+                value={field.value}
+                placeholder="5000"
+                className="col-span-2"
+              />
+              <FormDescription></FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="newpickupdate"
@@ -106,6 +173,7 @@ export function PickupNewDateTime({
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="newpickuptime"
@@ -135,9 +203,32 @@ export function PickupNewDateTime({
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="paymentmethod"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Payment Mehtod</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger className="!focus-visible:outline-none flex items-center justify-between whitespace-nowrap rounded-md border border-neutral-200 bg-white px-4 py-2 text-sm font-medium ring-offset-white transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:ring-neutral-950 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-800  dark:bg-neutral-950  dark:ring-offset-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 dark:focus-visible:ring-neutral-300">
+                  <SelectValue placeholder="Select a payment method" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="Cod">COD</SelectItem>
+                    <SelectItem value="Upi">UPI</SelectItem>
+                    <SelectItem value="Bank">Bank</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <FormDescription></FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button
           disabled={isLoading}
-          className="w-full font-semibold"
+          className="w-full !bg-[#82C43C] font-semibold"
           type="submit"
         >
           {isLoading ? "Processing" : "Update"}

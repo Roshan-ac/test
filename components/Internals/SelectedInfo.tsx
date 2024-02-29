@@ -16,7 +16,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { TabelPagination } from "./TabelPagination";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { LeadActions } from "@/components/Internals/LeadActions";
+import { LeadActions } from "@/app/(dashboard)/leads/_components/LeadActions";
 import { FailedImageGallery } from "./FailedImageCarousel";
 import { VendorDocuments } from "./VendorDocuments";
 import { Progress } from "../ui/progress";
