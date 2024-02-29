@@ -5,6 +5,7 @@ import SecondaryTable from "./SecondaryTable";
 import { CardContainer } from "./CardContainer";
 import { SheetDemo } from "./sheet";
 import { deviceType } from "@/interfaces";
+import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 
 export interface InvoiceInterface {
   success: boolean;
@@ -40,36 +41,41 @@ export interface InvoiceInterface {
 const BasePage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [invoices, setInvoices] = useState<InvoiceInterface>();
+  const [isLoading, setIsLoading] = useState<boolean>();
   const [SelectedRow, SetSelectedRow] = useState<{
     lead: number;
     devicetype: deviceType;
   }>();
   console.log(invoices);
   useEffect(() => {
-    (async function () {
-      const res = await fetch("/api/getallorders", {
-        method: "GET",
-      });
-      if (!res.ok) {
-        console.log("Error :", res);
-      }
-      const data = await res.json();
-      setInvoices(data);
-      console.log(data);
-    })();
+    setIsLoading(true),
+      (async function () {
+        const res = await fetch("/api/getallorders", {
+          method: "GET",
+        });
+        if (!res.ok) {
+          console.log("Error :", res);
+        }
+        const data = await res.json();
+        setInvoices(data);
+        console.log(data);
+      })();
+    setIsLoading(false);
   }, []);
   console.log(invoices);
   return (
     <div className=" w-full gap-4 space-y-6 px-8">
-      <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-        {invoices && (
+      {!invoices && <TableSkeleton />}
+      {invoices && (
+        <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
           <PrimaryTable
             SetSelectedRow={SetSelectedRow}
             setIsOpen={setIsOpen}
             invoices={invoices.orders}
           />
-        )}
-      </div>
+        </div>
+      )}
+
       {invoices && (
         <CardContainer
           cardsValues={{
@@ -79,9 +85,11 @@ const BasePage = () => {
           }}
         />
       )}
-      <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-        {invoices && <SecondaryTable leads={invoices.leads} />}
-      </div>
+      {invoices && (
+        <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
+          <SecondaryTable leads={invoices.leads} />
+        </div>
+      )}
       {SelectedRow && (
         <SheetDemo
           SelectedRow={SelectedRow}

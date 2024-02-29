@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { CardContainer } from "./CardContainer";
 import { SheetDemo } from "./sheet";
 import { PrimaryTable } from "./PrimaryTable";
+import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 
 export type VendorsInterface = {
   id: string;
@@ -49,15 +50,16 @@ const BasePage = () => {
   console.log(invoices);
   return (
     <div className=" w-full gap-4 space-y-6 px-8">
-      <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-        {invoices && (
+      {!invoices && <TableSkeleton />}
+      {invoices && (
+        <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
           <PrimaryTable
             SetSelectedRow={SetSelectedRow}
             setIsOpen={setIsOpen}
             invoices={invoices}
           />
-        )}
-      </div>
+        </div>
+      )}
       {invoices && (
         <CardContainer
           cardsValues={{

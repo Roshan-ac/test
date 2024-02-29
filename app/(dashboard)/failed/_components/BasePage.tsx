@@ -6,6 +6,7 @@ import { CardContainer } from "./CardContainer";
 import { SheetDemo } from "./sheet";
 import { deviceType } from "@/interfaces";
 import { PrimaryTable } from "./PrimaryTable";
+import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 
 export interface InvoiceInterface {
   success: boolean;
@@ -16,6 +17,7 @@ export interface InvoiceInterface {
     pickuptime: string;
     devicetype: string;
     status: string;
+    city: string;
     assignedvendor: string;
   }[];
   rejectedLeads: number;
@@ -47,15 +49,16 @@ const BasePage = () => {
   console.log(invoices);
   return (
     <div className=" w-full gap-4 space-y-6 px-8">
-      <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-        {invoices && (
+      {!invoices && <TableSkeleton />}
+      {invoices && (
+        <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
           <PrimaryTable
             SetSelectedRow={SetSelectedRow}
             setIsOpen={setIsOpen}
             invoices={invoices.leads}
           />
-        )}
-      </div>
+        </div>
+      )}
       {invoices && (
         <CardContainer
           cardsValues={{

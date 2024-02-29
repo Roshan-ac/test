@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { PrimaryTable } from "./PrimaryTable";
 import { CardContainer } from "@/components/Internals/CardContainer";
+import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 
 export interface LeadInterface {
   success: boolean;
@@ -14,7 +15,7 @@ export interface LeadInterface {
 export interface InvoiceInterface {
   id: string;
   pickupdate: string;
-  timestamp:string;
+  timestamp: string;
   devicename: string;
   pickuptime: string;
   devicetype: string;
@@ -51,21 +52,26 @@ const SectionOne = ({
     })();
   }, []);
 
-  if (invoices)
-    return (
-      <>
-        <div className="flex w-full gap-4 px-8">
+  return (
+    <>
+      <div className=" w-full gap-4 space-y-6 px-8">
+        {!invoices && <TableSkeleton />}
+        {invoices && (
           <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
             <PrimaryTable invoices={invoices.leads} />
           </div>
-        </div>
-        <CardContainer
-          completed={invoices.completedOrdersCount}
-          available={invoices.availableOrdersCount}
-          assigned={invoices.assignedOrdersCount}
-        />
-      </>
-    );
+        )}
+
+        {invoices && (
+          <CardContainer
+            completed={invoices.completedOrdersCount}
+            available={invoices.availableOrdersCount}
+            assigned={invoices.assignedOrdersCount}
+          />
+        )}
+      </div>
+    </>
+  );
 };
 
 export default SectionOne;
