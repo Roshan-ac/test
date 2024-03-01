@@ -10,6 +10,7 @@ import { Progress } from "@/ui/progress";
 import LeadLogs from "./LeadLogs";
 import EvaluationReport from "@/components/EvaluateReport/EvaluateReport";
 import { LeadActions } from "@/app/(dashboard)/leads/_components/LeadActions";
+import { Date } from "@/components/Internals/PrimaryTable";
 
 export function SheetDemo({
   isOpen,
@@ -33,6 +34,8 @@ export function SheetDemo({
     setTimeout(() => setProgress(100), 500);
     setTimeout(() => setIsLoading(false), 1000);
   };
+
+  console.log(lead);
   return (
     <Sheet open={isOpen}>
       <Progress
@@ -49,22 +52,24 @@ export function SheetDemo({
             <div className="flex h-full w-full gap-4">
               <div className="relative h-max w-[55%] bg-tertiaryBackground p-4 pt-8 text-hoverColor">
                 <Badge className=" absolute -top-[10px] left-6 z-10 w-max rounded-none !bg-purple-500 px-6 py-1 !text-white">
-                  Phone
+                  {lead?.devicetype}
                 </Badge>
                 <div>
-                  <h1 className="text-center">{lead?.devicename}</h1>
+                  <h1 className="">{lead?.devicename}</h1>
                 </div>
                 <div className="my-6 flex flex-col space-y-6">
                   <Label htmlFor="terms" className=" flex w-full space-x-4  ">
                     <span className="inline-block w-[40%]">Order ID :</span>
                     <span className="inline-block w-full">{lead?.id}</span>
                   </Label>
-                  <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                    <span className="inline-block w-[40%]">Pickup :</span>
-                    <span className="inline-block w-full">
-                      {lead?.pickupdate}
-                    </span>
-                  </Label>
+                  {lead?.timestamp && (
+                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+                      <span className="inline-block w-[40%]">Date :</span>
+                      <span className="inline-block w-full">
+                        <Date dateString={lead?.timestamp} />
+                      </span>
+                    </Label>
+                  )}
 
                   {/* From Here */}
 
@@ -75,20 +80,17 @@ export function SheetDemo({
                     />
                   )}
 
-                  <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                    <span className="inline-block w-[40%]">Vendor :</span>
-                    <span className="inline-block w-full">
-                      {lead?.assignedvendor}
-                    </span>
-                  </Label>
+                  {lead?.assignedvendor && (
+                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+                      <span className="inline-block w-[40%]">Vendor :</span>
+                      <span className="inline-block w-full">
+                        {lead?.assignedvendor}
+                      </span>
+                    </Label>
+                  )}
                 </div>
 
-                <div>
-                  {
-                    lead &&
-                  <LeadActions lead={lead} />
-                  }
-                </div>
+                <div>{lead && <LeadActions lead={lead} />}</div>
 
                 <div className="flex justify-center">
                   <TabelPagination />

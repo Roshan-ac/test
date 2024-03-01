@@ -25,7 +25,7 @@ type OrdersData = {
     | "Out For Pickup"
     | "Cn-Cancelled by Cashkr"
     | "Assigned"
-    | "Completed"
+    | "C-Completed"
     | null;
 };
 
@@ -41,7 +41,7 @@ export function PrimaryTable({
   return (
     <ScrollArea className="relative h-[70vh] w-full rounded-md">
       <Table>
-        <TableHeader className=" !sticky z-[1]  left-0 top-0 w-full dark:hover:bg-hoverColor">
+        <TableHeader className=" !sticky left-0  top-0 z-[1] w-full dark:hover:bg-hoverColor">
           <TableRow className="bg-tertiaryBackground ">
             <TableHead className="w-max">Order Date</TableHead>
             <TableHead>Model</TableHead>
@@ -88,16 +88,16 @@ export function PrimaryTable({
                         ? "bg-white"
                         : invoice.status == "Cn-Cancelled by Customer"
                           ? "bg-[#FFA0A0] text-[#222222]"
-                        : invoice.status == "Cn-Cancelled by Cashkr"
-                          ? " bg-[#0ed380] text-[#111a1c]"
-                          : invoice.status == "Failed"
-                            ? "bg-[#F64848] text-white"
-                            : invoice.status == "Assigned"
-                              ? "bg-[#FF974A]"
-                              : invoice.status == "Completed"
-                                ? "bg-[#82C43C]"
-                                : invoice.status == "Out For Pickup" &&
-                                  "bg-[#92B7FF]"
+                          : invoice.status == "Cn-Cancelled by Cashkr"
+                            ? " bg-[#0ed380] text-[#111a1c]"
+                            : invoice.status == "Failed"
+                              ? "bg-[#F64848] text-white"
+                              : invoice.status == "Assigned"
+                                ? "bg-[#FF974A]"
+                                : invoice.status == "C-Completed"
+                                  ? "bg-[#82C43C]"
+                                  : invoice.status == "Out For Pickup" &&
+                                    "bg-[#92B7FF]"
                     } p-1 px-2 text-black  `}
                   >
                     {invoice.status == null ? "Generated" : invoice.status}

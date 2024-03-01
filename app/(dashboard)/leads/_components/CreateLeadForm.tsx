@@ -72,6 +72,7 @@ export function CreateLeadForm({ lead }: { lead: any }) {
           customerid: lead.assignedvendor,
           leadid: lead.id,
           isCompleted: lead.isCompleted,
+          city: lead.city,
           pincode: lead.pincode,
           upino: lead.upino,
           bankacno: lead.bankacno,
