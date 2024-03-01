@@ -274,7 +274,15 @@ export function SheetDemo({
                   </h2>
                 </div>
                 <div className="my-2 w-full">
-                  <FailedImageGallery images={[SelectedRow.aadharcardimgback,SelectedRow.aadharcardimgfront,SelectedRow.pancardimg,SelectedRow.selfphoto,SelectedRow.shopphoto]} />
+                  <FailedImageGallery
+                    images={[
+                      SelectedRow.aadharcardimgback,
+                      SelectedRow.aadharcardimgfront,
+                      SelectedRow.pancardimg,
+                      SelectedRow.selfphoto,
+                      SelectedRow.shopphoto,
+                    ]}
+                  />
                 </div>
 
                 <div className="flex justify-between">
@@ -318,9 +326,7 @@ export function SheetDemo({
                         ))}
                       </>
                     )}
-                    {!logDetails && 
-                    <p> No Logs Found</p>
-                    }
+                    {!logDetails && <p> No Logs Found</p>}
                   </div>
                 </div>
                 <div className="flex justify-center">

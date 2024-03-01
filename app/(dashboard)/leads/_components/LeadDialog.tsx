@@ -37,50 +37,6 @@ const LeadDialog = ({
         <DialogHeader>
           <DialogTitle>Create Lead</DialogTitle>
         </DialogHeader>
-        {/* <div className="grid gap-4 py-4 ">
-          <div className="grid grid-cols-3 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Owner Address
-            </Label>
-            <Input
-              id="name"
-              defaultValue="Pedro Duarte"
-              className="col-span-2"
-            />
-          </div>
-          <div className="grid grid-cols-3 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Final Price
-            </Label>
-            <Input
-              id="username"
-              defaultValue="@peduarte"
-              className="col-span-2"
-            />
-          </div>
-          <div className="grid grid-cols-3 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Pickuptime
-            </Label>
-            <Input
-              id="username"
-              defaultValue="@peduarte"
-              className="col-span-2"
-            />
-          </div>
-          <div className="grid grid-cols-3 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Payment Method
-            </Label>
-            <Input
-              id="username"
-              color="dark"
-              defaultValue="@peduarte"
-              className=" col-span-2"
-            />
-          </div>
-        </div> */}
-
         <CreateLeadForm lead={lead} />
       </DialogContent>
     </Dialog>

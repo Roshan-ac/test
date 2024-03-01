@@ -36,8 +36,6 @@ export function LeadActions({ lead }: { lead: any }) {
 
   const [isDialogOpen, setDialogOpen] = React.useState<boolean>(false);
 
-  // console.log(select);
-
   const submitHandler = async (data: DispositionInterface) => {
     console.log(lead.id);
     const desposition = `${select.disposition1}-${select.disposition2}-(${data.remarks.length > 0 ? data.remarks : "no remarks"})`;

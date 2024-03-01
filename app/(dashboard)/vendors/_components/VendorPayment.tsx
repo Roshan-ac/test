@@ -31,6 +31,7 @@ const VendorPayment = () => {
       setIsLoading(true);
       const res = await fetch("/api/getvendorpayments", {
         method: "GET",
+        
       });
 
       if (!res.ok) {

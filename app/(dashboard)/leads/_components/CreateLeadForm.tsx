@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -36,6 +36,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 
 export const FormSchema = z.object({
   newpickupdate: z.date({
@@ -57,6 +58,7 @@ export const FormSchema = z.object({
 
 export function CreateLeadForm({ lead }: { lead: any }) {
   console.log(lead);
+  const [progress, setProgress] = useState(1);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -65,6 +67,7 @@ export function CreateLeadForm({ lead }: { lead: any }) {
   const router = useRouter();
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
+    ShowProgress();
     const res = await fetch(`/api/completeMyLead`, {
       method: "POST",
       body: JSON.stringify({
@@ -79,21 +82,47 @@ export function CreateLeadForm({ lead }: { lead: any }) {
           bankifsccode: lead.bankifscode,
           bankbeneficiaryname: lead.bankbeneficiaryname,
           bankname: lead.bankname,
-          devicefinalprice: data.finalprice,
+          finalgeneratedprice: data.finalprice,
           owneraddress: data.owneraddress,
           paymentmode: data.paymentmethod,
-          pickupdate: data.newpickupdate.toLocaleDateString("en-US"),
+          pickupdate: GetDate({ dateString: data.newpickupdate }),
           pickuptime: data.newpickuptime,
         },
       }),
     });
     const result = await res.json();
-    console.log(result);
-    setIsLoading(false);
+    if (result.success) {
+      toast({
+        title: "Success",
+        description: <p className=" text-green-500">{result.message}</p>,
+      });
+      router.refresh();
+    } else {
+      toast({
+        title: "Unable to update",
+        description: <p className=" text-[#dd9999]">{result.message}</p>,
+      });
+      setIsLoading(false);
+    }
   }
-
+  const ShowProgress = () => {
+    setIsLoading(true);
+    setProgress(8);
+    setTimeout(() => setProgress(32), 500);
+    setTimeout(() => setProgress(52), 500);
+    setTimeout(() => setProgress(67), 500);
+    setTimeout(() => setProgress(79), 500);
+    setTimeout(() => setProgress(94), 500);
+    setTimeout(() => setProgress(100), 500);
+    setTimeout(() => setIsLoading(false), 1000);
+  };
   return (
     <Form {...form}>
+      <Progress
+        hidden={!isLoading}
+        value={progress}
+        className=" fixed  right-0 top-0 z-[80] h-[2px]"
+      />
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         <FormField
           control={form.control}
@@ -237,4 +266,12 @@ export function CreateLeadForm({ lead }: { lead: any }) {
       </form>
     </Form>
   );
+}
+
+export function GetDate({ dateString }: { dateString: Date }) {
+  const year = dateString.getUTCFullYear();
+  const month = String(dateString.getUTCMonth() + 1).padStart(2, "0"); // Months are zero-based
+  const day = String(dateString.getUTCDate()).padStart(2, "0");
+  const formattedDateTime = `${year}-${month}-${day}`;
+  return formattedDateTime;
 }
