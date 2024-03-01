@@ -147,12 +147,12 @@ export function SheetDemo({
           {SelectedRow && (
             <div className="my-4 space-y-4">
               <div className="flex h-full w-full gap-4">
-                <div className="relative h-max w-[55%] bg-tertiaryBackground p-4 pt-8 text-hoverColor">
-                  <div className="my-6 flex flex-col space-y-6">
-                    <PincodeTextArea />
+                <div className="relative h-max w-[55%] space-y-2 text-hoverColor">
+                  <h4>Servicable Pincodes:</h4>
+                  <div className="">
+                    <PincodeTextArea vendorId={SelectedRow.id} />
                   </div>
                 </div>
-
                 <div className="h-max w-[45%] space-y-4">
                   <div className="h-max w-full bg-tertiaryBackground px-6 py-4">
                     <div className="my-4 flex flex-col space-y-6 text-hoverColor">
@@ -274,7 +274,7 @@ export function SheetDemo({
                   </h2>
                 </div>
                 <div className="my-2 w-full">
-                  <FailedImageGallery
+                  {/* <FailedImageGallery
                     images={[
                       SelectedRow.aadharcardimgback,
                       SelectedRow.aadharcardimgfront,
@@ -282,7 +282,7 @@ export function SheetDemo({
                       SelectedRow.selfphoto,
                       SelectedRow.shopphoto,
                     ]}
-                  />
+                  /> */}
                 </div>
 
                 <div className="flex justify-between">
