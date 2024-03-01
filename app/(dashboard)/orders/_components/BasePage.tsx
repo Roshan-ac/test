@@ -21,7 +21,7 @@ export interface InvoiceInterface {
       | "Failed"
       | "Out For Pickup"
       | "Assigned"
-      | "Completed"
+      | "C-Completed"
       | null;
   }[];
   leads: {

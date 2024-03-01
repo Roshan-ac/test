@@ -100,7 +100,7 @@ const ConsoleReport = ({
         )}
         {numberofcds !== undefined && (
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[40%]">Number of CD's : </span>
+            <span className="inline-block w-[40%]">Number of CD&lsquo;s : </span>
             <span className="inline-block w-full">
               {numberofcds == "CD0"
                 ? "No Extra CD"

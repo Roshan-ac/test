@@ -40,7 +40,7 @@ const PincodeTextArea = ({ vendorId }: { vendorId: string }) => {
         <div className=" grid grid-cols-4 gap-2">
           {pincodes &&
             pincodes.map((item, index) => (
-              <div className=" rounded-xl bg-primaryBackground p-1 text-center ">
+              <div key={index} className=" rounded-xl bg-primaryBackground p-1 text-center ">
                 <span>{item}</span>
               </div>
             ))}
