@@ -16,6 +16,7 @@ export interface InvoiceInterface {
     devicename: string;
     pickuptime: string;
     devicetype: string;
+    reason: string;
     status: string;
     city: string;
     assignedvendor: string;
