@@ -100,7 +100,7 @@ export function SheetDemo({
     const res = await fetch(`/api/failedLead`, {
       method: "POST",
       body: JSON.stringify({
-        vendorid: orderDetails.myBookings.assignedvendor,
+        vendorid: orderDetails.myBookings.assignedvendor ?? '',
         creditpoints: orderDetails.myBookings.creditpoints,
         label: "deduct",
         description: `Refund for ${orderDetails.myBookings.devicename}`,
@@ -119,6 +119,14 @@ export function SheetDemo({
         ),
       });
       router.refresh();
+    }else{
+      toast({
+        title: "Sorry!",
+        description: (
+          <p className=" text-green-500">Unable to update lead status.</p>
+        ),
+      });
+    
     }
   };
 
@@ -298,12 +306,13 @@ export function SheetDemo({
                     {/* </Label> */}
 
                     <Label
-                      htmlFor="terms"
+                      htmlFor="vendor"
                       className={`flex w-full space-x-4  `}
                     >
                       <span className="inline-block w-[40%]">Vendor :</span>
                       <span className="inline-block w-full">
-                        {orderDetails.myBookings.assignedvendor ?? "No vendor assigned !"}
+                        {orderDetails.myBookings.assignedvendor ??
+                          "No vendor assigned !"}
                       </span>
                     </Label>
 
@@ -331,10 +340,7 @@ export function SheetDemo({
                     </div>
                     <div>
                       <Button
-                        disabled={
-                          orderDetails.myBookings.assignedvendor == null ||
-                          orderDetails.myBookings.status !== null
-                        }
+                        disabled={orderDetails.myBookings.status !== null}
                         onClick={() => {
                           FailedLead();
                         }}

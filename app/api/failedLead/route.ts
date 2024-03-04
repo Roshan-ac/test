@@ -17,6 +17,7 @@ const POST = async (req: any) => {
     statustype,
     label,
     description);
+    console.log(vendorid)
   try {
     const res = await fetch(`${BACKEND_API}/setLeadStatus`, {
       method: "POST",
@@ -33,9 +34,9 @@ const POST = async (req: any) => {
         creditpoints: creditpoints,
       }),
     });
-
+    
     const data = await res.json();
-    if (data.success) {
+    if (data.success && vendorid) {
       const res = await fetch(`${BACKEND_API}/updateVendorCreditLogs`, {
         method: "POST",
         headers: {
