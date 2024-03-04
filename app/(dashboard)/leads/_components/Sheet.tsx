@@ -59,8 +59,8 @@ export function SheetDemo({
                 </div>
                 <div className="my-6 flex flex-col space-y-6">
                   <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                    <span className="inline-block w-[40%]">Order ID :</span>
-                    <span className="inline-block w-full">{lead?.id}</span>
+                    <span className="inline-block w-[40%]">Token :</span>
+                    <span className="inline-block w-full">{lead.token}</span>
                   </Label>
                   {lead?.timestamp && (
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
@@ -80,14 +80,12 @@ export function SheetDemo({
                     />
                   )}
 
-                  {lead?.assignedvendor && (
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Vendor :</span>
-                      <span className="inline-block w-full">
-                        {lead?.assignedvendor}
-                      </span>
-                    </Label>
-                  )}
+                  <Label htmlFor="vendor" className={`flex w-full space-x-4  `}>
+                    <span className="inline-block w-[40%]">Vendor :</span>
+                    <span className="inline-block w-full">
+                      {lead.assignedvendor ?? "No vendor assigned !"}
+                    </span>
+                  </Label>
                 </div>
 
                 <div>{lead && <LeadActions lead={lead} />}</div>

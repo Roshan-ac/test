@@ -252,9 +252,9 @@ export function SheetDemo({
                   </div>
                   <div className="my-6 flex flex-col space-y-6">
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Order ID :</span>
+                      <span className="inline-block w-[40%]">Token :</span>
                       <span className="inline-block w-full">
-                        {orderDetails?.myBookings.id}
+                        {orderDetails?.myBookings.token}
                       </span>
                     </Label>
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
@@ -296,17 +296,17 @@ export function SheetDemo({
                         {/* {myBookings.} */}
                     {/* </span> */}
                     {/* </Label> */}
-                    {orderDetails.myBookings.assignedvendor && (
-                      <Label
-                        htmlFor="terms"
-                        className={`flex w-full space-x-4  `}
-                      >
-                        <span className="inline-block w-[40%]">Vendor :</span>
-                        <span className="inline-block w-full">
-                          {orderDetails.myBookings.assignedvendor}
-                        </span>
-                      </Label>
-                    )}
+
+                    <Label
+                      htmlFor="terms"
+                      className={`flex w-full space-x-4  `}
+                    >
+                      <span className="inline-block w-[40%]">Vendor :</span>
+                      <span className="inline-block w-full">
+                        {orderDetails.myBookings.assignedvendor ?? "No vendor assigned !"}
+                      </span>
+                    </Label>
+
                     {SelectedRow.lead && (
                       <EvaluationReport
                         formData={orderDetails.myBookings}
@@ -476,7 +476,7 @@ export function SheetDemo({
                     <h1>Leads Logs :</h1>
                   </div>
                   <div className="my-6 flex flex-col space-y-6">
-                    {LogDetails && (
+                    {LogDetails && LogDetails.data && (
                       <>
                         {LogDetails.data.map((item) => (
                           <Label

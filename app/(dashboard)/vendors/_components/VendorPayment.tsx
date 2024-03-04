@@ -15,6 +15,7 @@ interface VendorPaymentInterface {
   id: number;
   vendorId: number;
   amount: number;
+  vendorname: string;
   paymentDate: string;
   screenshot: string;
   isApproved: 0 | 1;
@@ -31,7 +32,6 @@ const VendorPayment = () => {
       setIsLoading(true);
       const res = await fetch("/api/getvendorpayments", {
         method: "GET",
-        
       });
 
       if (!res.ok) {
@@ -118,7 +118,7 @@ const VendorPayment = () => {
         </TableRow>
         {vendorPayment.map((item) => (
           <TableBody key={item.id}>
-            <TableCell> {item.vendorId} </TableCell>
+            <TableCell> {item.vendorname} </TableCell>
             <TableCell> {item.amount} </TableCell>
             <TableCell>
               <button>view</button>

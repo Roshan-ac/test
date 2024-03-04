@@ -85,20 +85,20 @@ export function PrimaryTable({
                   <span
                     className={`inline-block h-max min-w-full rounded-[18px] px-4 text-center opacity-90  ${
                       invoice.status == "Generated" || invoice.status == null
-                        ? "bg-white"
+                        ? "!bg-white"
                         : invoice.status == "Cn-Cancelled by Customer"
-                          ? "bg-[#FFA0A0] text-[#222222]"
+                          ? "!bg-[#FFA0A0] text-[#222222]"
                           : invoice.status == "Cn-Cancelled by Cashkr"
-                            ? " bg-[#0ed380] text-[#111a1c]"
+                            ? " !bg-[#0ed380] text-[#111a1c]"
                             : invoice.status == "Failed"
-                              ? "bg-[#F64848] text-white"
+                              ? "!bg-[#F64848] text-white"
                               : invoice.status == "Assigned"
-                                ? "bg-[#FF974A]"
+                                ? "!bg-[#FF974A]"
                                 : invoice.status == "C-Completed"
-                                  ? "bg-[#82C43C]"
+                                  ? "!bg-[#82C43C]"
                                   : invoice.status == "Out For Pickup" &&
-                                    "bg-[#92B7FF]"
-                    } p-1 px-2 text-black  `}
+                                    "!bg-[#92B7FF]"
+                    } p-1 px-2 text-black bg-red-400  `}
                   >
                     {invoice.status == null ? "Generated" : invoice.status}
                   </span>
@@ -123,12 +123,11 @@ export function Date({ dateString }: { dateString: string }) {
   const hour = String(date.getUTCHours()).padStart(2, "0");
   const minute = String(date.getUTCMinutes()).padStart(2, "0");
   const adjustedHour = (date.getUTCHours() + 5) % 24;
-  const adjustedMinute = String((date.getUTCMinutes() + 45) % 60).padStart(
+  const adjustedMinute = String((date.getUTCMinutes() + 30) % 60).padStart(
     2,
     "0",
   );
   // Construct the formatted string
   const formattedDateTime = `${year}-${month}-${day} - ${adjustedHour}:${adjustedMinute}`;
-  console.log(formattedDateTime);
   return <time dateTime={dateString}>{formattedDateTime}</time>;
 }

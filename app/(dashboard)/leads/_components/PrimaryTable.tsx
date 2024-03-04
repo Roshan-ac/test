@@ -15,7 +15,6 @@ import { InvoiceInterface } from "./sectionOne";
 import { SheetDemo } from "./Sheet";
 import { Date } from "@/components/Internals/PrimaryTable";
 
-
 export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [leadDetails, setLeadDetails] = useState<any>();
@@ -68,7 +67,7 @@ export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
                   <TableCell className="border-r border-r-tableSeperator">
                     <Date dateString={invoice.timestamp} />
                   </TableCell>
-                  <TableCell className="border-r max-w-[260px] break-words border-r-tableSeperator">
+                  <TableCell className="max-w-[260px] break-words border-r border-r-tableSeperator">
                     {invoice.devicename}
                   </TableCell>
                   <TableCell className="border-r border-r-tableSeperator">
@@ -109,12 +108,15 @@ export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
           <TabelPagination />
         </div>
       </ScrollArea>
+    {
+      leadDetails &&
       <SheetDemo
-        varient={"lead"}
-        setIsOpen={setIsOpen}
-        isOpen={isOpen}
-        lead={leadDetails}
+      varient={"lead"}
+      setIsOpen={setIsOpen}
+      isOpen={isOpen}
+      lead={leadDetails}
       />
+    }
     </>
   );
 }

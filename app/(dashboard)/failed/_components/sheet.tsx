@@ -244,9 +244,9 @@ export function SheetDemo({
                   </div>
                   <div className="my-6 flex flex-col space-y-6">
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Order ID :</span>
+                      <span className="inline-block w-[40%]">Token :</span>
                       <span className="inline-block w-full">
-                        {orderDetails?.myBookings.id}
+                      {orderDetails?.myBookings.token}
                       </span>
                     </Label>
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
@@ -256,17 +256,12 @@ export function SheetDemo({
                         {orderDetails.myBookings.pickuptime}
                       </span>
                     </Label>
-                    {orderDetails.myBookings.assignedvendor && (
-                      <Label
-                        htmlFor="terms"
-                        className={`flex w-full space-x-4  `}
-                      >
-                        <span className="inline-block w-[40%]">Vendor :</span>
-                        <span className="inline-block w-full">
-                          {orderDetails.myBookings.assignedvendor}
-                        </span>
-                      </Label>
-                    )}
+                    <Label htmlFor="vendor" className={`flex w-full space-x-4  `}>
+                    <span className="inline-block w-[40%]">Vendor :</span>
+                    <span className="inline-block w-full">
+                      {orderDetails.myBookings.assignedvendor ?? "No vendor assigned !"}
+                    </span>
+                  </Label>
 
                     {SelectedRow.lead && (
                       <EvaluationReport
@@ -275,24 +270,7 @@ export function SheetDemo({
                       />
                     )}
 
-                    {/* <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Processor :</span>
-                      <span className="inline-block w-full">
-                        CK-MO-Pun-853211703827976
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Ram :</span>
-                      <span className="inline-block w-full">
-                        CK-MO-Pun-853211703827976
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Storage :</span>
-                      <span className="inline-block w-full">
-                        CK-MO-Pun-853211703827976
-                      </span>
-                    </Label> */}
+               
                   </div>
 
                   <div className="flex w-full items-center space-x-4 py-8">
@@ -473,7 +451,7 @@ export function SheetDemo({
                   </h2>
                 </div>
                 <div className="my-2 w-full">
-                  <FailedImageGallery images={[orderDetails.myBookings.deviceimg]} />
+                  <FailedImageGallery leadId={orderDetails.myBookings.id}   />
                 </div>
               </div>
 
@@ -483,7 +461,7 @@ export function SheetDemo({
                     <h1>Leads Logs :</h1>
                   </div>
                   <div className="my-6 flex flex-col space-y-6">
-                    {LogDetails && (
+                    {LogDetails && LogDetails.data && (
                       <>
                         {LogDetails.data.map((item) => (
                           <Label
