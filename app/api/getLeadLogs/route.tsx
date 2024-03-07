@@ -1,7 +1,8 @@
 const { BACKEND_API } = process.env;
 
-const POST = async () => {
-    console.log("hello")
+const POST = async (req: any) => {
+  const { leadId } = await req.json();
+  console.log(leadId);
   try {
     const res = await fetch(`${BACKEND_API}/getLeadLogs`, {
       method: "POST",
@@ -10,9 +11,9 @@ const POST = async () => {
         Authorization:
           "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NCwiZnVsbE5hbWUiOiJJYnJhaGltIFN1cnlhIiwidXNlcm5hbWUiOiJpYnJhaGltLnN1cnlhIiwiZW1haWwiOiJpYnJhaGltLnN1cnlhQGNhc2hrci5jb20iLCJyb2xlIjoiQWRtaW4ifQ.bVexhurmhuNwMTmHSUs86R3lpL6eSCBEcEWqsBsoReM",
       },
-      body:JSON.stringify({
-        leadid: "LD1708507406"
-      })
+      body: JSON.stringify({
+        leadid: leadId,
+      }),
     });
 
     const data = await res.json();

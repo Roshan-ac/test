@@ -25,17 +25,24 @@ export function SheetDemo({
 }) {
   const [progress, setProgress] = useState(13);
   const [isLoading, setIsLoading] = useState(false);
+  const [LogDetails, setLogDetails] = useState();
+  useEffect(() => {
+    (async function () {
+      const res2 = await fetch(`/api/getLeadLogs`, {
+        method: "POST",
+        body: JSON.stringify({
+          leadId: lead.id,
+        }),
+      });
+      const LeadLogs = await res2.json();
+      setLogDetails(LeadLogs);
+      setIsLoading(false);
+    })();
+  }, [ isLoading]);
 
-  const ShowProgress = () => {
-    setIsLoading(true);
-    setProgress(20);
-    setTimeout(() => setProgress(66), 500);
-    setTimeout(() => setProgress(78), 500);
-    setTimeout(() => setProgress(100), 500);
-    setTimeout(() => setIsLoading(false), 1000);
-  };
 
-  console.log(lead);
+console.log(LogDetails)
+
   return (
     <Sheet open={isOpen}>
       <Progress
@@ -97,7 +104,7 @@ export function SheetDemo({
               <ExtraInfo lead={lead} />
             </div>
 
-            <LeadLogs />
+            <LeadLogs LogDetails={LogDetails} />
           </div>
         </ScrollArea>
       </SheetContent>

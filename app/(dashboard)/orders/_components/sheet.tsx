@@ -218,7 +218,7 @@ export function SheetDemo({
         }),
       });
       const LeadLogs = await res2.json();
-      console.log(LeadLogs);
+   
       setLogDetails(LeadLogs);
       setIsLoading(false);
     })();
