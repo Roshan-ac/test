@@ -330,7 +330,7 @@ export function SheetDemo({
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <TabelPagination />
+                  {/* <TabelPagination /> */}
                 </div>
               </div>
             </div>

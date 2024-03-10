@@ -88,7 +88,7 @@ const SecondaryTable = ({ leads }: { leads: leadsData[]}) => {
         </TableBody>
       </Table>
       <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
-        <TabelPagination />
+        {/* <TabelPagination /> */}
       </div>
     </ScrollArea>
   );

@@ -10,12 +10,22 @@ import {
 } from "@/components/ui/table";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { InvoiceInterface } from "./sectionOne";
 import { SheetDemo } from "./Sheet";
 import { Date } from "@/components/Internals/PrimaryTable";
 
-export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
+export function PrimaryTable({
+  invoices,
+  setCurrentPage,
+  currentPage,
+  totalPage,
+}: {
+  invoices: InvoiceInterface[];
+  currentPage: number;
+  totalPage: number;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+}) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [leadDetails, setLeadDetails] = useState<any>();
 
@@ -42,7 +52,7 @@ export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
 
   return (
     <>
-      <ScrollArea className="relative h-[70vh] w-full rounded-md">
+      <ScrollArea className="relative h-max w-full rounded-md">
         <Table>
           <TableHeader className=" !sticky  left-0 top-0 w-full dark:hover:bg-hoverColor">
             <TableRow className="bg-tertiaryBackground ">
@@ -67,7 +77,7 @@ export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
                   <TableCell className="border-r border-r-tableSeperator">
                     <Date dateString={invoice.timestamp} />
                   </TableCell>
-                  <TableCell className="max-w-[260px] break-words border-r border-r-tableSeperator">
+                  <TableCell className="truncate max-w-[280px] overflow-hidden border-r border-r-tableSeperator">
                     {invoice.devicename}
                   </TableCell>
                   <TableCell className="border-r border-r-tableSeperator">
@@ -105,18 +115,17 @@ export function PrimaryTable({ invoices }: { invoices: InvoiceInterface[] }) {
           </TableBody>
         </Table>
         <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
-          <TabelPagination />
+        <TabelPagination tableType="Primary" totalPage={totalPage} currentPage={currentPage} setCurrentPage={setCurrentPage}  />
         </div>
       </ScrollArea>
-    {
-      leadDetails &&
-      <SheetDemo
-      varient={"lead"}
-      setIsOpen={setIsOpen}
-      isOpen={isOpen}
-      lead={leadDetails}
-      />
-    }
+      {leadDetails && (
+        <SheetDemo
+          varient={"lead"}
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+          lead={leadDetails}
+        />
+      )}
     </>
   );
 }

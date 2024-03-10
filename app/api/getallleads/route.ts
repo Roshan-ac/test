@@ -1,8 +1,9 @@
 const { BACKEND_API } = process.env;
 
-const GET = async () => {
+const POST = async (req:any) => {
+  const {orderPage}=await req.json()
   try {
-    const res = await fetch(`${BACKEND_API}/getAllLeads`, {
+    const res = await fetch(`${BACKEND_API}/getAllLeads?orderPage=${orderPage}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -21,4 +22,4 @@ const GET = async () => {
   }
 };
 
-export { GET };
+export { POST };

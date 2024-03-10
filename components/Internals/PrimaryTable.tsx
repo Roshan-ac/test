@@ -32,12 +32,19 @@ type OrdersData = {
 export function PrimaryTable({
   setIsOpen,
   SetSelectedRow,
+  totalPage,
   invoices,
+  currentPage,
+  setCurrentPage
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   SetSelectedRow: Dispatch<SetStateAction<object>>;
+  currentPage:number;
+  totalPage:number;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
   invoices: OrdersData[];
 }) {
+ 
   return (
     <ScrollArea className="relative h-[70vh] w-full rounded-md">
       <Table>
@@ -107,8 +114,8 @@ export function PrimaryTable({
             ))}
         </TableBody>
       </Table>
-      <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
-        <TabelPagination />
+      <div className="sticky bottom-0 flex w-full border-t border-t-tableSeperator bg-primaryBackground">
+        <TabelPagination  tableType="Primary" totalPage={totalPage} currentPage={currentPage} setCurrentPage={setCurrentPage}  />
       </div>
     </ScrollArea>
   );

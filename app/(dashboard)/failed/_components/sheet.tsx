@@ -246,7 +246,7 @@ export function SheetDemo({
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
                       <span className="inline-block w-[40%]">Token :</span>
                       <span className="inline-block w-full">
-                      {orderDetails?.myBookings.token}
+                        {orderDetails?.myBookings.token}
                       </span>
                     </Label>
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
@@ -256,12 +256,16 @@ export function SheetDemo({
                         {orderDetails.myBookings.pickuptime}
                       </span>
                     </Label>
-                    <Label htmlFor="vendor" className={`flex w-full space-x-4  `}>
-                    <span className="inline-block w-[40%]">Vendor :</span>
-                    <span className="inline-block w-full">
-                      {orderDetails.myBookings.assignedvendor ?? "No vendor assigned !"}
-                    </span>
-                  </Label>
+                    <Label
+                      htmlFor="vendor"
+                      className={`flex w-full space-x-4  `}
+                    >
+                      <span className="inline-block w-[40%]">Vendor :</span>
+                      <span className="inline-block w-full">
+                        {orderDetails.myBookings.assignedvendor ??
+                          "No vendor assigned !"}
+                      </span>
+                    </Label>
 
                     {SelectedRow.lead && (
                       <EvaluationReport
@@ -269,8 +273,6 @@ export function SheetDemo({
                         devicetype={SelectedRow.devicetype}
                       />
                     )}
-
-               
                   </div>
 
                   <div className="flex w-full items-center space-x-4 py-8">
@@ -451,7 +453,7 @@ export function SheetDemo({
                   </h2>
                 </div>
                 <div className="my-2 w-full">
-                  <FailedImageGallery leadId={orderDetails.myBookings.id}   />
+                  <FailedImageGallery leadId={orderDetails.myBookings.id} />
                 </div>
               </div>
 
@@ -483,7 +485,7 @@ export function SheetDemo({
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <TabelPagination />
+                  {/* <TabelPagination /> */}
                 </div>
               </div>
             </div>

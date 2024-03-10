@@ -7,57 +7,70 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { returnPaginationRange } from "@/lib/utils/returnPaginationRange";
+import { Dispatch, SetStateAction } from "react";
 
-export function TabelPagination() {
-  const [currentPage, setCurrentPage] = useState(1);
+export function TabelPagination({
+  currentPage,
+  tableType,
+  totalPage,
+  setCurrentPage,
+}: {
+  currentPage: number;
+  totalPage: number;
+  tableType: "Primary" | "Secondary";
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+}) {
+  console.log(totalPage)
+  const array = returnPaginationRange({
+    totalPage: totalPage,
+    page: currentPage,
+    siblings: 1,
+  });
+  console.log(array);
   return (
-    <Pagination className=" mx-0 w-max px-4 pt-4">
-      <PaginationContent>
-        <PaginationLink
-          className=" !dark:hover:bg-hoverColor  group !rounded-none bg-hoverColor text-black"
-          href={``}
-        >
-          <ChevronLeft
-            className=" !dark:hover:bg-hoverColor h-6 w-full !rounded-none text-black  group-hover:!text-hoverColor"
-            size={18}
+    <Pagination className=" flex w-full justify-start p-4">
+      <PaginationContent className="">
+        <PaginationItem className=" cursor-pointer" hidden={currentPage === 1}>
+          <PaginationPrevious
+            onClick={() => {
+              setCurrentPage(currentPage - 1);
+              window.scrollTo({ top: tableType == "Primary" ? 0 : 900 });
+            }}
           />
-        </PaginationLink>
+        </PaginationItem>
 
-        <PaginationLink
-          className=" !dark:hover:bg-hoverColor  !rounded-none bg-hoverColor text-black"
-          href="#"
+        {array.map((item, index) => {
+          return (
+            <PaginationItem
+            key={index}
+              className=" cursor-pointer"
+              aria-current={currentPage === index + 1 ? "page" : undefined}
+            >
+              <PaginationLink
+                onClick={() => {
+                  setCurrentPage(index + 1);
+                  window.scrollTo({ top: tableType == "Primary" ? 0 : 900 });
+                }}
+                isActive={currentPage == index + 1}
+              >
+                {item}
+              </PaginationLink>
+            </PaginationItem>
+          );
+        })}
+
+        <PaginationItem
+          className=" cursor-pointer"
+          hidden={currentPage === totalPage}
         >
-          1
-        </PaginationLink>
-        <PaginationLink
-          className=" !dark:hover:bg-hoverColor  !rounded-none bg-hoverColor text-black"
-          href="#"
-        >
-          2
-        </PaginationLink>
-        <PaginationLink
-          className=" !dark:hover:bg-hoverColor  !rounded-none bg-hoverColor text-black"
-          href="#"
-        >
-          3
-        </PaginationLink>
-        <PaginationLink
-          className=" !dark:hover:bg-hoverColor  !rounded-none bg-hoverColor text-black"
-          href="#"
-        >
-          4
-        </PaginationLink>
-        <PaginationLink
-          className=" !dark:hover:bg-hoverColor group  !rounded-none bg-hoverColor text-black"
-          href={`?page=${currentPage}`}
-        >
-          <ChevronRight
-            className=" !dark:hover:bg-hoverColor h-6 w-full !rounded-none text-black group-hover:!text-hoverColor"
-            size={18}
+          <PaginationNext
+            onClick={() => {
+              setCurrentPage(currentPage + 1);
+              window.scrollTo({ top: tableType == "Primary" ? 0 : 900 });
+            }}
           />
-        </PaginationLink>
+        </PaginationItem>
       </PaginationContent>
     </Pagination>
   );

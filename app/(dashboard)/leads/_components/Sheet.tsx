@@ -96,10 +96,6 @@ console.log(LogDetails)
                 </div>
 
                 <div>{lead && <LeadActions lead={lead} />}</div>
-
-                <div className="flex justify-center">
-                  <TabelPagination />
-                </div>
               </div>
               <ExtraInfo lead={lead} />
             </div>

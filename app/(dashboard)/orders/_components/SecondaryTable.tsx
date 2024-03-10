@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import {
   Table,
   TableBody,
@@ -19,9 +19,19 @@ type leadsData = {
   status: string | null;
   assignedvendor: string;
 };
-const SecondaryTable = ({ leads }: { leads: leadsData[] }) => {
+const SecondaryTable = ({
+  leads,
+  currentPage,
+  totalPage,
+  setCurrentPage,
+}: {
+  leads: leadsData[];
+  currentPage: number;
+  totalPage: number;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+}) => {
   return (
-    <ScrollArea className="relative h-[70vh] w-full rounded-md">
+    <ScrollArea className="relative h-max w-full rounded-md">
       <Table>
         <TableHeader className=" !sticky  left-0 top-0 w-full dark:hover:bg-hoverColor">
           <TableRow className="bg-tertiaryBackground ">
@@ -41,27 +51,26 @@ const SecondaryTable = ({ leads }: { leads: leadsData[] }) => {
                 className="group border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
                 key={index}
               >
-                <TableCell className="border-r border-r-tableSeperator">
-                  {/* <Date dateString={invoice.pickupdate}/> */}
+                <TableCell className="border-r !w-max border-r-tableSeperator">
                   {invoice.pickupdate}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
                   {invoice.pickuptime}
                 </TableCell>
-                <TableCell className="border-r border-r-tableSeperator">
+                <TableCell className="border-r truncate max-w-[280px] overflow-hidden  border-r-tableSeperator">
                   {invoice.devicename}
                 </TableCell>
-                <TableCell className="border-r border-r-tableSeperator">
+                <TableCell className="border-r  border-r-tableSeperator">
                   {invoice.assignedvendor}
                 </TableCell>
                 <TableCell className="flex justify-center border-r  border-r-tableSeperator">
-                  <span className="h-max w-max rounded-[18px] bg-purple-600 p-1 px-4 text-center !text-white">
+                  <span className="h-full w-max rounded-[18px] bg-purple-600 p-1 px-4 text-center !text-white">
                     {invoice.devicetype}
                   </span>
                 </TableCell>
                 <TableCell className="">
                   <span
-                    className={`inline-block h-max min-w-[100px] rounded-[18px] px-4 text-center  ${
+                    className={`inline-block h-full min-w-max rounded-[18px] px-4 text-center  ${
                       invoice.status == "Generated" || invoice.status == null
                         ? "bg-white"
                         : invoice.status == "Cn-Cancelled by Customer"
@@ -70,9 +79,11 @@ const SecondaryTable = ({ leads }: { leads: leadsData[] }) => {
                             ? "bg-[#F64848] text-white"
                             : invoice.status == "Assigned"
                               ? "bg-[#FF974A]"
-                              : invoice.status == "Completed"
+                              : invoice.status == "C-Completed"
                                 ? "bg-[#82C43C]"
-                                : invoice.status == "Out For Pickup" &&
+                              : invoice.status == "F-Not Interested In Selling"
+                                ? "bg-[#4b7ca1]"
+                                : invoice.status == "V-Out For Pickup" &&
                                   "bg-[#92B7FF]"
                     } p-1 px-2 text-black  `}
                   >
@@ -84,7 +95,12 @@ const SecondaryTable = ({ leads }: { leads: leadsData[] }) => {
         </TableBody>
       </Table>
       <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
-        <TabelPagination />
+        <TabelPagination
+          tableType="Secondary"
+          totalPage={totalPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
     </ScrollArea>
   );

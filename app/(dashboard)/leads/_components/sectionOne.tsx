@@ -6,7 +6,10 @@ import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 
 export interface LeadInterface {
   success: boolean;
-  leads: InvoiceInterface[];
+  leads: {
+    pagelimit: number;
+    data: InvoiceInterface[];
+  };
   completedOrdersCount: number;
   availableOrdersCount: number;
   assignedOrdersCount: number;
@@ -36,21 +39,23 @@ const SectionOne = ({
   varient: "lead" | "orders" | "failed" | "vendors";
 }) => {
   const [invoices, setInvoices] = useState<LeadInterface>();
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  // console.log(invoices);
   useEffect(() => {
     (async function () {
       const res = await fetch("/api/getallleads", {
-        method: "GET",
+        method: "POST",
+        body: JSON.stringify({
+          orderPage: currentPage,
+        }),
       });
       if (!res.ok) {
         console.log("Error :", res);
       }
       const data = await res.json();
       setInvoices(data);
-      // console.log(data);
     })();
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -58,7 +63,12 @@ const SectionOne = ({
         {!invoices && <TableSkeleton />}
         {invoices && (
           <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-            <PrimaryTable invoices={invoices.leads} />
+            <PrimaryTable
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPage={invoices.leads.pagelimit}
+              invoices={invoices.leads.data}
+            />
           </div>
         )}
 
