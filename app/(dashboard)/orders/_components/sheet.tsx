@@ -100,7 +100,7 @@ export function SheetDemo({
     const res = await fetch(`/api/failedLead`, {
       method: "POST",
       body: JSON.stringify({
-        vendorid: orderDetails.myBookings.assignedvendor ?? '',
+        vendorid: orderDetails.myBookings.assignedvendor ?? "",
         creditpoints: orderDetails.myBookings.creditpoints,
         label: "deduct",
         description: `Refund for ${orderDetails.myBookings.devicename}`,
@@ -119,14 +119,13 @@ export function SheetDemo({
         ),
       });
       router.refresh();
-    }else{
+    } else {
       toast({
         title: "Sorry!",
         description: (
           <p className=" text-green-500">Unable to update lead status.</p>
         ),
       });
-    
     }
   };
 
@@ -218,12 +217,12 @@ export function SheetDemo({
         }),
       });
       const LeadLogs = await res2.json();
-   
+
       setLogDetails(LeadLogs);
       setIsLoading(false);
     })();
   }, [SelectedRow, isLoading]);
-  console.log(orderDetails);
+  console.log(LogDetails);
   const ShowProgress = () => {
     setIsLoading(true);
     setProgress(8);
@@ -327,9 +326,7 @@ export function SheetDemo({
                   <div className="flex w-full items-center space-x-4 py-8">
                     <div>
                       <AssignDialog
-                        isAssigned={
-                          orderDetails.myBookings.assignedvendor !== null
-                        }
+                 
                         handleAssign={handleAssign}
                       />
                     </div>

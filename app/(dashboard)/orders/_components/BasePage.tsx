@@ -11,8 +11,8 @@ import { PrimaryTable } from "./PrimaryTable";
 export interface InvoiceInterface {
   success: boolean;
   orders: {
-    pagelimit:number;
-    data:{
+    pagelimit: number;
+    data: {
       id: string;
       timestamp: string;
       devicename: string;
@@ -27,45 +27,43 @@ export interface InvoiceInterface {
         | "C-Completed"
         | null;
     }[];
-    
-  }
+  };
   leads: {
-    pagelimit:number;
-    data:{
-    id: string;
-    pickupdate: string;
-    devicename: string;
-    pickuptime: string;
-    devicetype: string;
-    status: string | null;
-    assignedvendor: string;
-  }[];
-
-}
-completedOrdersCount: number;
-availableOrdersCount: number;
-assignedOrdersCount: number;
+    pagelimit: number;
+    data: {
+      id: string;
+      pickupdate: string;
+      devicename: string;
+      pickuptime: string;
+      devicetype: string;
+      status: string | null;
+      assignedvendor: string;
+    }[];
+  };
+  completedOrdersCount: number;
+  availableOrdersCount: number;
+  assignedOrdersCount: number;
 }
 const BasePage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [invoices, setInvoices] = useState<InvoiceInterface>();
   const [isLoading, setIsLoading] = useState<boolean>();
-  const [currentOrderPage,setCurrentOrderPage]=useState<number>(1);
-  const [currentLeadPage,setCurrentLeadPage]=useState<number>(1);
+  const [currentOrderPage, setCurrentOrderPage] = useState<number>(1);
+  const [currentLeadPage, setCurrentLeadPage] = useState<number>(1);
   const [SelectedRow, SetSelectedRow] = useState<{
     lead: number;
     devicetype: deviceType;
   }>();
- 
+
   useEffect(() => {
     setIsLoading(true),
       (async function () {
         const res = await fetch(`/api/getallorders`, {
           method: "POST",
-          body:JSON.stringify({
-            orderPage:currentOrderPage,
-            leadPage:currentLeadPage
-          })
+          body: JSON.stringify({
+            orderPage: currentOrderPage,
+            leadPage: currentLeadPage,
+          }),
         });
         if (!res.ok) {
           console.log("Error :", res);
@@ -75,8 +73,8 @@ const BasePage = () => {
         console.log(data);
       })();
     setIsLoading(false);
-  }, [currentLeadPage,currentOrderPage]);
-  console.log(invoices);
+  }, [currentLeadPage, currentOrderPage, isOpen]);
+
   return (
     <div className=" w-full gap-4 space-y-6 px-8">
       {!invoices && <TableSkeleton />}
@@ -104,9 +102,12 @@ const BasePage = () => {
       )}
       {invoices && (
         <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-          <SecondaryTable          currentPage={currentLeadPage}
+          <SecondaryTable
+            currentPage={currentLeadPage}
             setCurrentPage={setCurrentLeadPage}
-            totalPage={invoices.leads.pagelimit} leads={invoices.leads.data} />
+            totalPage={invoices.leads.pagelimit}
+            leads={invoices.leads.data}
+          />
         </div>
       )}
       {SelectedRow && (

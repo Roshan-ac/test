@@ -18,10 +18,8 @@ type AssignData = {
 };
 
 export function AssignDialog({
-  isAssigned,
   handleAssign,
 }: {
-  isAssigned: boolean;
   handleAssign: (vendorId: string) => {};
 }) {
   const [vendorId, setVendorId] = useState();
@@ -31,10 +29,7 @@ export function AssignDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          disabled={isAssigned}
-          className=" !h-max rounded-none !bg-[#82C43C] px-8"
-        >
+        <Button className=" !h-max rounded-none !bg-[#82C43C] px-8">
           Assign
         </Button>
       </DialogTrigger>

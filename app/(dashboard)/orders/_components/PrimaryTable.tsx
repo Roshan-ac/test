@@ -75,7 +75,7 @@ export function PrimaryTable({
                 <TableCell className="border-r border-r-tableSeperator">
                   <Date dateString={invoice.timestamp} />
                 </TableCell>
-                <TableCell className="truncate max-w-[280px] overflow-hidden border-r border-r-tableSeperator">
+                <TableCell className="max-w-[280px] overflow-hidden truncate border-r border-r-tableSeperator">
                   {invoice.devicename}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
@@ -90,7 +90,7 @@ export function PrimaryTable({
                 </TableCell>
                 <TableCell className="w-max">
                   <span
-                    className={`inline-block h-max min-w-max m-auto rounded-[18px] px-4 text-center opacity-90  ${
+                    className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90  ${
                       invoice.status == "Generated" || invoice.status == null
                         ? "!bg-white"
                         : invoice.status == "Cn-Cancelled by Customer"
@@ -107,7 +107,9 @@ export function PrimaryTable({
                                     "!bg-[#92B7FF]"
                     } bg-red-400 p-1 px-2 text-black  `}
                   >
-                    {invoice.status == null ? "Generated" : invoice.status}
+                    {invoice.status == null
+                      ? "Generated"
+                      : invoice.status.split("-")[1]}
                   </span>
                 </TableCell>
               </TableRow>
@@ -116,7 +118,7 @@ export function PrimaryTable({
       </Table>
       <div className="sticky bottom-0 flex w-full border-t border-t-tableSeperator bg-primaryBackground">
         <TabelPagination
-        tableType="Primary"
+          tableType="Primary"
           totalPage={totalPage}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

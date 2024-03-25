@@ -63,31 +63,35 @@ const SecondaryTable = ({
                 <TableCell className="border-r  border-r-tableSeperator">
                   {invoice.assignedvendor}
                 </TableCell>
-                <TableCell className="flex justify-center border-r  border-r-tableSeperator">
-                  <span className="h-full w-max rounded-[18px] bg-purple-600 p-1 px-4 text-center !text-white">
+                <TableCell className="border-r border-r-tableSeperator">
+                  <span
+                    className={`inline-block h-max min-w-full rounded-[18px] bg-purple-600 p-1 px-2 text-center !text-white opacity-90`}
+                  >
                     {invoice.devicetype}
                   </span>
                 </TableCell>
                 <TableCell className="">
-                  <span
-                    className={`inline-block h-full min-w-max rounded-[18px] px-4 text-center  ${
+                <span
+                    className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90  ${
                       invoice.status == "Generated" || invoice.status == null
-                        ? "bg-white"
+                        ? "!bg-white"
                         : invoice.status == "Cn-Cancelled by Customer"
-                          ? "bg-[#FFA0A0]"
-                          : invoice.status == "Failed"
-                            ? "bg-[#F64848] text-white"
-                            : invoice.status == "Assigned"
-                              ? "bg-[#FF974A]"
-                              : invoice.status == "C-Completed"
-                                ? "bg-[#82C43C]"
-                              : invoice.status == "F-Not Interested In Selling"
-                                ? "bg-[#4b7ca1]"
-                                : invoice.status == "V-Out For Pickup" &&
-                                  "bg-[#92B7FF]"
-                    } p-1 px-2 text-black  `}
+                          ? "!bg-[#FFA0A0] text-[#222222]"
+                          : invoice.status == "Cn-Cancelled by Cashkr"
+                            ? " !bg-[#0ed380] text-[#111a1c]"
+                            : invoice.status == "Failed"
+                              ? "!bg-[#F64848] text-white"
+                              : invoice.status == "Assigned"
+                                ? "!bg-[#FF974A]"
+                                : invoice.status == "C-Completed"
+                                  ? "!bg-[#82C43C]"
+                                  : invoice.status == "Out For Pickup" &&
+                                    "!bg-[#92B7FF]"
+                    } bg-red-400 p-1 px-2 text-black  `}
                   >
-                    {invoice.status == null ? "Generated" : invoice.status}
+                    {invoice.status == null
+                      ? "Generated"
+                      : invoice.status.split("-")[1]}
                   </span>
                 </TableCell>
               </TableRow>
