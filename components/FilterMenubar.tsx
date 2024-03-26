@@ -1,19 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Plus, Search } from "lucide-react";
 
-function SearchBar() {
-  return (
-    <div className="flex h-max items-center">
-      <Search className=" text-secondaryText" />
-      <Input
-        className=" border-b border-none !bg-transparent"
-        type="email"
-        placeholder="Search"
-      />
-    </div>
-  );
-}
-
 // export default FiltersBox;
 import {
   Select,
@@ -23,12 +10,52 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "./ui/button";
+import { deviceType } from "@/interfaces";
+import { useState } from "react";
 
-export function FilterMenubar() {
+export function FilterMenubar({
+  setFilterQueries,
+  filterQueries,
+}: {
+  setFilterQueries: React.Dispatch<
+    React.SetStateAction<{
+      search: string;
+      city: string;
+      status: string;
+      fromDate: string;
+      toDate: string;
+      category: string;
+    }>
+  >;
+  filterQueries: {
+    search: string;
+    city: string;
+    status: string;
+    fromDate: string;
+    toDate: string;
+    category: string;
+  };
+}) {
+  const [searchText, setSearchText] = useState<string>();
   return (
-    <div className="sticky top-[50px] z-10 flex h-max  items-center bg-secondaryBackground px-8  py-2">
+    <div className=" flex h-max  items-center bg-secondaryBackground px-8  py-2">
       <div className=" h-[38px] rounded-[16px] !bg-tertiaryBackground px-6">
-        <SearchBar />
+        <div className="flex h-max items-center">
+          <Input
+            className=" border-b border-none !bg-transparent"
+            type="email"
+            placeholder="Search"
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+          />
+          <Search
+            onClick={() => {
+              setFilterQueries({ ...filterQueries, search: searchText });
+            }}
+            className=" cursor-pointer text-secondaryText hover:text-green-400"
+          />
+        </div>
       </div>
       <div className=" ml-2 grid w-full grid-cols-6 gap-2">
         <Select>
@@ -103,7 +130,9 @@ export function FilterMenubar() {
 
           <SelectContent className=" !bg-secondaryBackground"></SelectContent>
         </Select>
-        <Button className=" !bg-[#82C43C] rounded-[16px] font-semibold tracking-wide">Apply</Button>
+        <Button className=" rounded-[16px] !bg-[#82C43C] font-semibold tracking-wide">
+          Apply
+        </Button>
       </div>
     </div>
   );

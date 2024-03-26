@@ -114,6 +114,7 @@ export function PrimaryTable({
                 </TableCell>
               </TableRow>
             ))}
+          {invoices.length < 1 && <p className=" p-4 text-xl">No Search Results Found.</p>}
         </TableBody>
       </Table>
       <div className="sticky bottom-0 flex w-full border-t border-t-tableSeperator bg-primaryBackground">

@@ -16,59 +16,89 @@ type cardData = {
   completedOrdersCount: number;
   availableOrdersCount: number;
   assignedOrdersCount: number;
-}
-export function CardContainer({cardsValues}:{cardsValues:cardData}) {
+  failedOrdersCount: number;
+};
+export function CardContainer({ cardsValues }: { cardsValues: cardData }) {
   return (
-    <div className="grid h-[40vh] grid-cols-3 gap-6">
+    <div className="grid h-[30vh] grid-cols-4 gap-6">
       <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
-        <div className="flex space-x-10">
-          <div>
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="flex items-center space-x-8">
             <Image
-              src={"/Images/Ok.svg"}
+          src={"/Images/Ok.svg"}
               width={60}
               quality={200}
               height={60}
               alt=""
             />
+            <h1 className=" text-5xl font-medium">
+            {cardsValues.availableOrdersCount}
+            </h1>
           </div>
-          <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">{cardsValues.availableOrdersCount}</h1>
-            <h6 className=" text-xl text-secondaryText">Available</h6>
-          </div>
+
+          <h6 className=" w-full text-right text-2xl text-secondaryText">
+          Available
+          </h6>
         </div>
       </Card>
       <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
-      <div className="flex space-x-10">
-          <div>
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="flex items-center space-x-8">
             <Image
-              src={"/Images/Refresh.svg"}
+                src={"/Images/Refresh.svg"}
               width={60}
               quality={200}
               height={60}
               alt=""
             />
+            <h1 className=" text-5xl font-medium">
+            {cardsValues.completedOrdersCount}
+            </h1>
           </div>
-          <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">{cardsValues.completedOrdersCount}</h1>
-            <h6 className=" text-xl text-secondaryText">Completed</h6>
-          </div>
+
+          <h6 className=" w-full text-right text-2xl text-secondaryText">
+          Completed
+          </h6>
         </div>
       </Card>
       <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
-      <div className="flex space-x-10">
-          <div>
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="flex items-center space-x-8">
             <Image
-              src={"/Images/call.svg"}
+                 src={"/Images/call.svg"}
               width={60}
               quality={200}
               height={60}
               alt=""
             />
+            <h1 className=" text-5xl font-medium">
+            {cardsValues.assignedOrdersCount}
+            </h1>
           </div>
-          <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">{cardsValues.assignedOrdersCount}</h1>
-            <h6 className=" text-xl text-secondaryText">Assigned</h6>
+
+          <h6 className=" w-full text-right text-2xl text-secondaryText">
+          Assigned
+          </h6>
+        </div>
+      </Card>
+      <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="flex items-center space-x-8">
+            <Image
+              src={"/Images/cancel.svg"}
+              width={60}
+              quality={200}
+              height={60}
+              alt=""
+            />
+            <h1 className=" text-5xl font-medium">
+              {cardsValues.assignedOrdersCount}
+            </h1>
           </div>
+
+          <h6 className=" w-full text-right text-2xl text-secondaryText">
+            Failed
+          </h6>
         </div>
       </Card>
     </div>
