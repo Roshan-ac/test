@@ -1,3 +1,4 @@
+'use client'
 import { Input } from "@/components/ui/input";
 import { Cross, Plus, Search, X } from "lucide-react";
 

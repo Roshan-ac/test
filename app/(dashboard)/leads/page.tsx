@@ -20,7 +20,7 @@ const page = async () => {
   if (user.role === "Admin" || user.role === "Sales")
     return (
       <div className="h-full w-full space-y-2 pb-20">
-        <FilterMenubar />
+        {/* <FilterMenubar /> */}
         <SectionOne varient="lead" />
       </div>
     );
