@@ -49,31 +49,30 @@ export interface InvoiceInterface {
 const BasePage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [invoices, setInvoices] = useState<InvoiceInterface>();
-  const [isLoading, setIsLoading] = useState<boolean>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [filterQueries, setFilterQueries] = useState<{
     search: string;
     city: string;
     status: string;
-    fromDate: string;
-    toDate: string;
+    fromDate: Date;
+    toDate: Date;
     category: string;
   }>({
     search: "",
     city: "",
     status: "",
-    fromDate: "",
-    toDate: "",
+    fromDate: undefined,
+    toDate: undefined,
     category: "",
   });
   const [currentOrderPage, setCurrentOrderPage] = useState<number>(1);
   const [currentLeadPage, setCurrentLeadPage] = useState<number>(1);
+  const [isApplied, setIsApplied] = useState(false);
   const [SelectedRow, SetSelectedRow] = useState<{
     lead: number;
     devicetype: deviceType;
   }>();
-
   useEffect(() => {
-
     setIsLoading(true),
       (async function () {
         const res = await fetch(`/api/getallorders`, {
@@ -94,19 +93,23 @@ const BasePage = () => {
         }
         const data = await res.json();
         setInvoices(data);
+        setIsLoading(false);
         console.log(data);
       })();
-    setIsLoading(false);
   }, [currentLeadPage, currentOrderPage, isOpen, filterQueries]);
+  console.log(isApplied);
   return (
     <div className=" w-full space-y-2 py-4">
       <FilterMenubar
+        isApplied={isApplied}
+        setIsApplied={setIsApplied}
+        isLoading={isLoading}
         filterQueries={filterQueries}
         setFilterQueries={setFilterQueries}
       />
       <div className="space-y-6  px-8">
         {!invoices && <TableSkeleton />}
-        {isLoading && <TableSkeleton/>}
+        {isLoading && <TableSkeleton />}
         {invoices && (
           <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
             <PrimaryTable
