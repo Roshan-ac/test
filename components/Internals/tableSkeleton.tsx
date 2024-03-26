@@ -7,15 +7,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-export function TableSkeleton() {
+export function TableSkeleton({ skeleton }: { skeleton: number }) {
   return (
-    <div className="h-full w-full">
-      <Skeleton className="h-[40px] w-full rounded-xl" />
-      <div className="w-full h-full grid-rows-10 grid grid-cols-6 gap-1 my-1">
-        {Array.from({ length: 48 }).map((item,index) => (
-          <Skeleton key={index} color="#40b896" className="h-10 w-full text-[#40b896]" />
-        ))}
-      </div>
-    </div>
+    <TableBody>
+      {Array.from({ length: 20 }).map((item, index) => (
+        <TableRow
+          className=" !gap-2 border !border-tableSeperator text-sm"
+          key={index}
+        >
+          {Array.from({ length: skeleton }).map((item, index) => (
+            <TableCell
+            key={index}
+              className={`!h-8 w-1/${skeleton} animate-pulse border-r !border-r-tableSeperator !bg-tertiaryBackground `}
+            ></TableCell>
+          ))}
+        </TableRow>
+      ))}
+    </TableBody>
   );
 }

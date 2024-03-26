@@ -11,6 +11,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { parseISO, format } from "date-fns";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { InvoiceInterface } from "./BasePage";
+import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 
 type leads = {
   id: string;
@@ -26,6 +27,7 @@ type leads = {
 
 export function PrimaryTable({
   setIsOpen,
+  isLoading,
   invoices,
   setCurrentPage,
   currentPage,
@@ -34,12 +36,13 @@ export function PrimaryTable({
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: leads[];
+  isLoading:boolean;
   currentPage: number;
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
   SetSelectedRow: Dispatch<SetStateAction<object>>;
 }) {
-  console.log(totalPage)
+  console.log(totalPage);
   return (
     <ScrollArea className="relative h-max w-full rounded-md">
       <Table>
@@ -54,9 +57,9 @@ export function PrimaryTable({
           </TableRow>
         </TableHeader>
 
-        <TableBody className="w-full">
-          {invoices &&
-            invoices.map((invoice, index) => (
+        {invoices && (
+          <TableBody className="w-full">
+            {invoices.map((invoice, index) => (
               <TableRow
                 onClick={() => {
                   SetSelectedRow({
@@ -111,7 +114,12 @@ export function PrimaryTable({
                 </TableCell>
               </TableRow>
             ))}
-        </TableBody>
+             {invoices?.length < 1 && (
+              <p className=" p-4 text-xl">No Search Results Found.</p>
+            )}
+          </TableBody>
+        )}
+          {!invoices && isLoading && <TableSkeleton skeleton={6} />}
       </Table>
       <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
         <TabelPagination

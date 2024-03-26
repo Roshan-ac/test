@@ -28,10 +28,10 @@ const Navbar = () => {
             <span>Add</span>
           </div>
           <Bell />
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center gap-2">
             <UserAvatar />
             <ChevronDown className=" cursor-pointer" />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -12,12 +12,15 @@ import { parseISO, format } from "date-fns";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { VendorsInterface } from "./BasePage";
 import { cn } from "@/lib/utils";
+import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 
 export function PrimaryTable({
   setIsOpen,
   invoices,
+  isLoading,
   SetSelectedRow,
 }: {
+  isLoading:boolean,
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: VendorsInterface[];
   SetSelectedRow: Dispatch<SetStateAction<object>>;
@@ -36,8 +39,9 @@ export function PrimaryTable({
           </TableRow>
         </TableHeader>
 
-        <TableBody className="w-full">
           {invoices &&
+        <TableBody className="w-full">
+          {
             invoices.map((invoice, index) => (
               <TableRow
                 onClick={() => {
@@ -88,6 +92,8 @@ export function PrimaryTable({
               </TableRow>
             ))}
         </TableBody>
+}
+{!invoices && isLoading && <TableSkeleton skeleton={6}/>}
       </Table>
       <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
         {/* <TabelPagination /> */}

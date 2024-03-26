@@ -14,15 +14,18 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { InvoiceInterface } from "./sectionOne";
 import { SheetDemo } from "./Sheet";
 import { Date } from "@/components/Internals/PrimaryTable";
+import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 
 export function PrimaryTable({
   invoices,
   setCurrentPage,
   currentPage,
+  isLoading,
   totalPage,
 }: {
   invoices: InvoiceInterface[];
   currentPage: number;
+  isLoading: boolean;
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }) {
@@ -31,7 +34,6 @@ export function PrimaryTable({
 
   const handleOrderClick = async (devicetype: string, lead: string) => {
     setIsOpen((prev) => !prev);
-
     const res = await fetch(`/api/getFullBookings/${devicetype}`, {
       method: "POST",
       body: JSON.stringify({
@@ -42,13 +44,10 @@ export function PrimaryTable({
     if (!res.ok) {
       console.log(res);
     }
-
     const data = await res.json();
     console.log(data);
     setLeadDetails(data.myBookings);
   };
-
-  console.log(leadDetails);
 
   return (
     <>
@@ -64,9 +63,9 @@ export function PrimaryTable({
             </TableRow>
           </TableHeader>
 
-          <TableBody className="w-full">
-            {invoices &&
-              invoices.map((invoice, index) => (
+          {invoices && (
+            <TableBody className="w-full">
+              {invoices.map((invoice, index) => (
                 <TableRow
                   onClick={() =>
                     handleOrderClick(invoice.devicetype, invoice.id)
@@ -77,7 +76,7 @@ export function PrimaryTable({
                   <TableCell className="border-r border-r-tableSeperator">
                     <Date dateString={invoice.timestamp} />
                   </TableCell>
-                  <TableCell className="truncate max-w-[280px] overflow-hidden border-r border-r-tableSeperator">
+                  <TableCell className="max-w-[280px] overflow-hidden truncate border-r border-r-tableSeperator">
                     {invoice.devicename}
                   </TableCell>
                   <TableCell className="border-r border-r-tableSeperator">
@@ -112,10 +111,20 @@ export function PrimaryTable({
                   </TableCell>
                 </TableRow>
               ))}
-          </TableBody>
+               {invoices?.length < 1 && (
+              <p className=" p-4 text-xl">No Search Results Found.</p>
+            )}
+            </TableBody>
+          )}
+          {!invoices && isLoading && <TableSkeleton skeleton={5} />}
         </Table>
         <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
-        <TabelPagination tableType="Primary" totalPage={totalPage} currentPage={currentPage} setCurrentPage={setCurrentPage}  />
+          <TabelPagination
+            tableType="Primary"
+            totalPage={totalPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       </ScrollArea>
       {leadDetails && (

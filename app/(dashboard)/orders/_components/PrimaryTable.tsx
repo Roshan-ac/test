@@ -12,6 +12,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import { parseISO, format } from "date-fns";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
+import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 
 type OrdersData = {
   id: string;
@@ -33,11 +34,13 @@ type OrdersData = {
 export function PrimaryTable({
   setIsOpen,
   SetSelectedRow,
+  isLoading,
   totalPage,
   invoices,
   currentPage,
   setCurrentPage,
 }: {
+  isLoading: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   SetSelectedRow: Dispatch<SetStateAction<object>>;
   currentPage: number;
@@ -46,7 +49,7 @@ export function PrimaryTable({
   invoices: OrdersData[];
 }) {
   return (
-    <ScrollArea className="relative h-max w-full rounded-md">
+    <ScrollArea className=" relative h-max w-full rounded-md">
       <Table>
         <TableHeader className=" !sticky left-0  top-0 z-[1] w-full dark:hover:bg-hoverColor">
           <TableRow className="bg-tertiaryBackground ">
@@ -57,10 +60,9 @@ export function PrimaryTable({
             <TableHead className="text-center">Status</TableHead>
           </TableRow>
         </TableHeader>
-
-        <TableBody className="w-full">
-          {invoices &&
-            invoices.map((invoice, index) => (
+        {invoices && (
+          <TableBody className="w-full">
+            {invoices.map((invoice, index) => (
               <TableRow
                 onClick={() => {
                   SetSelectedRow({
@@ -114,17 +116,23 @@ export function PrimaryTable({
                 </TableCell>
               </TableRow>
             ))}
-          {invoices.length < 1 && <p className=" p-4 text-xl">No Search Results Found.</p>}
-        </TableBody>
+            {invoices?.length < 1 && (
+              <p className=" p-4 text-xl">No Search Results Found.</p>
+            )}
+          </TableBody>
+        )}
+        {!invoices && isLoading && <TableSkeleton skeleton={5} />}
       </Table>
-      <div className="sticky bottom-0 flex w-full border-t border-t-tableSeperator bg-primaryBackground">
-        <TabelPagination
-          tableType="Primary"
-          totalPage={totalPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
+      {totalPage && (
+        <div className="sticky bottom-0 flex w-full border-t border-t-tableSeperator bg-primaryBackground">
+          <TabelPagination
+            tableType="Primary"
+            totalPage={totalPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
+      )}
     </ScrollArea>
   );
 }

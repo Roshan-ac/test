@@ -32,9 +32,10 @@ const BasePage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [invoices, setInvoices] = useState<VendorsInterface[]>();
   const [SelectedRow, SetSelectedRow] = useState<VendorsInterface>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  console.log(invoices);
   useEffect(() => {
+    setIsLoading(true),
     (async function () {
       const res = await fetch("/api/getallvendors", {
         method: "GET",
@@ -44,39 +45,46 @@ const BasePage = () => {
       }
       const data = await res.json();
       setInvoices(data.vendorsDetails);
-      console.log(data);
+      setIsLoading(false);
     })();
   }, []);
-  console.log(invoices);
+
   return (
-    <div className=" w-full gap-4 space-y-6 px-8">
-      {!invoices && <TableSkeleton />}
-      {invoices && (
+    <div className=" w-full space-y-2 py-4">
+      {/* <FilterMenubar
+        isApplied={isApplied}
+        setIsApplied={setIsApplied}
+        isLoading={isLoading}
+        filterQueries={filterQueries}
+        setFilterQueries={setFilterQueries}
+      /> */}
+      <div className="space-y-6  px-8">
         <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
           <PrimaryTable
+          isLoading={isLoading}
             SetSelectedRow={SetSelectedRow}
             setIsOpen={setIsOpen}
             invoices={invoices}
           />
         </div>
-      )}
-      {invoices && (
-        <CardContainer
-          cardsValues={{
-            acceptedLeads: 29,
-            pendingLeads: 95,
-            rejectedLeads: 35,
-          }}
-        />
-      )}
-      {SelectedRow && (
-        <SheetDemo
-          SelectedRow={SelectedRow}
-          varient={"failed"}
-          setIsOpen={setIsOpen}
-          isOpen={isOpen}
-        />
-      )}
+        {invoices && (
+          <CardContainer
+            cardsValues={{
+              acceptedLeads: 29,
+              pendingLeads: 95,
+              rejectedLeads: 35,
+            }}
+          />
+        )}
+        {SelectedRow && (
+          <SheetDemo
+            SelectedRow={SelectedRow}
+            varient={"failed"}
+            setIsOpen={setIsOpen}
+            isOpen={isOpen}
+          />
+        )}
+      </div>
     </div>
   );
 };

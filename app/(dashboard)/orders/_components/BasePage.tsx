@@ -74,6 +74,7 @@ const BasePage = () => {
   }>();
   useEffect(() => {
     setIsLoading(true),
+    setInvoices(undefined);
       (async function () {
         const res = await fetch(`/api/getallorders`, {
           method: "POST",
@@ -108,20 +109,17 @@ const BasePage = () => {
         setFilterQueries={setFilterQueries}
       />
       <div className="space-y-6  px-8">
-        {!invoices && <TableSkeleton />}
-        {isLoading && <TableSkeleton />}
-        {invoices && (
-          <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
-            <PrimaryTable
-              SetSelectedRow={SetSelectedRow}
-              currentPage={currentOrderPage}
-              setCurrentPage={setCurrentOrderPage}
-              totalPage={invoices.orders.pagelimit}
-              setIsOpen={setIsOpen}
-              invoices={invoices.orders.data}
-            />
-          </div>
-        )}
+        <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
+          <PrimaryTable
+            isLoading={isLoading}
+            SetSelectedRow={SetSelectedRow}
+            currentPage={currentOrderPage}
+            setCurrentPage={setCurrentOrderPage}
+            totalPage={invoices?.orders.pagelimit}
+            setIsOpen={setIsOpen}
+            invoices={invoices?.orders.data}
+          />
+        </div>
 
         {invoices && (
           <CardContainer
