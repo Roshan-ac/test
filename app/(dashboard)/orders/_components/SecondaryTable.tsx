@@ -38,7 +38,7 @@ const SecondaryTable = ({
             <TableHead className="w-max">Date</TableHead>
             <TableHead>Slot</TableHead>
             <TableHead>Model</TableHead>
-            <TableHead className="text-center">Vendor</TableHead>
+            <TableHead className="text-center">Lead Id</TableHead>
             <TableHead className="text-center">Type</TableHead>
             <TableHead>Status</TableHead>
           </TableRow>
@@ -51,17 +51,17 @@ const SecondaryTable = ({
                 className="group border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
                 key={index}
               >
-                <TableCell className="border-r !w-max border-r-tableSeperator">
+                <TableCell className="!w-max border-r border-r-tableSeperator">
                   {invoice.pickupdate}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
                   {invoice.pickuptime}
                 </TableCell>
-                <TableCell className="border-r truncate max-w-[280px] overflow-hidden  border-r-tableSeperator">
+                <TableCell className="max-w-[280px] overflow-hidden truncate border-r  border-r-tableSeperator">
                   {invoice.devicename}
                 </TableCell>
                 <TableCell className="border-r  border-r-tableSeperator">
-                  {invoice.assignedvendor}
+                  {invoice.id}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
                   <span
@@ -71,7 +71,7 @@ const SecondaryTable = ({
                   </span>
                 </TableCell>
                 <TableCell className="">
-                <span
+                  <span
                     className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90  ${
                       invoice.status == "Generated" || invoice.status == null
                         ? "!bg-white"
@@ -79,14 +79,18 @@ const SecondaryTable = ({
                           ? "!bg-[#FFA0A0] text-[#222222]"
                           : invoice.status == "Cn-Cancelled by Cashkr"
                             ? " !bg-[#0ed380] text-[#111a1c]"
-                            : invoice.status == "Failed"
-                              ? "!bg-[#F64848] text-white"
-                              : invoice.status == "Assigned"
-                                ? "!bg-[#FF974A]"
-                                : invoice.status == "C-Completed"
-                                  ? "!bg-[#82C43C]"
-                                  : invoice.status == "Out For Pickup" &&
-                                    "!bg-[#92B7FF]"
+                            : invoice.status == "F-Cancelled by Cashkr"
+                              ? " !bg-[#0ed380] text-[#111a1c]"
+                              : invoice.status == "Failed"
+                                ? "!bg-[#F64848] text-white"
+                                : invoice.status == "Assigned"
+                                  ? "!bg-[#FF974A]"
+                                  : invoice.status === "F-Sold Somewhere else"
+                                    ? "!bg-[#bf2fb8]"
+                                    : invoice.status == "C-Completed"
+                                      ? "!bg-[#82C43C]"
+                                      : invoice.status === "V-Out For Pickup" &&
+                                        "!bg-[#92B7FF]"
                     } bg-red-400 p-1 px-2 text-black  `}
                   >
                     {invoice.status == null

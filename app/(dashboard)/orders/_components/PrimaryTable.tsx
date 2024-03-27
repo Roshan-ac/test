@@ -21,14 +21,17 @@ type OrdersData = {
   city: string | null;
   devicetype: string;
   status:
-    | "Generated"
-    | "Cn-Cancelled by Customer"
-    | "Failed"
-    | "Out For Pickup"
-    | "Cn-Cancelled by Cashkr"
-    | "Assigned"
-    | "C-Completed"
-    | null;
+  | "Generated"
+  | "Cn-Cancelled by Customer"
+  | "F-Cancelled by Customer"
+  | "F-Cancelled by Cashkr"
+  | "Cn-Cancelled by Cashkr"
+  | "Failed"
+  | "V-Out For Pickup"
+  | "Assigned"
+  | "F-Sold Somewhere else"
+  | "C-Completed"
+  | null;
 };
 
 export function PrimaryTable({
@@ -91,7 +94,7 @@ export function PrimaryTable({
                   </span>
                 </TableCell>
                 <TableCell className="w-max">
-                  <span
+                <span
                     className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90  ${
                       invoice.status == "Generated" || invoice.status == null
                         ? "!bg-white"
@@ -99,14 +102,18 @@ export function PrimaryTable({
                           ? "!bg-[#FFA0A0] text-[#222222]"
                           : invoice.status == "Cn-Cancelled by Cashkr"
                             ? " !bg-[#0ed380] text-[#111a1c]"
-                            : invoice.status == "Failed"
-                              ? "!bg-[#F64848] text-white"
-                              : invoice.status == "Assigned"
-                                ? "!bg-[#FF974A]"
-                                : invoice.status == "C-Completed"
-                                  ? "!bg-[#82C43C]"
-                                  : invoice.status == "Out For Pickup" &&
-                                    "!bg-[#92B7FF]"
+                            : invoice.status == "F-Cancelled by Cashkr"
+                              ? " !bg-[#0ed380] text-[#111a1c]"
+                              : invoice.status == "Failed"
+                                ? "!bg-[#F64848] text-white"
+                                : invoice.status == "Assigned"
+                                  ? "!bg-[#FF974A]"
+                                  : invoice.status === "F-Sold Somewhere else"
+                                    ? "!bg-[#bf2fb8]"
+                                    : invoice.status == "C-Completed"
+                                      ? "!bg-[#82C43C]"
+                                      : invoice.status === "V-Out For Pickup" &&
+                                        "!bg-[#92B7FF]"
                     } bg-red-400 p-1 px-2 text-black  `}
                   >
                     {invoice.status == null

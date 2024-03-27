@@ -22,8 +22,11 @@ export interface InvoiceInterface {
       status:
         | "Generated"
         | "Cn-Cancelled by Customer"
+        | "F-Cancelled by Customer"
+        | "F-Cancelled by Cashkr"
+        | "Cn-Cancelled by Cashkr"
         | "Failed"
-        | "Out For Pickup"
+        | "V-Out For Pickup"
         | "Assigned"
         | "C-Completed"
         | null;
@@ -37,7 +40,16 @@ export interface InvoiceInterface {
       devicename: string;
       pickuptime: string;
       devicetype: string;
-      status: string | null;
+      status:
+        | "Cn-Cancelled by Customer"
+        | "F-Cancelled by Customer"
+        | "F-Cancelled by Cashkr"
+        | "Cn-Cancelled by Cashkr"
+        | "Failed"
+        | "V-Out For Pickup"
+        | "Assigned"
+        | "C-Completed"
+        | null;
       assignedvendor: string;
     }[];
   };
@@ -73,32 +85,31 @@ const BasePage = () => {
     devicetype: deviceType;
   }>();
   useEffect(() => {
-    setIsLoading(true),
-    setInvoices(undefined);
-      (async function () {
-        const res = await fetch(`/api/getallorders`, {
-          method: "POST",
-          body: JSON.stringify({
-            orderPage: currentOrderPage,
-            leadPage: currentLeadPage,
-            search: filterQueries.search,
-            city: filterQueries.city,
-            status: filterQueries.status,
-            fromDate: filterQueries.fromDate,
-            toDate: filterQueries.toDate,
-            category: filterQueries.category,
-          }),
-        });
-        if (!res.ok) {
-          console.log("Error :", res);
-        }
-        const data = await res.json();
-        setInvoices(data);
-        setIsLoading(false);
-        console.log(data);
-      })();
+    setIsLoading(true), setInvoices(undefined);
+    (async function () {
+      const res = await fetch(`/api/getallorders`, {
+        method: "POST",
+        body: JSON.stringify({
+          orderPage: currentOrderPage,
+          leadPage: currentLeadPage,
+          search: filterQueries.search,
+          city: filterQueries.city,
+          status: filterQueries.status,
+          fromDate: filterQueries.fromDate,
+          toDate: filterQueries.toDate,
+          category: filterQueries.category,
+        }),
+      });
+      if (!res.ok) {
+        console.log("Error :", res);
+      }
+      const data = await res.json();
+      setInvoices(data);
+      setIsLoading(false);
+      console.log(data);
+    })();
   }, [currentLeadPage, currentOrderPage, isOpen, filterQueries]);
-  console.log(isApplied);
+ 
   return (
     <div className=" w-full space-y-2 py-4">
       <FilterMenubar
@@ -109,7 +120,10 @@ const BasePage = () => {
         setFilterQueries={setFilterQueries}
       />
       <div className="space-y-6  px-8">
-        <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
+        <div className="w-full rounded-[12px]  bg-primaryBackground">
+          <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
+            Recent Orders
+          </h4>
           <PrimaryTable
             isLoading={isLoading}
             SetSelectedRow={SetSelectedRow}
@@ -132,7 +146,10 @@ const BasePage = () => {
           />
         )}
         {invoices && (
-          <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
+          <div className="w-full rounded-[12px]  bg-primaryBackground">
+            <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
+              Order Timeline
+            </h4>
             <SecondaryTable
               currentPage={currentLeadPage}
               setCurrentPage={setCurrentLeadPage}

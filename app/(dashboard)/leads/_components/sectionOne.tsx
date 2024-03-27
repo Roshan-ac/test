@@ -1,9 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { PrimaryTable } from "./PrimaryTable";
-import { CardContainer } from "@/components/Internals/CardContainer";
-import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { FilterMenubar } from "@/components/FilterMenubar";
+import { CardContainer } from "./CardContainer";
 
 export interface LeadInterface {
   success: boolean;
@@ -11,9 +10,11 @@ export interface LeadInterface {
     pagelimit: number;
     data: InvoiceInterface[];
   };
-  completedOrdersCount: number;
-  availableOrdersCount: number;
-  assignedOrdersCount: number;
+  Ringing: number;
+  Callback: number;
+  SwitchedOff: number;
+  Pending: number;
+  Converted: number;
 }
 
 export interface InvoiceInterface {
@@ -92,7 +93,10 @@ const SectionOne = ({
         setFilterQueries={setFilterQueries}
       />
       <div className="space-y-6  px-8">
-        <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
+        <div className="w-full rounded-[12px]  bg-primaryBackground">
+          <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
+            Recent Leads
+          </h4>
           <PrimaryTable
             isLoading={isLoading}
             currentPage={currentPage}
@@ -103,9 +107,11 @@ const SectionOne = ({
         </div>
         {invoices && (
           <CardContainer
-            completed={invoices.completedOrdersCount}
-            available={invoices.availableOrdersCount}
-            assigned={invoices.assignedOrdersCount}
+            Callback={invoices.Callback}
+            Converted={invoices.Converted}
+            Pending={invoices.Pending}
+            Ringing={invoices.Ringing}
+            SwitchedOff={invoices.SwitchedOff}
           />
         )}
       </div>

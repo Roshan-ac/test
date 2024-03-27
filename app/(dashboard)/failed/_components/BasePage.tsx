@@ -84,7 +84,8 @@ const BasePage = () => {
         setFilterQueries={setFilterQueries}
       />
       <div className="space-y-6  px-8">
-        <div className="w-full rounded-[12px]  bg-primaryBackground py-4">
+        <div className="w-full rounded-[12px]  bg-primaryBackground">
+        <h4 className=" text-lg font-semibold tracking-wide py-2 px-4">Failed Leads</h4>
           <PrimaryTable
             isLoading={isLoading}
             currentPage={currentPage}

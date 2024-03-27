@@ -16,6 +16,17 @@ import { toast } from "@/components/ui/use-toast";
 import EvaluationReport from "@/components/EvaluateReport/EvaluateReport";
 import { deviceType } from "@/interfaces";
 import { FailedImageGallery } from "@/components/Internals/FailedImageCarousel";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 type OrderDetails = {
   success: boolean;
   myBookings: {
@@ -276,48 +287,111 @@ export function SheetDemo({
                   </div>
 
                   <div className="flex w-full items-center space-x-4 py-8">
-                    <div>
-                      <Button
-                        onClick={() => {
-                          UpdateFailedCounts({
-                            accepted: 0,
-                            rejected: 0,
-                            pending: 1,
-                          });
-                        }}
-                        className=" !h-max rounded-none !bg-[#82C43C] px-8"
-                      >
-                        Accept Fail
-                      </Button>
-                    </div>
-                    <div>
-                      <Button
-                        onClick={() => {
-                          UpdateFailedCounts({
-                            accepted: 1,
-                            rejected: 0,
-                            pending: 0,
-                          });
-                        }}
-                        className=" !h-max rounded-none !bg-[#FF974A] px-8"
-                      >
-                        Reverse Lead
-                      </Button>
-                    </div>
-                    <div>
-                      <Button
-                        onClick={() => {
-                          UpdateFailedCounts({
-                            accepted: 0,
-                            rejected: 1,
-                            pending: 0,
-                          });
-                        }}
-                        className=" !h-max rounded-none !bg-[#FC5A5A] px-8"
-                      >
-                        Reject Fail
-                      </Button>
-                    </div>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button className=" !h-max rounded-none !text-white !bg-[#cd6235] px-8">
+                          Accept Fail
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="text-white">
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your account and remove your data from our
+                            servers.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="text-white">
+                            Cancel
+                          </AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => {
+                              UpdateFailedCounts({
+                                accepted: 1,
+                                rejected: 0,
+                                pending: 0,
+                              });
+                            }}
+                          >
+                            Continue
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button className=" !h-max rounded-none !text-white !bg-[#27b544a5] px-8">
+                          Reverse Lead
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="text-white">
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your account and remove your data from our
+                            servers.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="text-white">
+                            Cancel
+                          </AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => {
+                              UpdateFailedCounts({
+                                accepted: 0,
+                                rejected: 1,
+                                pending: 0,
+                              });
+                            }}
+                          >
+                            Continue
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button className=" !h-max rounded-none !text-white !bg-[#c43c3c] px-8">
+                          Reject Lead
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="text-white">
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your account and remove your data from our
+                            servers.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="text-white">
+                            Cancel
+                          </AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => {
+                              UpdateFailedCounts({
+                                accepted: 0,
+                                rejected: 1,
+                                pending: 0,
+                              });
+                            }}
+                          >
+                            Continue
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                 </div>
                 <div className="h-max w-[45%] space-y-4">
