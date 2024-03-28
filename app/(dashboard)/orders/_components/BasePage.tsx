@@ -16,6 +16,7 @@ export interface InvoiceInterface {
     data: {
       id: string;
       timestamp: string;
+      assignedVendor:string;
       devicename: string;
       city: string | null;
       devicetype: string;
@@ -61,6 +62,7 @@ export interface InvoiceInterface {
 const BasePage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [invoices, setInvoices] = useState<InvoiceInterface>();
+  const [isUpdated,setIsUpdated]=useState<boolean>()
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [filterQueries, setFilterQueries] = useState<{
     search: string;
@@ -108,8 +110,8 @@ const BasePage = () => {
       setIsLoading(false);
       console.log(data);
     })();
-  }, [currentLeadPage, currentOrderPage, isOpen, filterQueries]);
- 
+  }, [currentLeadPage, currentOrderPage,isUpdated, filterQueries]);
+
   return (
     <div className=" w-full space-y-2 py-4">
       <FilterMenubar
@@ -162,6 +164,7 @@ const BasePage = () => {
           <SheetDemo
             SelectedRow={SelectedRow}
             varient={"orders"}
+            setIsUpdated={setIsUpdated}
             setIsOpen={setIsOpen}
             isOpen={isOpen}
           />

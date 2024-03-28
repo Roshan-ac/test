@@ -20,18 +20,19 @@ type OrdersData = {
   devicename: string;
   city: string | null;
   devicetype: string;
+  assignedVendor: string;
   status:
-  | "Generated"
-  | "Cn-Cancelled by Customer"
-  | "F-Cancelled by Customer"
-  | "F-Cancelled by Cashkr"
-  | "Cn-Cancelled by Cashkr"
-  | "Failed"
-  | "V-Out For Pickup"
-  | "Assigned"
-  | "F-Sold Somewhere else"
-  | "C-Completed"
-  | null;
+    | "Generated"
+    | "Cn-Cancelled by Customer"
+    | "F-Cancelled by Customer"
+    | "F-Cancelled by Cashkr"
+    | "Cn-Cancelled by Cashkr"
+    | "Failed"
+    | "V-Out For Pickup"
+    | "Assigned"
+    | "F-Sold Somewhere else"
+    | "C-Completed"
+    | null;
 };
 
 export function PrimaryTable({
@@ -51,6 +52,7 @@ export function PrimaryTable({
   setCurrentPage: Dispatch<SetStateAction<number>>;
   invoices: OrdersData[];
 }) {
+  console.log(invoices)
   return (
     <ScrollArea className=" relative h-max w-full rounded-md">
       <Table>
@@ -94,7 +96,7 @@ export function PrimaryTable({
                   </span>
                 </TableCell>
                 <TableCell className="w-max">
-                <span
+                  <span
                     className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90  ${
                       invoice.status == "Generated" || invoice.status == null
                         ? "!bg-white"
@@ -116,9 +118,12 @@ export function PrimaryTable({
                                         "!bg-[#92B7FF]"
                     } bg-red-400 p-1 px-2 text-black  `}
                   >
-                    {invoice.status == null
+                    {invoice.status == null && invoice.assignedVendor == null
                       ? "Generated"
-                      : invoice.status.split("-")[1]}
+                      : invoice.status == null &&
+                          invoice.assignedVendor !== null
+                        ? "Assigned"
+                        : invoice.status.split("-")[1]}
                   </span>
                 </TableCell>
               </TableRow>

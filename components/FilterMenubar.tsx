@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Input } from "@/components/ui/input";
 import { Cross, Plus, Search, X } from "lucide-react";
 
@@ -82,29 +82,7 @@ export function FilterMenubar({
               setSelectQueries({ ...selectQueries, search: e.target.value });
             }}
           />
-          {selectQueries.search.length < 1 ? (
-            <Search
-            
-              onClick={() => {
-                setFilterQueries({
-                  ...filterQueries,
-                  search: selectQueries.search,
-                });
-              }}
-              className={` text-secondaryText ${!isApplied?' hover:text-green-400 cursor-pointer':' !opacity-20'}`}
-            />
-          ) : (
-            <X
-              onClick={() => {
-                setSelectQueries({ ...selectQueries, search: "" });
-                setFilterQueries({
-                  ...filterQueries,
-                  search: "",
-                });
-              }}
-              className=" cursor-pointer text-secondaryText hover:text-green-400"
-            />
-          )}
+          <Search className={` text-secondaryText`} />
         </div>
       </div>
       <div className=" ml-2 grid w-full grid-cols-6 gap-2">
@@ -115,7 +93,10 @@ export function FilterMenubar({
             setSelectQueries({ ...selectQueries, status: value });
           }}
         >
-          <SelectTrigger disabled={isApplied} className="w-full gap-2 rounded-[16px] !bg-tertiaryBackground">
+          <SelectTrigger
+            disabled={isApplied}
+            className="w-full gap-2 rounded-[16px] !bg-tertiaryBackground"
+          >
             <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent className=" !bg-secondaryBackground">
@@ -139,7 +120,10 @@ export function FilterMenubar({
             setSelectQueries({ ...selectQueries, category: value });
           }}
         >
-          <SelectTrigger disabled={isApplied} className="w-full gap-2 rounded-[16px] !bg-tertiaryBackground">
+          <SelectTrigger
+            disabled={isApplied}
+            className="w-full gap-2 rounded-[16px] !bg-tertiaryBackground"
+          >
             <SelectValue placeholder="Type" />
           </SelectTrigger>
 
@@ -165,7 +149,10 @@ export function FilterMenubar({
             setSelectQueries({ ...selectQueries, city: value });
           }}
         >
-          <SelectTrigger disabled={isApplied} className="w-full gap-2 rounded-[16px] !bg-tertiaryBackground">
+          <SelectTrigger
+            disabled={isApplied}
+            className="w-full gap-2 rounded-[16px] !bg-tertiaryBackground"
+          >
             <SelectValue placeholder="City" />
           </SelectTrigger>
 
@@ -177,13 +164,13 @@ export function FilterMenubar({
           </SelectContent>
         </Select>
         <DatePicker
-        isApplied={isApplied}
+          isApplied={isApplied}
           selectQueries={selectQueries}
           name="fromDate"
           setUpdateDate={setSelectQueries}
         />
         <DatePicker
-        isApplied={isApplied}
+          isApplied={isApplied}
           selectQueries={selectQueries}
           name="toDate"
           setUpdateDate={setSelectQueries}
@@ -193,6 +180,7 @@ export function FilterMenubar({
             selectQueries.status == "" &&
             selectQueries.category == "" &&
             selectQueries.city == "" &&
+            selectQueries.search == "" &&
             selectQueries.fromDate == undefined &&
             selectQueries.toDate == undefined
           }

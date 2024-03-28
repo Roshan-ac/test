@@ -55,7 +55,17 @@ const LaptopReport = ({
         {screensize !== undefined && (
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
             <span className="inline-block w-[40%]">Screen Size : </span>
-            <span className="inline-block w-full">{screensize}</span>
+            <span className="inline-block w-full">
+              {screensize == "S1"
+                ? "10-11 Inches"
+                : screensize == "S2"
+                  ? "12-13 Inches"
+                  : screensize == "S3"
+                    ? "13-14 Inches"
+                    : screensize == "S4"
+                      ? "14-15 Inches"
+                      : screensize == "S5" && "more than 15 Inches"}
+            </span>
           </Label>
         )}
 

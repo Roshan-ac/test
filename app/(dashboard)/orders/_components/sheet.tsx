@@ -15,6 +15,17 @@ import { z } from "zod";
 import { toast } from "@/components/ui/use-toast";
 import EvaluationReport from "@/components/EvaluateReport/EvaluateReport";
 import { deviceType } from "@/interfaces";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 type OrderDetails = {
   success: boolean;
   myBookings: {
@@ -79,9 +90,11 @@ type LogDetails = {
 export function SheetDemo({
   isOpen,
   setIsOpen,
+  setIsUpdated,
   SelectedRow,
 }: {
   isOpen: boolean;
+  setIsUpdated: React.Dispatch<React.SetStateAction<boolean>>;
   varient: "leads" | "orders" | "failed" | "vendors";
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   SelectedRow: {
@@ -118,7 +131,7 @@ export function SheetDemo({
           <p className=" text-green-500">Lead status successfully changed</p>
         ),
       });
-      router.refresh();
+      setIsUpdated(true);
     } else {
       toast({
         title: "Sorry!",
@@ -151,7 +164,7 @@ export function SheetDemo({
           </p>
         ),
       });
-      router.refresh();
+      setIsUpdated(true);
     } else {
       toast({
         title: "Unable to Update",
@@ -185,7 +198,7 @@ export function SheetDemo({
           <p className=" text-green-500">Vendor is successfully assigned</p>
         ),
       });
-      router.refresh();
+      setIsUpdated(true);
     } else {
       toast({
         title: "Unable to Assign",
@@ -247,7 +260,7 @@ export function SheetDemo({
         setIsOpen={setIsOpen}
       >
         <ScrollArea className="!h-[100vh] pb-6">
-          {orderDetails && orderDetails.myBookings && (
+          {orderDetails && orderDetails.myBookings ? (
             <div className=" my-4 space-y-4">
               <div className="flex h-full w-full gap-4">
                 <div className="relative h-max w-[55%] bg-tertiaryBackground p-4 pt-8 text-hoverColor">
@@ -271,38 +284,6 @@ export function SheetDemo({
                         {orderDetails.myBookings.pickuptime}
                       </span>
                     </Label>
-                    {/* <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Warranty :</span>
-                      <span className="inline-block w-full">
-                        {orderDetails.myBookings.warrantystatus}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Screen :</span>
-                      <span className="inline-block w-full">
-                        {orderDetails.myBookings.screencondition}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Body :</span>
-                      <span className="inline-block w-full">
-                        {orderDetails.myBookings.bodycondition}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">
-                        Accessories :
-                      </span>
-                      <span className="inline-block w-full">
-                        {orderDetails.myBookings.accessoriesunavailable}
-                      </span>
-                    </Label>
-                    <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Issues :</span>
-                      <span className="inline-block w-full">
-                        {/* {myBookings.} */}
-                    {/* </span> */}
-                    {/* </Label> */}
 
                     <Label
                       htmlFor="vendor"
@@ -325,27 +306,48 @@ export function SheetDemo({
 
                   <div className="flex w-full items-center space-x-4 py-8">
                     <div>
-                      <AssignDialog
-                 
-                        handleAssign={handleAssign}
-                      />
+                      <AssignDialog handleAssign={handleAssign} />
                     </div>
                     <div>
                       <ReschedulePickup
                         ReschedulePickupDateTime={ReschedulePickupDateTime}
                       />
                     </div>
-                    <div>
-                      <Button
-                        disabled={orderDetails.myBookings.status !== null}
-                        onClick={() => {
-                          FailedLead();
-                        }}
-                        className=" !h-max rounded-none !bg-[#FC5A5A] px-8"
-                      >
-                        Fail Lead
-                      </Button>
-                    </div>
+
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          disabled={orderDetails.myBookings.status !== null}
+                          className=" !h-max rounded-none !bg-[#cd6235] px-8 !text-white"
+                        >
+                          Fail Lead
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="text-white">
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your account and remove your data from our
+                            servers.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="text-white">
+                            Cancel
+                          </AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => {
+                              FailedLead();
+                            }}
+                          >
+                            Continue
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                 </div>
                 <div className="h-max w-[45%] space-y-4">
@@ -504,6 +506,18 @@ export function SheetDemo({
                   {/* <TabelPagination /> */}
                 </div>
               </div>
+            </div>
+       
+          ) : (
+            <div className="!h-[100vh] w-full space-y-2 p-1">
+              <div className="flex h-[70%] w-full items-center space-x-2">
+                <div className=" h-full w-1/2 animate-pulse rounded-2xl border bg-tertiaryBackground"></div>
+                <div className=" h-full w-1/2 space-y-2">
+                  <div className=" h-[48%] w-full animate-pulse rounded-2xl border bg-tertiaryBackground"></div>
+                  <div className=" h-1/2 w-full animate-pulse rounded-2xl border bg-tertiaryBackground"></div>
+                </div>
+              </div>
+              <div className="h-[30%] w-full animate-pulse rounded-2xl border bg-tertiaryBackground"></div>
             </div>
           )}
         </ScrollArea>
