@@ -210,6 +210,7 @@ export function SheetDemo({
   };
 
   useEffect(() => {
+    setOrderDetails(null);
     (async function () {
       const res = await fetch(
         `/api/getFullBookings/${SelectedRow.devicetype}`,
