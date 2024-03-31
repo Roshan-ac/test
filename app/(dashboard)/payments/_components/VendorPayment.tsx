@@ -1,6 +1,7 @@
+"use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
+import ImgsViewer from "react-images-viewer";
 import {
   Table,
   TableBody,
@@ -22,6 +23,7 @@ interface VendorPaymentInterface {
 }
 
 const VendorPayment = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [vendorPayment, setVendorPayment] =
     useState<VendorPaymentInterface[]>();
   const router = useRouter();
@@ -89,7 +91,7 @@ const VendorPayment = () => {
     setIsLoading(false);
   };
 
-  // console.log(vendorPayment);
+  console.log(process.env.NEXT_PUBLIC_BACKEND_API);
   if (isLoading && !vendorPayment) {
     return (
       <Table className="animate-pulse">
@@ -121,7 +123,23 @@ const VendorPayment = () => {
             <TableCell> {item.vendorname} </TableCell>
             <TableCell> {item.amount} </TableCell>
             <TableCell>
-              <button>view</button>
+              {
+                <span
+                className=" text-sm uppercase font-semibold underline cursor-pointer"
+                  onClick={() => {
+                    setIsOpen((prev) => !prev);
+                  }}
+                >
+                  view
+                </span>
+              }
+              <ImgsViewer
+                imgs={[{ src: `${""}${item.screenshot}` }]}
+                isOpen={isOpen}
+                onClose={() => {
+                  setIsOpen((prev) => !prev);
+                }}
+              />
             </TableCell>
             <TableCell className="flex gap-2 text-black">
               <button

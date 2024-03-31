@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import {
+  BadgeCent,
   BadgeDollarSign,
   LayoutDashboard,
   Luggage,
@@ -87,6 +88,22 @@ const SideMenus = () => {
         ></span>
         <Luggage />
         <span>Vendors</span>
+      </Link>
+      <Link
+        href={"/payments"}
+        className={`${
+          pathname == "/payments"
+            ? "font-bold"
+            : "text-secondaryText font-normal"
+        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+      >
+        <span
+          className={`${
+            pathname == "/payments" ? "bg-[#82C43C]" : " bg-transparent"
+          } h-[32px] w-[3px] rounded-[0px_100px_100px_0px] group-hover:bg-[#82C43C] `}
+        ></span>
+        <BadgeCent />
+        <span>Payments</span>
       </Link>
     </div>
   );

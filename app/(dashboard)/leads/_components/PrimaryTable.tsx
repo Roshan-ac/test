@@ -89,31 +89,36 @@ export function PrimaryTable({
                   </TableCell>
                   <TableCell className="">
                     <span
-                      className={`inline-block h-max min-w-[100px] rounded-[18px] px-4 text-center  ${
-                        invoice.status?.startsWith("cn") ||
-                        invoice.status === null
-                          ? "bg-white"
-                          : invoice.status == "Cancelled"
-                            ? "bg-[#FFA0A0]"
-                            : invoice.status == "Failed"
-                              ? "bg-[#F64848] text-white"
-                              : invoice.status == "Assigned"
-                                ? "bg-[#FF974A]"
-                                : invoice.status == "Completed"
-                                  ? "bg-[#82C43C]"
-                                  : invoice.status == "Out For Pickup" &&
-                                    "bg-[#92B7FF]"
-                      } p-1 px-2 text-black  `}
+                      className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90  ${
+                         invoice.status == null
+                          ? "!bg-white"
+                          : invoice.status == "Cn-Cancelled by Customer"
+                            ? "!bg-[#FFA0A0] text-[#222222]"
+                            : invoice.status == "Cn-Cancelled by Cashkr"
+                              ? " !bg-[#0ed380] text-[#111a1c]"
+                              : invoice.status == "F-Cancelled by Cashkr"
+                                ? " !bg-[#0ed380] text-[#111a1c]"
+                                : invoice.status == "Failed"
+                                  ? "!bg-[#F64848] text-white"
+                                  : invoice.status == "Assigned"
+                                    ? "!bg-[#FF974A]"
+                                    : invoice.status === "F-Sold Somewhere else"
+                                      ? "!bg-[#bf2fb8]"
+                                      : invoice.status == "C-Completed"
+                                        ? "!bg-[#82C43C]"
+                                        : invoice.status ===
+                                            "V-Out For Pickup" &&
+                                          "!bg-[#92B7FF]"
+                      } bg-red-400 p-1 px-2 text-black  `}
                     >
-                      {invoice.status === null && "Generated"}
-                      {invoice.status}
+                      {invoice.status.split("-")[1]}
                     </span>
                   </TableCell>
                 </TableRow>
               ))}
-               {invoices?.length < 1 && (
-              <p className=" p-4 text-xl">No Search Results Found.</p>
-            )}
+              {invoices?.length < 1 && (
+                <p className=" p-4 text-xl">No Search Results Found.</p>
+              )}
             </TableBody>
           )}
           {!invoices && isLoading && <TableSkeleton skeleton={5} />}

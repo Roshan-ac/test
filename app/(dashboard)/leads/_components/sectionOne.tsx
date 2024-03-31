@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { PrimaryTable } from "./PrimaryTable";
-import { FilterMenubar } from "@/components/FilterMenubar";
+
 import { CardContainer } from "./CardContainer";
+import { FilterMenubar } from "./FilterMenubar";
 
 export interface LeadInterface {
   success: boolean;
@@ -25,13 +26,16 @@ export interface InvoiceInterface {
   pickuptime: string;
   devicetype: string;
   status:
-    | "Generated"
-    | "Cancelled"
-    | "Failed"
-    | "Out For Pickup"
-    | "Assigned"
-    | "Completed"
-    | null;
+  | "Cn-Cancelled by Customer"
+  | "F-Cancelled by Customer"
+  | "F-Cancelled by Cashkr"
+  | "Cn-Cancelled by Cashkr"
+  |"F-Sold Somewhere else"
+  | "Failed"
+  | "V-Out For Pickup"
+  | "Assigned"
+  | "C-Completed"
+  | null;
   assignedvendor: string | null;
 }
 

@@ -6,14 +6,16 @@ import { Cross, Plus, Search, X } from "lucide-react";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "./ui/button";
+
 import { deviceType } from "@/interfaces";
 import { useState } from "react";
-import { DatePicker } from "./Internals/DatePicker";
+import { DatePicker } from "@/components/Internals/DatePicker";
+import { Button } from "@/components/ui/button";
 
 export function FilterMenubar({
   setFilterQueries,
@@ -99,19 +101,34 @@ export function FilterMenubar({
           >
             <SelectValue placeholder="Status" />
           </SelectTrigger>
-          {/* <SelectContent className=" !bg-secondaryBackground">
-            <SelectItem value="Generated">Generated</SelectItem>
-            <SelectItem value="Cancelled by Customer">
-              Cancelled by Customer
-            </SelectItem>
-            <SelectItem value="Failed">Failed</SelectItem>
-            <SelectItem value="Out For Pickup">Out For Pickup</SelectItem>
-            <SelectItem value="Cancelled by Cashkr">
-              Cancelled by Cashkr
-            </SelectItem>
-            <SelectItem value="Completed">Completed</SelectItem>
-            <SelectItem value="Assigned">Assigned</SelectItem>
-          </SelectContent> */}
+          <SelectContent className=" !bg-secondaryBackground">
+            <SelectGroup>
+              <SelectItem value="Callback">Callback</SelectItem>
+              <SelectItem value="Sold Elsewhere">Sold Elsewhere</SelectItem>
+
+              <SelectItem value="Getting Better Price Elsewhere">
+                Getting Better Price Elsewhere
+              </SelectItem>
+              <SelectItem value="Higher Expectations">
+                Higher Expectations
+              </SelectItem>
+              <SelectItem value="Was Just Checking">
+                Was Just Checking
+              </SelectItem>
+              <SelectItem value="Do not Want to Sell it Anymore">
+                Do not Want to Sell it Anymore
+              </SelectItem>
+              <SelectItem value="Out of Town">Out of Town</SelectItem>
+            </SelectGroup>
+            <SelectGroup>
+              <SelectItem value="swiched off">Swiched Off</SelectItem>
+              <SelectItem value="not reachable">Not Reachable</SelectItem>
+
+              <SelectItem value="ringing">Ringing</SelectItem>
+
+              <SelectItem value="wrong number">Wrong Number</SelectItem>
+            </SelectGroup>
+          </SelectContent>
         </Select>
         <Select
           value={selectQueries.category}

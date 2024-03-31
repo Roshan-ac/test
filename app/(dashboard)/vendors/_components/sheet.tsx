@@ -14,7 +14,7 @@ import { deviceType } from "@/interfaces";
 import { FailedImageGallery } from "@/components/Internals/FailedImageCarousel";
 import { VendorsInterface } from "./BasePage";
 import PincodeTextArea from "./PincodeTextArea";
-import VendorPayment from "./VendorPayment";
+import VendorPayment from "../../payments/_components/VendorPayment";
 
 type OrderDetails = {
   success: boolean;
