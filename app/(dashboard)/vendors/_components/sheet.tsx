@@ -142,7 +142,6 @@ export function SheetDemo({
         className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
         setIsOpen={setIsOpen}
       >
-        <VendorPayment />
         <ScrollArea className="!h-[100vh] pb-6">
           {SelectedRow && (
             <div className="my-4 space-y-4">

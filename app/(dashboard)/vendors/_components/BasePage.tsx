@@ -44,6 +44,7 @@ const BasePage = () => {
         console.log("Error :", res);
       }
       const data = await res.json();
+      console.log(data)
       setInvoices(data.vendorsDetails);
       setIsLoading(false);
     })();

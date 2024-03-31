@@ -99,7 +99,7 @@ export function FilterMenubar({
           >
             <SelectValue placeholder="Status" />
           </SelectTrigger>
-          {/* <SelectContent className=" !bg-secondaryBackground">
+          <SelectContent className=" !bg-secondaryBackground">
             <SelectItem value="Generated">Generated</SelectItem>
             <SelectItem value="Cancelled by Customer">
               Cancelled by Customer
@@ -111,7 +111,7 @@ export function FilterMenubar({
             </SelectItem>
             <SelectItem value="Completed">Completed</SelectItem>
             <SelectItem value="Assigned">Assigned</SelectItem>
-          </SelectContent> */}
+          </SelectContent>
         </Select>
         <Select
           value={selectQueries.category}

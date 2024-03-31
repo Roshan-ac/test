@@ -3,7 +3,7 @@ import VendorPayment from "./_components/VendorPayment";
 
 const page = () => {
   return (
-    <div>
+    <div className=" min-h-screen bg-secondaryBackground">
       <VendorPayment />
     </div>
   );
