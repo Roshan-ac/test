@@ -3,9 +3,12 @@ import React from "react";
 import {
   BadgeCent,
   BadgeDollarSign,
+  Contact,
+  LandPlot,
   LayoutDashboard,
   Luggage,
   ShieldX,
+  Smartphone,
   UserPlus,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -104,6 +107,54 @@ const SideMenus = () => {
         ></span>
         <BadgeCent />
         <span>Payments</span>
+      </Link>
+      <Link
+        href={"/area"}
+        className={`${
+          pathname == "/area"
+            ? "font-bold"
+            : "text-secondaryText font-normal"
+        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+      >
+        <span
+          className={`${
+            pathname == "/area" ? "bg-[#82C43C]" : " bg-transparent"
+          } h-[32px] w-[3px] rounded-[0px_100px_100px_0px] group-hover:bg-[#82C43C] `}
+        ></span>
+      <LandPlot />
+        <span>Area</span>
+      </Link>
+      <Link
+        href={"/products"}
+        className={`${
+          pathname == "/products"
+            ? "font-bold"
+            : "text-secondaryText font-normal"
+        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+      >
+        <span
+          className={`${
+            pathname == "/product" ? "bg-[#82C43C]" : " bg-transparent"
+          } h-[32px] w-[3px] rounded-[0px_100px_100px_0px] group-hover:bg-[#82C43C] `}
+        ></span>
+      <Smartphone />
+        <span>Products</span>
+      </Link>
+      <Link
+        href={"/contact"}
+        className={`${
+          pathname == "/contact"
+            ? "font-bold"
+            : "text-secondaryText font-normal"
+        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+      >
+        <span
+          className={`${
+            pathname == "/contact" ? "bg-[#82C43C]" : " bg-transparent"
+          } h-[32px] w-[3px] rounded-[0px_100px_100px_0px] group-hover:bg-[#82C43C] `}
+        ></span>
+      <Contact />
+        <span>Contact</span>
       </Link>
     </div>
   );

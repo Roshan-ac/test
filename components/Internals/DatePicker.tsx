@@ -23,19 +23,9 @@ export function DatePicker({
   name: string;
   isApplied: boolean;
   setUpdateDate: React.Dispatch<
-    React.SetStateAction<{
-      fromDate: Date;
-      toDate: Date;
-    }>
+    React.SetStateAction<any>
   >;
-  selectQueries: {
-    search: string;
-    city: string;
-    status: string;
-    fromDate: Date;
-    toDate: Date;
-    category: string;
-  };
+  selectQueries: any;
 }) {
   return (
     <Popover>
