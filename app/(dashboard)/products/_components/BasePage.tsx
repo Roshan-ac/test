@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FilterMenubar } from "./filterMenubar";
 import { PrimaryTable } from "./PrimaryTable";
-import { ProgressSection } from "./ProgressSection";
+
 export interface InvoiceInterface {
   success: boolean;
   pagelimit: number;
@@ -53,9 +53,6 @@ const BasePage = () => {
             setIsOpen={null}
             setCurrentPage={null}
           />
-        </div>
-        <div>
-          <ProgressSection cardsValues={{areaCovered:20,pincodes:500}} />
         </div>
       </div>
     </div>

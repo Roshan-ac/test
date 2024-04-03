@@ -4,22 +4,29 @@ import React from "react";
 
 const Notifications = () => {
   return (
-    <ScrollArea className="relative h-[70vh] w-full rounded-md">
-    <div className="p-4 h-full">
-      <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
+    <div className="h-full px-2">
+      <h4 className=" p-3 px-4 text-lg font-semibold tracking-wide">
         Notifications
       </h4>
-      <div className="gap-3 p-4 grid grid-cols-3">
-        {Array.from({ length: 12 }).map((item, ind) => (
-          <div key={ind} className=" bg-tertiaryBackground p-2 px-3 space-y-2 rounded-lg">
-            <h5>Title</h5>
-            <h6>Lorem ipsum dolor.</h6>
-            <Button className=" !text-white !bg-green-800 w-1/2 m-auto" >Notify</Button>
-          </div>
-        ))}
-      </div>
+      <ScrollArea className="relative border-t h-[70vh] py-3 w-[80%] rounded-2xl">
+        <div className="gap-3 space-y-2 px-4">
+          {Array.from({ length: 12 }).map((item, ind) => (
+            <div
+              key={ind}
+              className=" flex w-full items-center justify-between space-x-4 rounded-lg bg-tertiaryBackground p-2 px-3"
+            >
+              <h6 className="opacity-60 truncate">
+                Lorem ipsum dolor. Lorem ipsum dolor, sit amet consectetur
+                adipisicing elit.
+              </h6>
+              <Button className=" m-auto h-8 w-1/4 !bg-blue-600 !text-white !text-opacity-90">
+                Notify
+              </Button>
+            </div>
+          ))}
+        </div>
+      </ScrollArea>
     </div>
-    </ScrollArea>
   );
 };
 

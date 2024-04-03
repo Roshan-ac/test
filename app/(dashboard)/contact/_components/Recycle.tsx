@@ -23,7 +23,7 @@ const Recycle = () => {
       toDate: undefined,
     });
   return (
-    <div className="p-4">
+    <div className="px-4 border-t mx-2 rounded-2xl">
       <div>
         <RecycleFilterMenubar  filterQueries={filterQueries} isApplied isLoading  setFilterQueries={setFilterQueries} setIsApplied={setIsApplied}  />
       </div>
