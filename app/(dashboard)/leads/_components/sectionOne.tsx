@@ -4,6 +4,8 @@ import { PrimaryTable } from "./PrimaryTable";
 
 import { CardContainer } from "./CardContainer";
 import { FilterMenubar } from "./FilterMenubar";
+import { deviceType } from "@/interfaces";
+import { SheetDemo } from "./Sheet";
 
 export interface LeadInterface {
   success: boolean;
@@ -26,16 +28,16 @@ export interface InvoiceInterface {
   pickuptime: string;
   devicetype: string;
   status:
-  | "Cn-Cancelled by Customer"
-  | "F-Cancelled by Customer"
-  | "F-Cancelled by Cashkr"
-  | "Cn-Cancelled by Cashkr"
-  |"F-Sold Somewhere else"
-  | "Failed"
-  | "V-Out For Pickup"
-  | "Assigned"
-  | "C-Completed"
-  | null;
+    | "Cn-Cancelled by Customer"
+    | "F-Cancelled by Customer"
+    | "F-Cancelled by Cashkr"
+    | "Cn-Cancelled by Cashkr"
+    | "F-Sold Somewhere else"
+    | "Failed"
+    | "V-Out For Pickup"
+    | "Assigned"
+    | "C-Completed"
+    | null;
   assignedvendor: string | null;
 }
 
@@ -46,7 +48,12 @@ const SectionOne = ({
 }) => {
   const [invoices, setInvoices] = useState<LeadInterface>();
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [SelectedRow, SetSelectedRow] = useState<{
+    lead: string;
+    devicetype: deviceType;
+  }>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isApplied, setIsApplied] = useState(false);
   const [filterQueries, setFilterQueries] = useState<{
     search: string;
@@ -102,6 +109,8 @@ const SectionOne = ({
             Recent Leads
           </h4>
           <PrimaryTable
+            setIsOpen={setIsOpen}
+            SetSelectedRow={SetSelectedRow}
             isLoading={isLoading}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
@@ -116,6 +125,13 @@ const SectionOne = ({
             Pending={invoices.Pending}
             Ringing={invoices.Ringing}
             SwitchedOff={invoices.SwitchedOff}
+          />
+        )}
+        {SelectedRow && (
+          <SheetDemo
+            SelectedRow={SelectedRow}
+            setIsOpen={setIsOpen}
+            isOpen={isOpen}
           />
         )}
       </div>

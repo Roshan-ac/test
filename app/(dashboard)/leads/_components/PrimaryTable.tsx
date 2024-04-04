@@ -15,39 +15,30 @@ import { InvoiceInterface } from "./sectionOne";
 import { SheetDemo } from "./Sheet";
 import { Date } from "@/components/Internals/PrimaryTable";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
+import { deviceType } from "@/interfaces";
 
 export function PrimaryTable({
   invoices,
   setCurrentPage,
   currentPage,
+  SetSelectedRow,
+  setIsOpen,
   isLoading,
   totalPage,
 }: {
   invoices: InvoiceInterface[];
   currentPage: number;
+  setIsOpen:Dispatch<SetStateAction<boolean>>;
+  SetSelectedRow: Dispatch<
+    SetStateAction<{
+      lead: string;
+      devicetype: string;
+    }>
+  >;
   isLoading: boolean;
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [leadDetails, setLeadDetails] = useState<any>();
-
-  const handleOrderClick = async (devicetype: string, lead: string) => {
-    setIsOpen((prev) => !prev);
-    const res = await fetch(`/api/getFullBookings/${devicetype}`, {
-      method: "POST",
-      body: JSON.stringify({
-        leadId: lead,
-      }),
-    });
-
-    if (!res.ok) {
-      console.log(res);
-    }
-    const data = await res.json();
-    console.log(data);
-    setLeadDetails(data.myBookings);
-  };
 
   return (
     <>
@@ -67,9 +58,13 @@ export function PrimaryTable({
             <TableBody className="w-full">
               {invoices.map((invoice, index) => (
                 <TableRow
-                  onClick={() =>
-                    handleOrderClick(invoice.devicetype, invoice.id)
-                  }
+                  onClick={() => {
+                    SetSelectedRow({
+                      lead: invoice.id,
+                      devicetype: invoice.devicetype,
+                    });
+                    setIsOpen((prev) => !prev);
+                  }}
                   className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
                   key={index}
                 >
@@ -90,7 +85,7 @@ export function PrimaryTable({
                   <TableCell className="">
                     <span
                       className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90  ${
-                         invoice.status == null
+                        invoice.status == null
                           ? "!bg-white"
                           : invoice.status == "Cn-Cancelled by Customer"
                             ? "!bg-[#FFA0A0] text-[#222222]"
@@ -132,14 +127,6 @@ export function PrimaryTable({
           />
         </div>
       </ScrollArea>
-      {leadDetails && (
-        <SheetDemo
-          varient={"lead"}
-          setIsOpen={setIsOpen}
-          isOpen={isOpen}
-          lead={leadDetails}
-        />
-      )}
     </>
   );
 }

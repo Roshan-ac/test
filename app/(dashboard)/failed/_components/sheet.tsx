@@ -27,6 +27,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import SheetSkeleton from "@/components/sheetSkeleton";
 type OrderDetails = {
   success: boolean;
   myBookings: {
@@ -243,7 +244,7 @@ export function SheetDemo({
         setIsOpen={setIsOpen}
       >
         <ScrollArea className="!h-[100vh] pb-6">
-          {orderDetails && orderDetails.myBookings && (
+          {orderDetails && orderDetails.myBookings ? (
             <div className=" my-4 space-y-4">
               <div className="flex h-full w-full gap-4">
                 <div className="relative h-max w-[55%] bg-tertiaryBackground p-4 pt-8 text-hoverColor">
@@ -563,6 +564,8 @@ export function SheetDemo({
                 </div>
               </div>
             </div>
+          ):(
+            <SheetSkeleton/>
           )}
         </ScrollArea>
       </SheetContent>

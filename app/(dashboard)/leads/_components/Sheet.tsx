@@ -11,36 +11,54 @@ import LeadLogs from "./LeadLogs";
 import EvaluationReport from "@/components/EvaluateReport/EvaluateReport";
 import { LeadActions } from "@/app/(dashboard)/leads/_components/LeadActions";
 import { Date } from "@/components/Internals/PrimaryTable";
+import { deviceType } from "@/interfaces";
+import SheetSkeleton from "@/components/sheetSkeleton";
 
 export function SheetDemo({
   isOpen,
-  varient,
+  SelectedRow,
   setIsOpen,
-  lead,
 }: {
   isOpen: boolean;
-  varient: "lead" | "orders" | "failed" | "vendors";
+  SelectedRow: {
+    lead: string;
+    devicetype: deviceType;
+  };
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  lead: any;
 }) {
   const [progress, setProgress] = useState(13);
   const [isLoading, setIsLoading] = useState(false);
   const [LogDetails, setLogDetails] = useState();
+  const [leadDetails, setLeadDetails] = useState<any>();
   useEffect(() => {
-    (async function () {
-      const res2 = await fetch(`/api/getLeadLogs`, {
-        method: "POST",
-        body: JSON.stringify({
-          leadId: lead.id,
-        }),
-      });
-      const LeadLogs = await res2.json();
-      setLogDetails(LeadLogs);
-      setIsLoading(false);
-    })();
-  }, [ isLoading]);
+    setIsLoading(true),
+      (async function () {
+        const res = await fetch(
+          `/api/getFullBookings/${SelectedRow.devicetype}`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              leadId: SelectedRow.lead,
+            }),
+          },
+        );
 
-console.log(LogDetails)
+        if (!res.ok) {
+          console.log(res);
+        }
+        const data = await res.json();
+        setLeadDetails(data.myBookings);
+        const res2 = await fetch(`/api/getLeadLogs`, {
+          method: "POST",
+          body: JSON.stringify({
+            leadId: SelectedRow.lead,
+          }),
+        });
+        const LeadLogs = await res2.json();
+        setLogDetails(LeadLogs);
+        setIsLoading(false);
+      })();
+  }, [isLoading]);
 
   return (
     <Sheet open={isOpen}>
@@ -54,53 +72,65 @@ console.log(LogDetails)
         setIsOpen={setIsOpen}
       >
         <ScrollArea className="!h-[100vh] pb-6">
-          <div className=" my-4 space-y-4">
-            <div className="flex h-full w-full gap-4">
-              <div className="relative h-max w-[55%] bg-tertiaryBackground p-4 pt-8 text-hoverColor">
-                <Badge className=" absolute -top-[10px] left-6 z-10 w-max rounded-none !bg-purple-500 px-6 py-1 !text-white">
-                  {lead?.devicetype}
-                </Badge>
-                <div>
-                  <h1 className="">{lead?.devicename}</h1>
-                </div>
-                <div className="my-6 flex flex-col space-y-6">
-                  <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                    <span className="inline-block w-[40%]">Token :</span>
-                    <span className="inline-block w-full">{lead.token}</span>
-                  </Label>
-                  {lead?.timestamp && (
+          {leadDetails ? (
+            <div className=" my-4 space-y-4">
+              <div className="flex h-full w-full gap-4">
+                <div className="relative h-max w-[55%] bg-tertiaryBackground p-4 pt-8 text-hoverColor">
+                  <Badge className=" absolute -top-[10px] left-6 z-10 w-max rounded-none !bg-purple-500 px-6 py-1 !text-white">
+                    {SelectedRow.devicetype}
+                  </Badge>
+                  <div>
+                    <h1 className="">{leadDetails.devicename}</h1>
+                  </div>
+                  <div className="my-6 flex flex-col space-y-6">
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-                      <span className="inline-block w-[40%]">Date :</span>
+                      <span className="inline-block w-[40%]">Token :</span>
                       <span className="inline-block w-full">
-                        <Date dateString={lead?.timestamp} />
+                        {leadDetails.token}
                       </span>
                     </Label>
-                  )}
+                    {leadDetails?.timestamp && (
+                      <Label
+                        htmlFor="terms"
+                        className=" flex w-full space-x-4  "
+                      >
+                        <span className="inline-block w-[40%]">Date :</span>
+                        <span className="inline-block w-full">
+                          <Date dateString={leadDetails?.timestamp} />
+                        </span>
+                      </Label>
+                    )}
 
-                  {/* From Here */}
+                    {/* From Here */}
 
-                  {lead && (
-                    <EvaluationReport
-                      formData={lead}
-                      devicetype={lead.devicetype}
-                    />
-                  )}
+                    {leadDetails && (
+                      <EvaluationReport
+                        formData={leadDetails.formData}
+                        devicetype={SelectedRow.devicetype}
+                      />
+                    )}
 
-                  <Label htmlFor="vendor" className={`flex w-full space-x-4  `}>
-                    <span className="inline-block w-[40%]">Vendor :</span>
-                    <span className="inline-block w-full">
-                      {lead.assignedvendor ?? "No vendor assigned !"}
-                    </span>
-                  </Label>
+                    <Label
+                      htmlFor="vendor"
+                      className={`flex w-full space-x-4  `}
+                    >
+                      <span className="inline-block w-[40%]">Vendor :</span>
+                      <span className="inline-block w-full">
+                        {leadDetails.assignedvendor ?? "No vendor assigned !"}
+                      </span>
+                    </Label>
+                  </div>
+
+                  <div>{leadDetails && <LeadActions lead={leadDetails} />}</div>
                 </div>
-
-                <div>{lead && <LeadActions lead={lead} />}</div>
+                <ExtraInfo lead={leadDetails} />
               </div>
-              <ExtraInfo lead={lead} />
-            </div>
 
-            <LeadLogs LogDetails={LogDetails} />
-          </div>
+              <LeadLogs LogDetails={LogDetails} />
+            </div>
+          ) : (
+            <SheetSkeleton />
+          )}
         </ScrollArea>
       </SheetContent>
     </Sheet>
