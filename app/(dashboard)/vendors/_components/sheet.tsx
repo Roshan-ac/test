@@ -15,6 +15,7 @@ import { FailedImageGallery } from "@/components/Internals/FailedImageCarousel";
 import { VendorsInterface } from "./BasePage";
 import PincodeTextArea from "./PincodeTextArea";
 import VendorPayment from "../../payments/_components/VendorPayment";
+import SheetSkeleton from "@/components/sheetSkeleton";
 
 type OrderDetails = {
   success: boolean;
@@ -83,7 +84,6 @@ export function SheetDemo({
   SelectedRow,
 }: {
   isOpen: boolean;
-  varient: "leads" | "orders" | "failed" | "vendors";
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   SelectedRow: VendorsInterface;
 }) {
@@ -96,7 +96,7 @@ export function SheetDemo({
       const res = await fetch("/api/getvendorcreditlogs", {
         method: "POST",
         body: JSON.stringify({
-          vendorid: SelectedRow.id,
+          vendorid: SelectedRow?.id,
         }),
       });
 
@@ -128,7 +128,7 @@ export function SheetDemo({
     setTimeout(() => setIsLoading(false), 1000);
   };
 
-  console.log(SelectedRow);
+ 
 
   return (
     <Sheet open={isOpen}>
@@ -143,7 +143,7 @@ export function SheetDemo({
         setIsOpen={setIsOpen}
       >
         <ScrollArea className="!h-[100vh] pb-6">
-          {SelectedRow && (
+          {SelectedRow ? (
             <div className="my-4 space-y-4">
               <div className="flex h-full w-full gap-4">
                 <div className="relative h-max w-[55%] space-y-2 text-hoverColor">
@@ -333,6 +333,8 @@ export function SheetDemo({
                 </div>
               </div>
             </div>
+          ):(
+            <SheetSkeleton/>
           )}
         </ScrollArea>
       </SheetContent>

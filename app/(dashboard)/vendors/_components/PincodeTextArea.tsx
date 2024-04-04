@@ -53,6 +53,11 @@ const PincodeTextArea = ({ vendorId }: { vendorId: string }) => {
                 <span>{item}</span>
               </div>
             ))}
+            {
+              !pincodes && (
+                <p className=" w-max">No Pincodes available</p>
+              )
+            }
         </div>
       </div>
       <ChipListInput

@@ -20,7 +20,7 @@ export function PrimaryTable({
   isLoading,
   SetSelectedRow,
 }: {
-  isLoading:boolean,
+  isLoading: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: VendorsInterface[];
   SetSelectedRow: Dispatch<SetStateAction<object>>;
@@ -39,10 +39,9 @@ export function PrimaryTable({
           </TableRow>
         </TableHeader>
 
-          {invoices &&
-        <TableBody className="w-full">
-          {
-            invoices.map((invoice, index) => (
+        {invoices && (
+          <TableBody className="w-full">
+            {invoices.map((invoice, index) => (
               <TableRow
                 onClick={() => {
                   SetSelectedRow(invoice);
@@ -91,9 +90,9 @@ export function PrimaryTable({
                 </TableCell>
               </TableRow>
             ))}
-        </TableBody>
-}
-{!invoices && isLoading && <TableSkeleton skeleton={6}/>}
+          </TableBody>
+        )}
+        {!invoices && isLoading && <TableSkeleton skeleton={6} />}
       </Table>
       <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
         {/* <TabelPagination /> */}

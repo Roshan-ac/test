@@ -36,34 +36,29 @@ const BasePage = () => {
 
   useEffect(() => {
     setIsLoading(true),
-    (async function () {
-      const res = await fetch("/api/getallvendors", {
-        method: "GET",
-      });
-      if (!res.ok) {
-        console.log("Error :", res);
-      }
-      const data = await res.json();
-      console.log(data)
-      setInvoices(data.vendorsDetails);
-      setIsLoading(false);
-    })();
+      (async function () {
+        const res = await fetch("/api/getallvendors", {
+          method: "GET",
+        });
+        if (!res.ok) {
+          console.log("Error :", res);
+        }
+        const data = await res.json();
+        console.log(data);
+        setInvoices(data.vendorsDetails);
+        setIsLoading(false);
+      })();
   }, []);
 
   return (
     <div className=" w-full space-y-2 py-4">
-      {/* <FilterMenubar
-        isApplied={isApplied}
-        setIsApplied={setIsApplied}
-        isLoading={isLoading}
-        filterQueries={filterQueries}
-        setFilterQueries={setFilterQueries}
-      /> */}
       <div className="space-y-6  px-8">
         <div className="w-full rounded-[12px]  bg-primaryBackground">
-        <h4 className=" text-lg font-semibold tracking-wide py-2 px-4">All Vendors</h4>
+          <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
+            All Vendors
+          </h4>
           <PrimaryTable
-          isLoading={isLoading}
+            isLoading={isLoading}
             SetSelectedRow={SetSelectedRow}
             setIsOpen={setIsOpen}
             invoices={invoices}
@@ -78,14 +73,11 @@ const BasePage = () => {
             }}
           />
         )}
-        {SelectedRow && (
-          <SheetDemo
-            SelectedRow={SelectedRow}
-            varient={"failed"}
-            setIsOpen={setIsOpen}
-            isOpen={isOpen}
-          />
-        )}
+        <SheetDemo
+          SelectedRow={SelectedRow}
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+        />
       </div>
     </div>
   );
