@@ -18,7 +18,7 @@ type leads = {
   pincode: number;
   city: string;
   status: string;
-  device:number;
+  device: number;
   vendors: string;
 };
 
@@ -29,7 +29,6 @@ export function PrimaryTable({
   setCurrentPage,
   currentPage,
   totalPage,
-  SetSelectedRow,
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: InvoiceInterface;
@@ -37,7 +36,6 @@ export function PrimaryTable({
   currentPage: number;
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
-  SetSelectedRow: Dispatch<SetStateAction<object>>;
 }) {
   console.log(invoices);
   return (
@@ -58,11 +56,7 @@ export function PrimaryTable({
             {invoices.data.map((invoice, index) => (
               <TableRow
                 onClick={() => {
-                  // SetSelectedRow({
-                  //   lead: invoice.id,
-                  //   devicetype: invoice.devicetype,
-                  // });
-                  // setIsOpen((prev) => !prev);
+                  setIsOpen((prev) => !prev);
                 }}
                 className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
                 key={index}
@@ -80,7 +74,7 @@ export function PrimaryTable({
                     {invoice.state}
                   </span>
                 </TableCell>
-                <TableCell className="border-r w-max border-r-tableSeperator">
+                <TableCell className="w-max border-r border-r-tableSeperator">
                   <span
                     className={`inline-block h-max w-max  p-1 px-2 text-center !text-white opacity-90`}
                   >
@@ -90,21 +84,27 @@ export function PrimaryTable({
                 <TableCell className="w-12">
                   <span
                     className={`inline-block ${
-                      invoice.isLive ? ' bg-green-500 text-white' : invoice.isOnHold? ' bg-orange-300 text-white':' bg-red-500 text-white'
-                    } h-max w-max m-auto p-1 rounded-[18px] px-4 text-center opacity-90 `}
+                      invoice.status == "active"
+                        ? " bg-green-500 text-white"
+                        : invoice.status == "hold"
+                          ? " bg-orange-300 text-white"
+                          : " bg-red-500 text-white"
+                    } m-auto h-max w-max rounded-[18px] p-1 px-4 text-center opacity-90 `}
                   >
-                   {invoice.isLive ? 'Live':
-                   invoice.isOnHold ? 'Hold' :' Not Live'}
+                    {invoice.state == "active"
+                      ? "Live"
+                      : invoice.status == "hold"
+                        ? "Hold"
+                        : " In active"}
                   </span>
                 </TableCell>
               </TableRow>
             ))}
-            {invoices?.data.length < 1 && (
-              <p className=" p-4 text-xl">No Search Results Found.</p>
-            )}
+          {invoices?.data.length < 1 && (
+            <p className=" p-4 text-xl">No Search Results Found.</p>
+          )}
           </TableBody>
-        )}
-        {!invoices && isLoading && <TableSkeleton skeleton={5} />}
+        ) }
       </Table>
       <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
         <TabelPagination

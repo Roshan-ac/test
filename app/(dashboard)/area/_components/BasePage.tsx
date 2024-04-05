@@ -4,6 +4,7 @@ import { FilterMenubar } from "./filterMenubar";
 import { PrimaryTable } from "./PrimaryTable";
 import { ProgressSection } from "./ProgressSection";
 import { deviceType } from "@/interfaces";
+import { SheetDemo } from "./sheet";
 export interface InvoiceInterface {
   success: boolean;
   pagelimit: number;
@@ -13,19 +14,16 @@ export interface InvoiceInterface {
     city: string;
     state: string;
     devicetype: deviceType;
-    isLive: boolean;
-    isOnHold: boolean;
+    status: string;
   }[];
   pincodes: number;
   areaCovered: number;
 }
 const BasePage = () => {
   const [isApplied, setIsApplied] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [invoice,setInvoice]=useState<InvoiceInterface>();
-  const [SelectedRow, SetSelectedRow] = useState<{
-    id: number;
-  }>();
+  const [invoice, setInvoice] = useState<InvoiceInterface>();
   const [filterQueries, setFilterQueries] = useState<{
     search: string;
     type: string;
@@ -44,9 +42,9 @@ const BasePage = () => {
   useEffect(() => {
     (async function () {
       const response = await fetch("/api/getAreaCovered");
-      const invoice = await response.json()
-      console.log(invoice)
-      setInvoice(invoice)
+      const invoice = await response.json();
+      console.log(invoice);
+      setInvoice(invoice);
     })();
   }, []);
   return (
@@ -64,12 +62,11 @@ const BasePage = () => {
             Serviceable Pincodes
           </h4>
           <PrimaryTable
-            SetSelectedRow={SetSelectedRow}
             currentPage={1}
             totalPage={1}
             invoices={invoice}
-            isLoading
-            setIsOpen={null}
+            isLoading={isLoading}
+            setIsOpen={setIsOpen}
             setCurrentPage={null}
           />
         </div>
@@ -77,6 +74,11 @@ const BasePage = () => {
           <ProgressSection cardsValues={{ areaCovered: 20, pincodes: 500 }} />
         </div>
       </div>
+      <SheetDemo
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        setIsUpdated={setIsLoading}
+      />
     </div>
   );
 };
