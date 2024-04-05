@@ -51,7 +51,7 @@ export function PrimaryTable({
           </TableRow>
         </TableHeader>
 
-        {invoices && invoices.data && (
+        {invoices && invoices.data ? (
           <TableBody className="w-full">
             {invoices.data.map((invoice, index) => (
               <TableRow
@@ -104,7 +104,9 @@ export function PrimaryTable({
             <p className=" p-4 text-xl">No Search Results Found.</p>
           )}
           </TableBody>
-        ) }
+        ) : (
+          <TableSkeleton skeleton={5} />
+        )}
       </Table>
       <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
         <TabelPagination
