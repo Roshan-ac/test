@@ -32,14 +32,14 @@ export function PrimaryTable({
   SetSelectedRow,
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  invoices: leads[];
+  invoices: InvoiceInterface;
   isLoading: boolean;
   currentPage: number;
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
   SetSelectedRow: Dispatch<SetStateAction<object>>;
 }) {
-  console.log(totalPage);
+  console.log(invoices);
   return (
     <ScrollArea className="relative h-max w-full rounded-md">
       <Table>
@@ -53,58 +53,53 @@ export function PrimaryTable({
           </TableRow>
         </TableHeader>
 
-        {invoices && (
+        {invoices && invoices.data && (
           <TableBody className="w-full">
-            {invoices.map((invoice, index) => (
+            {invoices.data.map((invoice, index) => (
               <TableRow
                 onClick={() => {
                   // SetSelectedRow({
                   //   lead: invoice.id,
                   //   devicetype: invoice.devicetype,
                   // });
-                  setIsOpen((prev) => !prev);
+                  // setIsOpen((prev) => !prev);
                 }}
                 className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
                 key={index}
               >
                 <TableCell className="border-r border-r-tableSeperator">
-                  {invoice.pincode}
+                  {invoice.pvalue}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
                   {invoice.city ?? "null"}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
                   <span
-                    className={`inline-block h-max min-w-full rounded-[18px] bg-purple-600 p-1 px-2 text-center !text-white opacity-90`}
+                    className={`inline-block w-max  p-1 px-2 text-center !text-white opacity-90`}
                   >
-                    {invoice.vendors}
+                    {invoice.state}
                   </span>
                 </TableCell>
-                <TableCell className="w-max">
+                <TableCell className="border-r w-max border-r-tableSeperator">
                   <span
-                    className={`inline-block h-max min-w-full rounded-[18px] px-4 text-center opacity-90  ${
-                      invoice.status == "Generated" || invoice.status == null
-                        ? "bg-white"
-                        : invoice.status == "Cn-Cancelled by Customer"
-                          ? "bg-[#FFA0A0] text-[#222222]"
-                          : invoice.status == "Cn-Cancelled by Cashkr"
-                            ? " bg-[#0ed380] text-[#111a1c]"
-                            : invoice.status == "Failed"
-                              ? "bg-[#F64848] text-white"
-                              : invoice.status == "Assigned"
-                                ? "bg-[#FF974A]"
-                                : invoice.status == "C-Completed"
-                                  ? "bg-[#82C43C]"
-                                  : invoice.status == "Out For Pickup" &&
-                                    "bg-[#92B7FF]"
-                    } p-1 px-2 text-black  `}
+                    className={`inline-block h-max w-max  p-1 px-2 text-center !text-white opacity-90`}
                   >
-                    {invoice.status == null ? "Generated" : invoice.status}
+                    {invoice.devicetype}
+                  </span>
+                </TableCell>
+                <TableCell className="w-12">
+                  <span
+                    className={`inline-block ${
+                      invoice.isLive ? ' bg-green-500 text-white' : invoice.isOnHold? ' bg-orange-300 text-white':' bg-red-500 text-white'
+                    } h-max w-max m-auto p-1 rounded-[18px] px-4 text-center opacity-90 `}
+                  >
+                   {invoice.isLive ? 'Live':
+                   invoice.isOnHold ? 'Hold' :' Not Live'}
                   </span>
                 </TableCell>
               </TableRow>
             ))}
-            {invoices?.length < 1 && (
+            {invoices?.data.length < 1 && (
               <p className=" p-4 text-xl">No Search Results Found.</p>
             )}
           </TableBody>

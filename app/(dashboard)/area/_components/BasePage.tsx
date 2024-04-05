@@ -1,18 +1,20 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FilterMenubar } from "./filterMenubar";
 import { PrimaryTable } from "./PrimaryTable";
 import { ProgressSection } from "./ProgressSection";
+import { deviceType } from "@/interfaces";
 export interface InvoiceInterface {
   success: boolean;
   pagelimit: number;
   data: {
-    id: string;
-    pincode: number;
+    pid: string;
+    pvalue: string;
     city: string;
-    status: string;
-    device: number;
-    vendors: string;
+    state: string;
+    devicetype: deviceType;
+    isLive: boolean;
+    isOnHold: boolean;
   }[];
   pincodes: number;
   areaCovered: number;
@@ -20,6 +22,7 @@ export interface InvoiceInterface {
 const BasePage = () => {
   const [isApplied, setIsApplied] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [invoice,setInvoice]=useState<InvoiceInterface>();
   const [SelectedRow, SetSelectedRow] = useState<{
     id: number;
   }>();
@@ -28,16 +31,24 @@ const BasePage = () => {
     type: string;
     city: string;
     status: string;
-    fromDate: string,
-    toDate: string,
+    fromDate: string;
+    toDate: string;
   }>({
     search: "",
     status: "",
     city: "",
-    type:"",
+    type: "",
     fromDate: undefined,
     toDate: undefined,
   });
+  useEffect(() => {
+    (async function () {
+      const response = await fetch("/api/getAreaCovered");
+      const invoice = await response.json()
+      console.log(invoice)
+      setInvoice(invoice)
+    })();
+  }, []);
   return (
     <div className=" w-full space-y-2 py-4">
       <FilterMenubar
@@ -56,14 +67,14 @@ const BasePage = () => {
             SetSelectedRow={SetSelectedRow}
             currentPage={1}
             totalPage={1}
-            invoices={null}
+            invoices={invoice}
             isLoading
             setIsOpen={null}
             setCurrentPage={null}
           />
         </div>
         <div>
-          <ProgressSection cardsValues={{areaCovered:20,pincodes:500}} />
+          <ProgressSection cardsValues={{ areaCovered: 20, pincodes: 500 }} />
         </div>
       </div>
     </div>
