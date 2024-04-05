@@ -24,6 +24,14 @@ const BasePage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [invoice, setInvoice] = useState<InvoiceInterface>();
+  const [selectInvoice, setSelectInvoice] = useState<{
+    pid: string;
+    pvalue: string;
+    city: string;
+    state: string;
+    devicetype: deviceType;
+    status: string;
+  }>();
   const [filterQueries, setFilterQueries] = useState<{
     search: string;
     type: string;
@@ -66,6 +74,7 @@ const BasePage = () => {
             totalPage={1}
             invoices={invoice}
             isLoading={isLoading}
+            setSelectInvoice={setSelectInvoice}
             setIsOpen={setIsOpen}
             setCurrentPage={null}
           />
@@ -75,6 +84,7 @@ const BasePage = () => {
         </div>
       </div>
       <SheetDemo
+        invoice={selectInvoice}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         setIsUpdated={setIsLoading}

@@ -12,6 +12,7 @@ import { parseISO, format } from "date-fns";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { InvoiceInterface } from "./BasePage";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
+import { deviceType } from "@/interfaces";
 
 type leads = {
   id: string;
@@ -27,17 +28,19 @@ export function PrimaryTable({
   isLoading,
   invoices,
   setCurrentPage,
+  setSelectInvoice,
   currentPage,
   totalPage,
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: InvoiceInterface;
   isLoading: boolean;
+  setSelectInvoice:Dispatch<SetStateAction<any>>
   currentPage: number;
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }) {
-  console.log(invoices);
+
   return (
     <ScrollArea className="relative h-max w-full rounded-md">
       <Table>
@@ -56,6 +59,7 @@ export function PrimaryTable({
             {invoices.data.map((invoice, index) => (
               <TableRow
                 onClick={() => {
+                  setSelectInvoice(invoice);
                   setIsOpen((prev) => !prev);
                 }}
                 className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"

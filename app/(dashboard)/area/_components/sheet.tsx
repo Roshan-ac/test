@@ -22,9 +22,18 @@ import { Checkbox } from "@/components/ui/checkbox";
 export function SheetDemo({
   isOpen,
   setIsOpen,
+  invoice,
   setIsUpdated,
 }: {
   isOpen: boolean;
+  invoice: {
+    pid: string;
+    pvalue: string;
+    city: string;
+    state: string;
+    devicetype: deviceType;
+    status: string;
+  };
   setIsUpdated: React.Dispatch<React.SetStateAction<boolean>>;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
@@ -32,8 +41,8 @@ export function SheetDemo({
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [LogDetails, setLogDetails] = useState<any>();
-  useEffect(() => {}, []);
 
+  useEffect(() => {}, []);
   return (
     <Sheet open={isOpen}>
       <Progress
@@ -87,7 +96,10 @@ export function SheetDemo({
                 <div className="rounded-xl bg-tertiaryBackground">
                   <div className=" grid grid-cols-4 grid-rows-4 gap-5 p-6 text-white">
                     {allDeviceType.map((item, index) => (
-                      <div key={index} className=" flex w-max items-center space-x-2">
+                      <div
+                        key={index}
+                        className=" flex w-max items-center space-x-2"
+                      >
                         <Checkbox
                         // checked={field.value?.includes(item.id)}
                         // onCheckedChange={(checked) => {
