@@ -16,7 +16,7 @@ const page = async () => {
   }
   if (user.role === "Admin" || user.role === "Sales") {
     return (
-      <div className="h-full w-full space-y-2 pb-20">
+      <div className="w-full bg-secondaryBackground space-y-2 pb-20">
         <BasePage />
       </div>
     );

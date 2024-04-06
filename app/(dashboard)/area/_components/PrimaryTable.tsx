@@ -48,8 +48,8 @@ export function PrimaryTable({
           <TableRow className="bg-tertiaryBackground ">
             <TableHead className="w-max">Pincodes</TableHead>
             <TableHead>City</TableHead>
-            <TableHead className="">Vendors</TableHead>
-            <TableHead className="">Device</TableHead>
+            <TableHead className="">State</TableHead>
+            <TableHead className="">Device Type</TableHead>
             <TableHead className="text-center">Status</TableHead>
           </TableRow>
         </TableHeader>

@@ -18,8 +18,8 @@ type cardData = {
 };
 export function ProgressSection({ cardsValues }: { cardsValues: cardData }) {
   return (
-    <div className="grid h-[40vh] grid-cols-3 gap-6">
-      <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
+    <div className="space-y-4">
+      <Card className="flex h-max py-8 w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
         <div className="flex space-x-10">
           <div>
             <Image
@@ -38,7 +38,7 @@ export function ProgressSection({ cardsValues }: { cardsValues: cardData }) {
           </div>
         </div>
       </Card>
-      <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
+      <Card className="flex w-full py-8 items-center justify-center rounded-[16px] !bg-primaryBackground">
         <div className="flex space-x-10">
           <div>
             <Image

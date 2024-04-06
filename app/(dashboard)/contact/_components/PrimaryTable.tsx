@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   Table,
   TableBody,
@@ -12,13 +12,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { parseISO, format } from "date-fns";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
-
-type leads = {
-  id: string;
-  orderDate: string;
-  title: string;
-  status: string;
-};
+import { MessageInterface } from "./BasePage";
 
 export function PrimaryTable({
   setIsOpen,
@@ -30,75 +24,55 @@ export function PrimaryTable({
   SetSelectedRow,
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  invoices: leads[];
+  invoices: MessageInterface;
   isLoading: boolean;
   currentPage: number;
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
   SetSelectedRow: Dispatch<SetStateAction<object>>;
 }) {
-  console.log(totalPage);
+  console.log(invoices);
   return (
     <ScrollArea className="relative h-max w-full rounded-md">
       <Table>
         <TableHeader className=" !sticky left-0  top-0 z-[1] w-full dark:hover:bg-hoverColor">
           <TableRow className="bg-tertiaryBackground ">
-            <TableHead className="w-max">Order Date</TableHead>
-            <TableHead>Title</TableHead>
-            <TableHead className="">Status</TableHead>
+            <TableHead className="w-max">Date</TableHead>
+            <TableHead>Full Name</TableHead>
+            <TableHead className="">Email</TableHead>
+            <TableHead className="">Category</TableHead>
           </TableRow>
         </TableHeader>
 
-        {invoices && (
+        {invoices && invoices.data && (
           <TableBody className="w-full">
-            {invoices.map((invoice, index) => (
+            {invoices.data.map((invoice, index) => (
               <TableRow
-                // onClick={() => {
-                //   // SetSelectedRow({
-                //   //   lead: invoice.id,
-                //   //   devicetype: invoice.devicetype,
-                //   // });
-                //   setIsOpen((prev) => !prev);
-                // }}
                 className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
                 key={index}
               >
                 <TableCell className="border-r border-r-tableSeperator">
-                  {invoice.orderDate}
+                  {invoice.date}
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
-                  {invoice.title ?? "null"}
+                  {invoice.fullname ?? "null"}
                 </TableCell>
-                <TableCell className="w-max">
-                  <span
-                    className={`inline-block h-max min-w-full rounded-[18px] px-4 text-center opacity-90  ${
-                      invoice.status == "Generated" || invoice.status == null
-                        ? "bg-white"
-                        : invoice.status == "Cn-Cancelled by Customer"
-                          ? "bg-[#FFA0A0] text-[#222222]"
-                          : invoice.status == "Cn-Cancelled by Cashkr"
-                            ? " bg-[#0ed380] text-[#111a1c]"
-                            : invoice.status == "Failed"
-                              ? "bg-[#F64848] text-white"
-                              : invoice.status == "Assigned"
-                                ? "bg-[#FF974A]"
-                                : invoice.status == "C-Completed"
-                                  ? "bg-[#82C43C]"
-                                  : invoice.status == "Out For Pickup" &&
-                                    "bg-[#92B7FF]"
-                    } p-1 px-2 text-black  `}
-                  >
-                    {invoice.status == null ? "Generated" : invoice.status}
-                  </span>
+                <TableCell className="border-r border-r-tableSeperator">
+                  {invoice.email ?? "null"}
+                </TableCell>
+                <TableCell
+                  className={`border-r ${invoice.category == "Recycle Device" ? " text-green-500" : "text-orange-500"} border-r-tableSeperator`}
+                >
+                  {invoice.category ?? "null"}
                 </TableCell>
               </TableRow>
             ))}
-            {invoices?.length < 1 && (
+            {invoices.data?.length < 1 && (
               <p className=" p-4 text-xl">No Search Results Found.</p>
             )}
           </TableBody>
         )}
-        {!invoices && isLoading && <TableSkeleton skeleton={3} />}
+        {!invoices && isLoading && <TableSkeleton skeleton={4} />}
       </Table>
       <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
         <TabelPagination

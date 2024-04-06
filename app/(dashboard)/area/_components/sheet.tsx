@@ -38,10 +38,17 @@ export function SheetDemo({
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   const [progress, setProgress] = useState(1);
+  const [newpincode, setNewPincode] = useState<{
+    pincode: string;
+    city: string;
+    state: string;
+  }>();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [LogDetails, setLogDetails] = useState<any>();
-
+  async function updateNewPincode() {
+    console.log(newpincode);
+  }
   useEffect(() => {}, []);
   return (
     <Sheet open={isOpen}>
@@ -57,33 +64,7 @@ export function SheetDemo({
         <ScrollArea className="!h-[100vh] pb-6">
           <div className=" space-y-6">
             <div className=" flex items-start space-x-4">
-              <div className="w-1/3 space-y-3">
-                <Label className=" px-2 text-base font-semibold text-white">
-                  Add Pincode
-                </Label>
-                <div className=" space-y-3 rounded-xl bg-tertiaryBackground p-6">
-                  <div className="space-y-3">
-                    <Input
-                      type="text"
-                      className=" !disabled:bg-secondaryBackground border-b border-none !bg-hoverColor !text-black placeholder:!text-black "
-                      placeholder="pincode"
-                    />
-                    <Input
-                      type="text"
-                      className=" !disabled:bg-secondaryBackground border-b border-none !bg-hoverColor !text-black placeholder:!text-black "
-                      placeholder="city"
-                    />
-                    <Input
-                      type="search"
-                      className=" !disabled:bg-secondaryBackground border-b border-none !bg-hoverColor !text-black placeholder:!text-black "
-                      placeholder="state"
-                    />
-                    <Button className=" !h-max rounded-none !bg-[#82C43C] px-8">
-                      Update
-                    </Button>
-                  </div>
-                </div>
-              </div>
+         
               <div className="w-max space-y-3">
                 <div className=" flex justify-between px-2 text-white">
                   <Label className=" px-2 text-base font-semibold text-white">

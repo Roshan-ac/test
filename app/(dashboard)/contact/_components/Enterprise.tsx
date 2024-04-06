@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { PrimaryTable } from "./PrimaryTable";
 import { RecycleFilterMenubar } from "./recycleFilterMenut";
 import { EnterpriseFilterMenubar } from "./enterpriseFilterMenu";
+import { MessageInterface } from "./BasePage";
 
-const Enterprise = () => {
+const Enterprise = ({message}:{message:MessageInterface}) => {
     const [isApplied, setIsApplied] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [SelectedRow, SetSelectedRow] = useState<{

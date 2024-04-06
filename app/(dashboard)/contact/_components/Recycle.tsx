@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import { PrimaryTable } from "./PrimaryTable";
 import { RecycleFilterMenubar } from "./recycleFilterMenut";
+import { MessageInterface } from "./BasePage";
 
-const Recycle = () => {
+const Recycle = ({message}:{message:MessageInterface}) => {
     const [isApplied, setIsApplied] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [SelectedRow, SetSelectedRow] = useState<{
@@ -29,13 +30,13 @@ const Recycle = () => {
       </div>
       <div className="w-full rounded-[12px]  bg-primaryBackground">
         <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
-          Recycle Device
+          Contact Message
         </h4>
         <PrimaryTable
           SetSelectedRow={null}
           currentPage={1}
           totalPage={1}
-          invoices={null}
+          invoices={message}
           isLoading
           setIsOpen={null}
           setCurrentPage={null}
