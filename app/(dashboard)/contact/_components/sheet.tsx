@@ -104,13 +104,32 @@ export function SheetDemo({
               />
             </div>
             <div className=" flex w-full justify-between py-2">
-              <div>
-                <ul className=" space-y-2 text-white">
-                  <li>Full Name : {fullMessage?.data.fullname} </li>
-                  <li>City : {fullMessage?.data.city} </li>
-                  <li>Email : {fullMessage?.data.email} </li>
-                  <li>Phone : {fullMessage?.data.phone} </li>
-                  <li>Message : {fullMessage?.data.message} </li>
+              <div className=" w-full flex items-start">
+                <ul className=" space-y-2 text-secondaryText w-1/4">
+                  <li>Full Name</li>
+                  <li>Email</li>
+                  <li>Phone Number</li>
+                  {
+                    fullMessage?.data.address && 
+                    <li>Address</li>
+                  }
+                  {
+                    fullMessage?.data.message &&
+                    <li>Message</li>
+                  }
+                </ul>
+                <ul className=" list-disc space-y-2 text-secondaryText w-max">
+                  <li>{fullMessage?.data.fullname}</li>
+                  {
+                    fullMessage?.data.address &&
+                  <li>{fullMessage?.data.address}</li>
+                  }
+                  <li>{fullMessage?.data.email}</li>
+                  <li>{fullMessage?.data.phone}</li>
+                  {
+                    fullMessage?.data.message &&
+                  <li>{fullMessage?.data.message}</li>
+                  }
                 </ul>
               </div>
               <div className=" flex w-1/3 flex-col items-end space-y-2">
