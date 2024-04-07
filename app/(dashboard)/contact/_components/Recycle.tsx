@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import { PrimaryTable } from "./PrimaryTable";
 import { RecycleFilterMenubar } from "./recycleFilterMenut";
 import { MessageInterface } from "./BasePage";
+import { SheetDemo } from "./sheet";
 
 const Recycle = ({message}:{message:MessageInterface}) => {
     const [isApplied, setIsApplied] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const [SelectedRow, SetSelectedRow] = useState<{
       id: number;
     }>();
@@ -33,15 +35,20 @@ const Recycle = ({message}:{message:MessageInterface}) => {
           Contact Message
         </h4>
         <PrimaryTable
-          SetSelectedRow={null}
+          SetSelectedRow={SetSelectedRow}
           currentPage={1}
           totalPage={1}
           invoices={message}
           isLoading
-          setIsOpen={null}
+          setIsOpen={setIsOpen}
           setCurrentPage={null}
         />
       </div>
+
+      {
+        SelectedRow &&
+      <SheetDemo SelectedRow={SelectedRow} isOpen={isOpen} setIsOpen={setIsOpen} setIsUpdated={null}  />
+      }
     </div>
   );
 };

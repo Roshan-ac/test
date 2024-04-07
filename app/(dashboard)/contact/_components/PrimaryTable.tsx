@@ -48,6 +48,12 @@ export function PrimaryTable({
           <TableBody className="w-full">
             {invoices.data.map((invoice, index) => (
               <TableRow
+              onClick={()=>{
+                SetSelectedRow({
+                  id:invoice.id
+                }),
+                setIsOpen(true)
+              }}
                 className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
                 key={index}
               >
@@ -61,7 +67,7 @@ export function PrimaryTable({
                   {invoice.email ?? "null"}
                 </TableCell>
                 <TableCell
-                  className={`border-r ${invoice.category == "Recycle Device" ? " text-green-500" : "text-orange-500"} border-r-tableSeperator`}
+                  className={`border-r ${invoice.category == "Recycle Device" ? " text-green-500" : invoice.category=="Partner With Us" ? "text-orange-500":"text-blue-500"} border-r-tableSeperator`}
                 >
                   {invoice.category ?? "null"}
                 </TableCell>
