@@ -1,8 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Notifications from "./Notifications";
 import Recycle from "./Recycle";
-import Enterprise from "./Enterprise";
 
 export type MessageInterface = {
   success: boolean;
@@ -21,13 +19,12 @@ const BasePage = () => {
     (async function () {
       const response = await fetch("/api/getMessage");
       const invoice = await response.json();
-      setMessage(invoice)
+      setMessage(invoice);
     })();
   }, []);
   console.log(message);
   return (
     <div>
-      <Notifications />
       <Recycle message={message} />
     </div>
   );

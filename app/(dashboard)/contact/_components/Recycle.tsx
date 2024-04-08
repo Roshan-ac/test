@@ -26,7 +26,7 @@ const Recycle = ({message}:{message:MessageInterface}) => {
       toDate: undefined,
     });
   return (
-    <div className="px-4 border-t mx-2 rounded-2xl">
+    <div className="px-4 mx-2 rounded-2xl">
       <div>
         <RecycleFilterMenubar  filterQueries={filterQueries} isApplied isLoading  setFilterQueries={setFilterQueries} setIsApplied={setIsApplied}  />
       </div>

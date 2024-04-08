@@ -3,6 +3,7 @@ import React from "react";
 import {
   BadgeCent,
   BadgeDollarSign,
+  Bell,
   Contact,
   LandPlot,
   LayoutDashboard,
@@ -23,8 +24,8 @@ const SideMenus = () => {
         className={`${
           pathname == "/dashboard"
             ? "font-bold"
-            : "text-secondaryText font-normal"
-        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+            : "font-normal text-secondaryText"
+        } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
       >
         <span
           className={`${
@@ -37,8 +38,8 @@ const SideMenus = () => {
       <Link
         href={"/orders"}
         className={`${
-          pathname == "/orders" ? "font-bold" : "text-secondaryText font-normal"
-        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+          pathname == "/orders" ? "font-bold" : "font-normal text-secondaryText"
+        } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
       >
         <span
           className={`${
@@ -51,8 +52,8 @@ const SideMenus = () => {
       <Link
         href={"/leads"}
         className={`${
-          pathname == "/leads" ? "font-bold" : "text-secondaryText font-normal"
-        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+          pathname == "/leads" ? "font-bold" : "font-normal text-secondaryText"
+        } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
       >
         <span
           className={`${
@@ -65,8 +66,8 @@ const SideMenus = () => {
       <Link
         href={"/failed"}
         className={`${
-          pathname == "/failed" ? "font-bold" : "text-secondaryText font-normal"
-        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+          pathname == "/failed" ? "font-bold" : "font-normal text-secondaryText"
+        } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
       >
         <span
           className={`${
@@ -81,8 +82,8 @@ const SideMenus = () => {
         className={`${
           pathname == "/vendors"
             ? "font-bold"
-            : "text-secondaryText font-normal"
-        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+            : "font-normal text-secondaryText"
+        } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
       >
         <span
           className={`${
@@ -97,8 +98,8 @@ const SideMenus = () => {
         className={`${
           pathname == "/payments"
             ? "font-bold"
-            : "text-secondaryText font-normal"
-        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+            : "font-normal text-secondaryText"
+        } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
       >
         <span
           className={`${
@@ -111,17 +112,15 @@ const SideMenus = () => {
       <Link
         href={"/area"}
         className={`${
-          pathname == "/area"
-            ? "font-bold"
-            : "text-secondaryText font-normal"
-        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+          pathname == "/area" ? "font-bold" : "font-normal text-secondaryText"
+        } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
       >
         <span
           className={`${
             pathname == "/area" ? "bg-[#82C43C]" : " bg-transparent"
           } h-[32px] w-[3px] rounded-[0px_100px_100px_0px] group-hover:bg-[#82C43C] `}
         ></span>
-      <LandPlot />
+        <LandPlot />
         <span>Area</span>
       </Link>
       <Link
@@ -129,15 +128,15 @@ const SideMenus = () => {
         className={`${
           pathname == "/products"
             ? "font-bold"
-            : "text-secondaryText font-normal"
-        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+            : "font-normal text-secondaryText"
+        } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
       >
         <span
           className={`${
             pathname == "/product" ? "bg-[#82C43C]" : " bg-transparent"
           } h-[32px] w-[3px] rounded-[0px_100px_100px_0px] group-hover:bg-[#82C43C] `}
         ></span>
-      <Smartphone />
+        <Smartphone />
         <span>Products</span>
       </Link>
       <Link
@@ -145,16 +144,32 @@ const SideMenus = () => {
         className={`${
           pathname == "/contact"
             ? "font-bold"
-            : "text-secondaryText font-normal"
-        } hover:bg-tertiaryBackground hover:text-primaryText group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:font-bold`}
+            : "font-normal text-secondaryText"
+        } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
       >
         <span
           className={`${
             pathname == "/contact" ? "bg-[#82C43C]" : " bg-transparent"
           } h-[32px] w-[3px] rounded-[0px_100px_100px_0px] group-hover:bg-[#82C43C] `}
         ></span>
-      <Contact />
+        <Contact />
         <span>Contact</span>
+      </Link>
+      <Link
+        href={"/notification"}
+        className={`${
+          pathname == "/notification"
+            ? "font-bold"
+            : "font-normal text-secondaryText"
+        } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
+      >
+        <span
+          className={`${
+            pathname == "/notification" ? "bg-[#82C43C]" : " bg-transparent"
+          } h-[32px] w-[3px] rounded-[0px_100px_100px_0px] group-hover:bg-[#82C43C] `}
+        ></span>
+        <Bell />
+        <span>Push Notification</span>
       </Link>
     </div>
   );
