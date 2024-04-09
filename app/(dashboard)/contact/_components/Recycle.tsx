@@ -37,7 +37,7 @@ const Recycle = ({message}:{message:MessageInterface}) => {
         <PrimaryTable
           SetSelectedRow={SetSelectedRow}
           currentPage={1}
-          totalPage={1}
+          totalPage={null}
           invoices={message}
           isLoading
           setIsOpen={setIsOpen}

@@ -28,7 +28,6 @@ export function AssignDialog({
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const handleAssign = async (vendorId: string) => {
-    console.log(vendorId);
     setIsLoading(true);
     const res = await fetch(`api/assignVendor`, {
       method: "POST",

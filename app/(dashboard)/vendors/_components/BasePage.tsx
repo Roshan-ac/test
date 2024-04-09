@@ -40,11 +40,7 @@ const BasePage = () => {
         const res = await fetch("/api/getallvendors", {
           method: "GET",
         });
-        if (!res.ok) {
-          console.log("Error :", res);
-        }
         const data = await res.json();
-        console.log(data);
         setInvoices(data.vendorsDetails);
         setIsLoading(false);
       })();

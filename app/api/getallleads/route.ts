@@ -5,7 +5,6 @@ const { BACKEND_API } = process.env;
 const POST = async (req: any) => {
   const {
     orderPage,
-    leadPage,
     search,
     category,
     city,
@@ -23,7 +22,6 @@ const POST = async (req: any) => {
       fromDate,
       toDate,
     });
-    console.log(queryString)
     const res = await fetch(`${BACKEND_API}/getAllLeads?${queryString}`, {
       method: "GET",
       headers: {
@@ -35,10 +33,8 @@ const POST = async (req: any) => {
     });
 
     const data = await res.json();
-    console.log(data);
     return new Response(JSON.stringify(data));
   } catch (error) {
-    console.log(error);
     return new Response(JSON.stringify({ success: false, message: error }));
   }
 };

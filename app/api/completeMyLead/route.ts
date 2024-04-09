@@ -9,7 +9,6 @@ const POST = async (req: any) => {
     request: CompleteMyLeadInterface;
   } = await req.json();
   try {
-    console.log(request);
     const res = await fetch(`${BACKEND_API}/completeMyLead`, {
       method: "POST",
       headers: {
@@ -20,14 +19,9 @@ const POST = async (req: any) => {
       body: JSON.stringify(request),
     });
 
-    if (!res.ok) {
-      console.log(res);
-    }
     const result = await res.json();
-    console.log(result);
     return new Response(JSON.stringify(result));
   } catch (error) {
-    console.log(error);
     return new Response(JSON.stringify({ success: false, message: error }));
   }
 };

@@ -10,14 +10,7 @@ const POST = async (req: any) => {
     label,
     description,
   } = await req.json();
-  console.log(leadid,
-    vendorid,
-    creditpoints,
-    statuscode,
-    statustype,
-    label,
-    description);
-    console.log(vendorid)
+
   try {
     const res = await fetch(`${BACKEND_API}/setLeadStatus`, {
       method: "POST",
@@ -57,7 +50,6 @@ const POST = async (req: any) => {
       return new Response(JSON.stringify(data));
     }
   } catch (error) {
-    console.log(error);
     return new Response(JSON.stringify({ success: false, message: error }));
   }
 };

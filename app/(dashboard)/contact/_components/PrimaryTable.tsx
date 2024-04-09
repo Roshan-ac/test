@@ -31,7 +31,6 @@ export function PrimaryTable({
   setCurrentPage: Dispatch<SetStateAction<number>>;
   SetSelectedRow: Dispatch<SetStateAction<object>>;
 }) {
-  console.log(invoices);
   return (
     <ScrollArea className="relative h-max w-full rounded-md">
       <Table>
@@ -48,12 +47,12 @@ export function PrimaryTable({
           <TableBody className="w-full">
             {invoices.data.map((invoice, index) => (
               <TableRow
-              onClick={()=>{
-                SetSelectedRow({
-                  id:invoice.id
-                }),
-                setIsOpen(true)
-              }}
+                onClick={() => {
+                  SetSelectedRow({
+                    id: invoice.id,
+                  }),
+                    setIsOpen(true);
+                }}
                 className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
                 key={index}
               >
@@ -67,7 +66,7 @@ export function PrimaryTable({
                   {invoice.email ?? "null"}
                 </TableCell>
                 <TableCell
-                  className={`border-r ${invoice.category == "Recycle Device" ? " text-green-500" : invoice.category=="Partner With Us" ? "text-orange-500":"text-blue-500"} border-r-tableSeperator`}
+                  className={`border-r ${invoice.category == "Recycle Device" ? " text-green-500" : invoice.category == "Partner With Us" ? "text-orange-500" : "text-blue-500"} border-r-tableSeperator`}
                 >
                   {invoice.category ?? "null"}
                 </TableCell>
@@ -80,14 +79,16 @@ export function PrimaryTable({
         )}
         {!invoices && isLoading && <TableSkeleton skeleton={4} />}
       </Table>
-      <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
-        <TabelPagination
-          tableType="Primary"
-          totalPage={totalPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
+      {totalPage && (
+        <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
+          <TabelPagination
+            tableType="Primary"
+            totalPage={totalPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
+      )}
     </ScrollArea>
   );
 }

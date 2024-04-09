@@ -66,7 +66,6 @@ export function AddNewNotification({}) {
   const [isLoading, setIsLoading] = useState<boolean>();
   const router = useRouter();
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
     // setIsLoading(true);
     // const res = await ReschedulePickupDateTime(data);
     // setIsLoading(false);

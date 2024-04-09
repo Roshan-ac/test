@@ -36,13 +36,12 @@ export function PrimaryTable({
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: leads[];
-  isLoading:boolean;
+  isLoading: boolean;
   currentPage: number;
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
   SetSelectedRow: Dispatch<SetStateAction<object>>;
 }) {
-  console.log(totalPage);
   return (
     <ScrollArea className="relative h-max w-full rounded-md">
       <Table>
@@ -88,7 +87,7 @@ export function PrimaryTable({
                   </span>
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
-                  {invoice.reason.split('-')[1] ?? "null"}
+                  {invoice.reason.split("-")[1] ?? "null"}
                 </TableCell>
                 <TableCell className="w-max">
                   <span
@@ -114,21 +113,23 @@ export function PrimaryTable({
                 </TableCell>
               </TableRow>
             ))}
-             {invoices?.length < 1 && (
+            {invoices?.length < 1 && (
               <p className=" p-4 text-xl">No Search Results Found.</p>
             )}
           </TableBody>
         )}
-          {!invoices && isLoading && <TableSkeleton skeleton={6} />}
+        {!invoices && isLoading && <TableSkeleton skeleton={6} />}
       </Table>
-      <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
-        <TabelPagination
-          tableType="Primary"
-          totalPage={totalPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
+      {totalPage && (
+        <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
+          <TabelPagination
+            tableType="Primary"
+            totalPage={totalPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
+      )}
     </ScrollArea>
   );
 }

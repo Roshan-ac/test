@@ -23,12 +23,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         // const { username, password } = credentials;
         try {
-          console.log(
-            JSON.stringify({
-              username: credentials?.username,
-              password: credentials?.password,
-            }),
-          );
+  
           const res = await fetch(`${BACKEND_API}/loginAdmin`, {
             method: "POST",
             headers: {
@@ -42,10 +37,8 @@ export const authOptions: NextAuthOptions = {
             }),
           });
 
-          console.log(res);
+
           const user = await res.json();
-          console.log(user);
-          console.log(credentials);
 
           if (res.ok && user) {
             const extendedUser = {
@@ -53,7 +46,7 @@ export const authOptions: NextAuthOptions = {
               token: user.token,
             };
 
-            console.log(extendedUser);
+  
 
             return extendedUser;
           } else {
@@ -61,7 +54,7 @@ export const authOptions: NextAuthOptions = {
           }
           throw new Error(user.message);
         } catch (error) {
-          console.log("Error", error);
+  
           throw new Error((error as Error).message);
         }
       },

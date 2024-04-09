@@ -85,9 +85,7 @@ const SectionOne = ({
             category: filterQueries.category,
           }),
         });
-        if (!res.ok) {
-          console.log("Error :", res);
-        }
+
         const data = await res.json();
         setInvoices(data);
         setIsLoading(false);
@@ -109,6 +107,7 @@ const SectionOne = ({
             Recent Leads
           </h4>
           <PrimaryTable
+            key={SelectedRow?.lead}
             setIsOpen={setIsOpen}
             SetSelectedRow={SetSelectedRow}
             isLoading={isLoading}

@@ -52,7 +52,6 @@ export function PrimaryTable({
   setCurrentPage: Dispatch<SetStateAction<number>>;
   invoices: OrdersData[];
 }) {
-  console.log(invoices)
   return (
     <ScrollArea className=" relative h-max w-full rounded-md">
       <Table>

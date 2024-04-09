@@ -99,14 +99,7 @@ export function SheetDemo({
           vendorid: SelectedRow?.id,
         }),
       });
-
-      if (!res.ok) {
-        console.log("error");
-      }
-
       const data = await res.json();
-      console.log(data);
-
       if (data) {
         setLogDetails(data.data);
       }
@@ -127,8 +120,6 @@ export function SheetDemo({
     setTimeout(() => setProgress(100), 500);
     setTimeout(() => setIsLoading(false), 1000);
   };
-
- 
 
   return (
     <Sheet open={isOpen}>
@@ -333,8 +324,8 @@ export function SheetDemo({
                 </div>
               </div>
             </div>
-          ):(
-            <SheetSkeleton/>
+          ) : (
+            <SheetSkeleton />
           )}
         </ScrollArea>
       </SheetContent>

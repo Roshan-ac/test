@@ -1,14 +1,9 @@
 "use client";
-
 import ChipListInput from "@/components/Internals/chipListInput";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Textarea } from "@/components/ui/textarea";
-import { PincodeInterface } from "@/interfaces/pincode";
 import { useEffect, useState } from "react";
 
 const PincodeTextArea = ({ vendorId }: { vendorId: string }) => {
-  console.log(vendorId);
   const [pincodes, setPincodes] = useState<string[]>();
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(1);
@@ -21,10 +16,6 @@ const PincodeTextArea = ({ vendorId }: { vendorId: string }) => {
         }),
       });
 
-      if (!res.ok) {
-        console.log("error");
-      }
-
       const data = await res.json();
       setPincodes(data.data);
     }
@@ -32,15 +23,14 @@ const PincodeTextArea = ({ vendorId }: { vendorId: string }) => {
     if (!pincodes) {
       fetchData();
     }
-  }, [pincodes,isLoading]);
+  }, [pincodes, isLoading]);
 
-  console.log(pincodes);
   return (
     <div className=" space-y-4">
       <Progress
         hidden={!isLoading}
         value={progress}
-        className=" absolute  top-0 right-0 z-[90] h-[2px]"
+        className=" absolute  right-0 top-0 z-[90] h-[2px]"
       />
       <div className="flex min-h-32 flex-col justify-center bg-tertiaryBackground p-4">
         <div className=" grid grid-cols-4 gap-2">
@@ -53,11 +43,7 @@ const PincodeTextArea = ({ vendorId }: { vendorId: string }) => {
                 <span>{item}</span>
               </div>
             ))}
-            {
-              !pincodes && (
-                <p className=" w-max">No Pincodes available</p>
-              )
-            }
+          {!pincodes && <p className=" w-max">No Pincodes available</p>}
         </div>
       </div>
       <ChipListInput

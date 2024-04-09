@@ -1,7 +1,6 @@
 const { BACKEND_API } = process.env;
 const POST = async (req: any,) => {
   const { leadid } = await req.json();
-  console.log(leadid)
   try {
     const response = await fetch(
       `${BACKEND_API}/viewDeviceConditionImages`,
@@ -20,14 +19,9 @@ const POST = async (req: any,) => {
       },
     );
 
-    if (!response.ok) {
-      console.log("Error: ", response.status);
-    }
-
     const data = await response.json();
     return new Response(JSON.stringify(data));
   } catch (error) {
-    console.error(error);
     return new Response(JSON.stringify(error));
   }
 };

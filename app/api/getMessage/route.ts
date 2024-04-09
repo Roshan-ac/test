@@ -3,9 +3,7 @@ import { createQueryString } from "@/lib/utils";
 const { BACKEND_API } = process.env;
 
 const GET = async (req: any) => {
-    console.log("hello")
   try {
-
     const res = await fetch(`${BACKEND_API}/getmessages`, {
       method: "GET",
       headers: {
@@ -17,10 +15,8 @@ const GET = async (req: any) => {
     });
 
     const data = await res.json();
-    console.log(data);
     return new Response(JSON.stringify(data));
   } catch (error) {
-    console.log(error);
     return new Response(JSON.stringify({ success: false, message: error }));
   }
 };

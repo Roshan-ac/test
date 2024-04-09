@@ -67,7 +67,6 @@ const BasePage = () => {
     devicetype: deviceType;
   }>();
   const updateNewPincode = async (e) => {
-    console.log(newpincode);
     e.preventDefault();
     setIsLoading(true);
     const response = await fetch("api/addnewarea", {
@@ -83,7 +82,7 @@ const BasePage = () => {
     if (response.ok) {
       setIsLoading(false);
       toast({
-        title: result.message
+        title: result.message,
       });
     }
     // setInvoice(invoice);
@@ -93,13 +92,12 @@ const BasePage = () => {
     (async function () {
       const response = await fetch("/api/getAreaCovered");
       const invoice = await response.json();
-      console.log(invoice);
       setInvoice(invoice);
-      if(response.ok){
+      if (response.ok) {
         setIsLoading(false);
       }
     })();
-  }, [isLoading,isAreaUpdating]);
+  }, [isAreaUpdating]);
   return (
     <div className=" w-full space-y-2 py-4">
       <FilterMenubar
@@ -117,7 +115,7 @@ const BasePage = () => {
             </h4>
             <PrimaryTable
               currentPage={1}
-              totalPage={1}
+              totalPage={null}
               invoices={invoice}
               isLoading={isLoading}
               setSelectInvoice={setSelectInvoice}
@@ -197,7 +195,7 @@ const BasePage = () => {
                       type="submit"
                       className=" !h-max rounded-none !bg-[#82C43C] px-8"
                     >
-                     {isAreaUpdating?'updating':'update'}
+                      {isAreaUpdating ? "updating" : "update"}
                     </Button>
                   </div>
                 </form>

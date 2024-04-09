@@ -218,7 +218,7 @@ const MobileReport = ({
         )}
         {physicalcondition !== undefined && (
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[40%]">Screen Condition : </span>
+            <span className="inline-block w-[40%]">Physical Condition : </span>
             <ul className=" w-full space-y-2">
               <>
                 {physicalcondition.map((item, index) => (
@@ -278,7 +278,7 @@ const MobileReport = ({
             </span>
           </Label>
         )}
-        {accessoriesunavailable !== undefined && (
+        {accessoriesunavailable !== undefined  && accessoriesunavailable.length>0 && (
           <Label
             htmlFor="terms"
             className=" flex w-full items-start  space-x-4"

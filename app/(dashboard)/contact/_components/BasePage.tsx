@@ -22,7 +22,6 @@ const BasePage = () => {
       setMessage(invoice);
     })();
   }, []);
-  console.log(message);
   return (
     <div>
       <Recycle message={message} />

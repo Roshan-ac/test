@@ -180,7 +180,6 @@ export function SheetDemo({
         },
       );
       const orderDetails1 = await res.json();
-      console.log(orderDetails1);
       setOrderDetails(orderDetails1);
       const res2 = await fetch(`/api/getLeadLogs`, {
         method: "POST",
@@ -189,11 +188,10 @@ export function SheetDemo({
         }),
       });
       const LeadLogs = await res2.json();
-      console.log(LeadLogs);
       setLogDetails(LeadLogs);
       setIsLoading(false);
     })();
-  }, [SelectedRow, isLoading]);
+  }, [SelectedRow]);
 
   const ShowProgress = () => {
     setIsLoading(true);
@@ -221,7 +219,6 @@ export function SheetDemo({
     });
 
     const result = await res.json();
-    console.log(result);
     if (result.success) {
       setIsLoading(false);
       toast({
@@ -290,7 +287,7 @@ export function SheetDemo({
                   <div className="flex w-full items-center space-x-4 py-8">
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button className=" !h-max rounded-none !text-white !bg-[#cd6235] px-8">
+                        <Button className=" !h-max rounded-none !bg-[#cd6235] px-8 !text-white">
                           Accept Fail
                         </Button>
                       </AlertDialogTrigger>
@@ -325,7 +322,7 @@ export function SheetDemo({
                     </AlertDialog>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button className=" !h-max rounded-none !text-white !bg-[#27b544a5] px-8">
+                        <Button className=" !h-max rounded-none !bg-[#27b544a5] px-8 !text-white">
                           Reverse Lead
                         </Button>
                       </AlertDialogTrigger>
@@ -360,7 +357,7 @@ export function SheetDemo({
                     </AlertDialog>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button className=" !h-max rounded-none !text-white !bg-[#c43c3c] px-8">
+                        <Button className=" !h-max rounded-none !bg-[#c43c3c] px-8 !text-white">
                           Reject Lead
                         </Button>
                       </AlertDialogTrigger>
@@ -564,8 +561,8 @@ export function SheetDemo({
                 </div>
               </div>
             </div>
-          ):(
-            <SheetSkeleton/>
+          ) : (
+            <SheetSkeleton />
           )}
         </ScrollArea>
       </SheetContent>

@@ -91,7 +91,6 @@ export function FilterMenubar({
         <Select
           value={selectQueries.status}
           onValueChange={(value) => {
-            console.log(value);
             setSelectQueries({ ...selectQueries, status: value });
           }}
         >
@@ -133,7 +132,6 @@ export function FilterMenubar({
         <Select
           value={selectQueries.category}
           onValueChange={(value) => {
-            console.log(value);
             setSelectQueries({ ...selectQueries, category: value });
           }}
         >
@@ -156,13 +154,12 @@ export function FilterMenubar({
             <SelectItem value="desktop">desktop</SelectItem>
             <SelectItem value="tv">tv</SelectItem>
             <SelectItem value="drone">drone</SelectItem>
-            <SelectItem value="drone">camera</SelectItem>
+            <SelectItem value="camera">camera</SelectItem>
           </SelectContent>
         </Select>
         <Select
           value={selectQueries.city}
           onValueChange={(value) => {
-            console.log(value);
             setSelectQueries({ ...selectQueries, city: value });
           }}
         >

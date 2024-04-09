@@ -124,7 +124,6 @@ export function SheetDemo({
       }),
     });
     const data = await res.json();
-    console.log(data);
     if (data.success) {
       toast({
         title: "Success",
@@ -223,7 +222,6 @@ export function SheetDemo({
         },
       );
       const orderDetails1 = await res.json();
-      console.log(orderDetails1);
       setOrderDetails(orderDetails1);
       const res2 = await fetch(`/api/getLeadLogs`, {
         method: "POST",
@@ -236,8 +234,8 @@ export function SheetDemo({
       setLogDetails(LeadLogs);
       setIsLoading(false);
     })();
-  }, [SelectedRow, isLoading]);
-  console.log(LogDetails);
+  }, [SelectedRow]);
+
   const ShowProgress = () => {
     setIsLoading(true);
     setProgress(8);
@@ -509,9 +507,8 @@ export function SheetDemo({
                 </div>
               </div>
             </div>
-       
           ) : (
-            <SheetSkeleton/>
+            <SheetSkeleton />
           )}
         </ScrollArea>
       </SheetContent>

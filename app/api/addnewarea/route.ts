@@ -1,7 +1,6 @@
 const { BACKEND_API } = process.env;
 
 const POST = async (req: any) => {
-  console.log("hello");
   const { pincode, devicetype, city, state } = await req.json();
   try {
     const res = await fetch(`${BACKEND_API}/addnewarea`, {
@@ -20,10 +19,8 @@ const POST = async (req: any) => {
     });
 
     const data = await res.json();
-    console.log(data);
     return new Response(JSON.stringify(data));
   } catch (error) {
-    console.log(error);
     return new Response(JSON.stringify({ success: false, message: error }));
   }
 };

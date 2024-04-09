@@ -16,7 +16,6 @@ import { useState } from "react";
 import { DatePicker } from "@/components/Internals/DatePicker";
 import { Button } from "@/components/ui/button";
 
-
 export function RecycleFilterMenubar({
   setFilterQueries,
   isLoading,
@@ -87,7 +86,6 @@ export function RecycleFilterMenubar({
         <Select
           value={selectQueries.status}
           onValueChange={(value) => {
-            console.log(value);
             setSelectQueries({ ...selectQueries, status: value });
           }}
         >
@@ -114,7 +112,6 @@ export function RecycleFilterMenubar({
         <Select
           value={selectQueries.city}
           onValueChange={(value) => {
-            console.log(value);
             setSelectQueries({ ...selectQueries, city: value });
           }}
         >

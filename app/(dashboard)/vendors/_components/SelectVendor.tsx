@@ -32,14 +32,11 @@ export function SelectVendor({
         const res = await fetch("https://newapi.cashkar.in/getAllVendors", {
           method: "GET",
         });
-        if (!res.ok) {
-          console.log("Error :", res);
-        }
         const data = await res.json();
         setAllVenodrs(data);
       })();
   }, []);
-  console.log(allvendors);
+
   return (
     <Select
       onValueChange={(value) => {

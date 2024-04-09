@@ -3,8 +3,6 @@ const { BACKEND_API } = process.env;
 const POST = async (req: any) => {
   try {
     const { status, pid } = await req.json();
-    console.log(status);
-
     const res = await fetch(`${BACKEND_API}/updateArea`, {
       method: "POST",
       headers: {
@@ -22,7 +20,6 @@ const POST = async (req: any) => {
     const data = await res.json();
     return new Response(JSON.stringify(data));
   } catch (error) {
-    console.log(error);
     return new Response(JSON.stringify({ success: false, message: error }));
   }
 };

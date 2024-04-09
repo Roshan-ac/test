@@ -34,7 +34,6 @@ const Page = () => {
 
   const submitHandler = async (data: FormInterface) => {
     setIsLoading(true);
-    console.log(data);
     const { username, password } = data;
 
     const res = await signIn("credentials", {

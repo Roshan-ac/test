@@ -146,7 +146,6 @@ const ChartOne = () => {
                 offsetX: 12,
               },
               formatter(legendName, opts) {
-                console.log(options1);
                 return `<div class=" mx-3 p-2 space-y-1">
                      <p class=" text-primaryText">${
                        opts.w.globals.series[opts.seriesIndex]

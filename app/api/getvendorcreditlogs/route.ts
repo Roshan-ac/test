@@ -15,10 +15,8 @@ const POST = async (req: Request) => {
       }),
     });
     const data = await res.json();
-    console.log(data, res);
     return new Response(JSON.stringify(data));
   } catch (error) {
-    console.log(error);
     return new Response(JSON.stringify({ success: false, message: error }));
   }
 };

@@ -37,7 +37,6 @@ export function LeadActions({ lead }: { lead: any }) {
   const [isDialogOpen, setDialogOpen] = React.useState<boolean>(false);
 
   const submitHandler = async (data: DispositionInterface) => {
-    console.log(lead.id);
     const desposition = `${select.disposition1}-${select.disposition2}-(${data.remarks.length > 0 ? data.remarks : "no remarks"})`;
     const res = await fetch("/api/updateDesposition", {
       method: "POST",
@@ -84,7 +83,6 @@ export function LeadActions({ lead }: { lead: any }) {
               ...select,
               disposition1: value as string,
             });
-            console.log(value);
             if (value === "create lead") {
               setDialogOpen(true);
             }

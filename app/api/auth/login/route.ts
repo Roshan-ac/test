@@ -2,7 +2,6 @@ const { BACKEND_API } = process.env;
 
 const POST = async (req: Request) => {
   const { username, password } = await req.json();
-  console.log(username);
 
   try {
     const res = await fetch(`${BACKEND_API}/loginAdmin`, {
@@ -19,10 +18,8 @@ const POST = async (req: Request) => {
     });
 
     const data = await res.json();
-    console.log(data);
     return new Response(JSON.stringify(data));
   } catch (error) {
-    console.log("Error Occured: ", error);
     return new Response(JSON.stringify(error));
   }
 };

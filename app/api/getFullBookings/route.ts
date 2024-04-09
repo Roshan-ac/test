@@ -1,8 +1,6 @@
 const { BACKEND_API } = process.env;
 const POST = async (req: any) => {
   const { leadId, devicetype } = await req.json();
-
-  console.log(leadId, devicetype);
   try {
     const response = await fetch(
       `${BACKEND_API}/get${devicetype}BookingsFullDetail`,
@@ -20,15 +18,11 @@ const POST = async (req: any) => {
       }
     );
 
-    if (!response.ok) {
-      console.log(response);
-    }
+
 
     const data = await response.json();
-    // console.log(data);
     return new Response(JSON.stringify(data));
   } catch (error) {
-    // console.error(error);
     return new Response(JSON.stringify(error));
   }
 };

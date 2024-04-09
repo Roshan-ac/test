@@ -39,7 +39,6 @@ export function PrimaryTable({
   setCurrentPage: Dispatch<SetStateAction<number>>;
   SetSelectedRow: Dispatch<SetStateAction<object>>;
 }) {
-  console.log(totalPage);
   return (
     <ScrollArea className="relative h-max w-full rounded-md">
       <Table>

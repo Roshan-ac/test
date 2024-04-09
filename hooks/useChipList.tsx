@@ -41,10 +41,8 @@ const useChipList = (data: PincodeInterface[]) => {
   function handleInputKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Backspace" && searchQuery === "") {
       if (!isDeleting) {
-        console.log("Backspace 1");
         setIsDeleting(true);
       } else {
-        console.log("Backspace 2");
         removeFromSelection(selectedItems[selectedItems.length - 1].id);
         setIsDeleting(false);
       }
@@ -56,13 +54,6 @@ const useChipList = (data: PincodeInterface[]) => {
         const emailItem: PincodeInterface = { id: pincode, value: pincode };
         addToSelectionWithItem(emailItem);
       }
-      // if (e.key === "ArrowUp") {
-      //   setHighlightedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-      // } else if (e.key === "ArrowDown") {
-      //   setHighlightedIndex((prevIndex) =>
-      //     Math.min(prevIndex + 1, filteredItems.length - 1),
-      //   );
-      // }
     }
   }
   async function updateSearchParams(e: React.ChangeEvent<HTMLInputElement>) {

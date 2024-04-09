@@ -57,7 +57,6 @@ export const FormSchema = z.object({
 });
 
 export function CreateLeadForm({ lead }: { lead: any }) {
-  console.log(lead);
   const [progress, setProgress] = useState(1);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),

@@ -49,12 +49,7 @@ const VendorPayment = () => {
         method: "GET",
       });
 
-      if (!res.ok) {
-        console.log("error");
-      }
-
       const data = await res.json();
-      console.log(data);
       setVendorPayment(data.payments);
       setIsLoading(false);
     }
@@ -69,13 +64,6 @@ const VendorPayment = () => {
     vendorid: number,
     action: "approve" | "reject",
   ) => {
-    console.log(
-      JSON.stringify({
-        id: paymentId?.toString(),
-        vendorid: vendorid,
-        action: action,
-      }),
-    );
     setIsLoading(true);
     const res = await fetch("/api/updatevendorpayment", {
       method: "POST",
@@ -86,12 +74,7 @@ const VendorPayment = () => {
       }),
     });
 
-    if (!res.ok) {
-      console.log("error");
-    }
-
     const data = await res.json();
-    console.log(data);
     if ((await data.success) === true) {
       toast({
         title: "Success",
@@ -103,8 +86,6 @@ const VendorPayment = () => {
     }
     setIsLoading(false);
   };
-
-  console.log(process.env.NEXT_PUBLIC_BACKEND_API);
 
   return (
     <div className="p-4">

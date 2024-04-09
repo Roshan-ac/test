@@ -79,7 +79,6 @@ export function FilterMenubar({
         <Select
           value={selectQueries.type}
           onValueChange={(value) => {
-            console.log(value);
             setSelectQueries({ ...selectQueries, type: value });
           }}
         >
@@ -107,7 +106,6 @@ export function FilterMenubar({
         <Select
           value={selectQueries.brand}
           onValueChange={(value) => {
-            console.log(value);
             setSelectQueries({ ...selectQueries, brand: value });
           }}
         >

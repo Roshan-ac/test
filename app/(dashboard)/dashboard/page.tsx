@@ -8,7 +8,6 @@ import ChartThree from "./_components/chartThree";
 const page = () => {
   return (
     <div className="h-full w-full space-y-6 pb-20">
-
       <HeadingBar />
       <ChartOne />
       <ChartTwo />

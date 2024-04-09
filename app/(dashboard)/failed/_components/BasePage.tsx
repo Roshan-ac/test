@@ -55,7 +55,6 @@ const BasePage = () => {
     toDate: undefined,
     category: "",
   });
-  console.log(invoices);
   useEffect(() => {
     setIsLoading(true),
       (async function () {
@@ -65,9 +64,6 @@ const BasePage = () => {
             orderPage: currentPage,
           }),
         });
-        if (!res.ok) {
-          console.log("Error :", res);
-        }
         const data = await res.json();
         setInvoices(data);
         setIsLoading(false);
@@ -85,7 +81,9 @@ const BasePage = () => {
       />
       <div className="space-y-6  px-8">
         <div className="w-full rounded-[12px]  bg-primaryBackground">
-        <h4 className=" text-lg font-semibold tracking-wide py-2 px-4">Failed Leads</h4>
+          <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
+            Failed Leads
+          </h4>
           <PrimaryTable
             isLoading={isLoading}
             currentPage={currentPage}

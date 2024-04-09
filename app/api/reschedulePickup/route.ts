@@ -1,9 +1,7 @@
 const { BACKEND_API } = process.env;
 
 const POST = async (req: any) => {
-  const { leadid, newPickupDate, newPickupTime, deviceType } =
-    await req.json();
-  console.log(leadid, newPickupDate, newPickupTime, deviceType);
+  const { leadid, newPickupDate, newPickupTime, deviceType } = await req.json();
   try {
     const res = await fetch(`${BACKEND_API}/reschedulePickupCustomer`, {
       method: "POST",
@@ -22,7 +20,6 @@ const POST = async (req: any) => {
     const data = await res.json();
     return new Response(JSON.stringify(data));
   } catch (error) {
-    console.log(error);
     return new Response(JSON.stringify({ success: false, message: error }));
   }
 };

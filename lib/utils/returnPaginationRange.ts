@@ -9,7 +9,7 @@ export const returnPaginationRange = ({
   page: number;
   siblings: number;
 }) => {
-console.log(totalPage,page,siblings)
+
   let totalPageNoInArray = 7 + siblings;
   if (totalPageNoInArray >= totalPage) {
     return _.range(1, totalPage + 1);

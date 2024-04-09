@@ -15,7 +15,6 @@ const GET = async () => {
     const data = await res.json();
     return new Response(JSON.stringify(data));
   } catch (error) {
-    console.log(error);
     return new Response(JSON.stringify({ success: false, message: error }));
   }
 };

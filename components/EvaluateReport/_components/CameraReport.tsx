@@ -7,7 +7,7 @@ const CameraReport = ({
   formData: CameraFullBookingsInterface;
 }) => {
   const { bodycondition, deviceage, accessories } = formData;
-
+console.log(accessories)
   return (
     <div className="font-primary text-md space-y-4 font-normal">
       <div className="flex flex-col space-y-6">
@@ -42,7 +42,7 @@ const CameraReport = ({
             </span>
           </Label>
         )}
-        {accessories !== undefined && (
+        {accessories !== undefined && accessories.length>0 && (
           <Label
             htmlFor="terms"
             className=" flex w-full items-start  space-x-4"

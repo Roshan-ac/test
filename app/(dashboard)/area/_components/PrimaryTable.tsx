@@ -1,3 +1,4 @@
+"use client";
 import {
   Table,
   TableBody,
@@ -35,12 +36,11 @@ export function PrimaryTable({
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: InvoiceInterface;
   isLoading: boolean;
-  setSelectInvoice:Dispatch<SetStateAction<any>>
+  setSelectInvoice: Dispatch<SetStateAction<any>>;
   currentPage: number;
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }) {
-
   return (
     <ScrollArea className="relative h-max w-full rounded-md">
       <Table>
@@ -54,7 +54,7 @@ export function PrimaryTable({
           </TableRow>
         </TableHeader>
 
-        {invoices && invoices.data ? (
+        {invoices && invoices.data && (
           <TableBody className="w-full">
             {invoices.data.map((invoice, index) => (
               <TableRow
@@ -103,23 +103,24 @@ export function PrimaryTable({
                   </span>
                 </TableCell>
               </TableRow>
-            ))}
-          {invoices?.data.length < 1 && (
-            <p className=" p-4 text-xl">No Search Results Found.</p>
-          )}
+            ))}{" "}
+            {invoices.data?.length < 1 && (
+              <p className=" p-4 text-xl">No Search Results Found.</p>
+            )}
           </TableBody>
-        ) : isLoading && (
-          <TableSkeleton skeleton={5} />
         )}
+        {!invoices && isLoading && <TableSkeleton skeleton={4} />}
       </Table>
-      <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
-        <TabelPagination
-          tableType="Primary"
-          totalPage={totalPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
+      {totalPage && (
+        <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
+          <TabelPagination
+            tableType="Primary"
+            totalPage={totalPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
+      )}
     </ScrollArea>
   );
 }

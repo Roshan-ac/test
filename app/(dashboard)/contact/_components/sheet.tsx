@@ -69,7 +69,6 @@ export function SheetDemo({
   const router = useRouter();
 
   useEffect(() => {
-    console.log(SelectedRow.id),
       (async function () {
         const response = await fetch("/api/getfullmessage/", {
           method: "POST",
@@ -79,7 +78,6 @@ export function SheetDemo({
         });
         const invoice = await response.json();
         setFullMessage(invoice);
-        console.log(invoice);
       })();
   }, [SelectedRow]);
 

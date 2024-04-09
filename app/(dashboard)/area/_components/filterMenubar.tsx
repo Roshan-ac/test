@@ -91,7 +91,6 @@ export function FilterMenubar({
         <Select
           value={selectQueries.status}
           onValueChange={(value) => {
-            console.log(value);
             setSelectQueries({ ...selectQueries, status: value });
           }}
         >
@@ -133,7 +132,6 @@ export function FilterMenubar({
         <Select
           value={selectQueries.type}
           onValueChange={(value) => {
-            console.log(value);
             setSelectQueries({ ...selectQueries, type: value });
           }}
         >
@@ -162,7 +160,6 @@ export function FilterMenubar({
         <Select
           value={selectQueries.city}
           onValueChange={(value) => {
-            console.log(value);
             setSelectQueries({ ...selectQueries, city: value });
           }}
         >

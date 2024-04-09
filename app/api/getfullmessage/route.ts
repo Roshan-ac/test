@@ -2,7 +2,6 @@ const { BACKEND_API } = process.env;
 
 const POST = async (req: any) => {
   const { id } = await req.json();
-  console.log(id);
   try {
     const res = await fetch(`${BACKEND_API}/getFullMessage`, {
       method: "POST",
@@ -17,10 +16,9 @@ const POST = async (req: any) => {
     });
 
     const data = await res.json();
-    console.log(data);
     return new Response(JSON.stringify(data));
   } catch (error) {
-    console.log(error);
+
     return new Response(JSON.stringify({ success: false, message: error }));
   }
 };

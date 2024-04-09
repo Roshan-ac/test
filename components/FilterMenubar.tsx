@@ -139,7 +139,7 @@ export function FilterMenubar({
             <SelectItem value="desktop">desktop</SelectItem>
             <SelectItem value="tv">tv</SelectItem>
             <SelectItem value="drone">drone</SelectItem>
-            <SelectItem value="drone">camera</SelectItem>
+            <SelectItem value="camera">camera</SelectItem>
           </SelectContent>
         </Select>
         <Select

@@ -6,10 +6,8 @@ import { CardContainer } from "../../../components/Internals/CardContainer";
 import PageNotAccessible from "@/components/Internals/PageNotAccessible";
 import BasePage from "./_components/BasePage";
 
-
 const page = async () => {
   const user: UserType = await getCurrentUser();
-  console.log(user);
 
   if (!user) {
     redirect("/login");

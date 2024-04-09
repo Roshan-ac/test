@@ -23,11 +23,8 @@ export function FailedImageGallery({ leadId }: { leadId: number }) {
         body: JSON.stringify({ leadid: leadId }),
         cache: "no-cache",
       });
-      if (!res.ok) {
-        console.log("Error :", res);
-      }
+
       const data = await res.json();
-      console.log(data);
       setImages(data);
     })();
   }, []);

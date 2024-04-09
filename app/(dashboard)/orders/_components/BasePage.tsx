@@ -16,7 +16,7 @@ export interface InvoiceInterface {
     data: {
       id: string;
       timestamp: string;
-      assignedVendor:string;
+      assignedVendor: string;
       devicename: string;
       city: string | null;
       devicetype: string;
@@ -62,7 +62,7 @@ export interface InvoiceInterface {
 const BasePage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [invoices, setInvoices] = useState<InvoiceInterface>();
-  const [isUpdated,setIsUpdated]=useState<boolean>()
+  const [isUpdated, setIsUpdated] = useState<boolean>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [filterQueries, setFilterQueries] = useState<{
     search: string;
@@ -102,15 +102,11 @@ const BasePage = () => {
           category: filterQueries.category,
         }),
       });
-      if (!res.ok) {
-        console.log("Error :", res);
-      }
       const data = await res.json();
       setInvoices(data);
       setIsLoading(false);
-      console.log(data);
     })();
-  }, [currentLeadPage, currentOrderPage,isUpdated, filterQueries]);
+  }, [currentLeadPage, currentOrderPage, isUpdated, filterQueries]);
 
   return (
     <div className=" w-full space-y-2 py-4">

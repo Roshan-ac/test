@@ -10,9 +10,9 @@ import { Progress } from "@/ui/progress";
 import LeadLogs from "./LeadLogs";
 import EvaluationReport from "@/components/EvaluateReport/EvaluateReport";
 import { LeadActions } from "@/app/(dashboard)/leads/_components/LeadActions";
-import { Date } from "@/components/Internals/PrimaryTable";
 import { deviceType } from "@/interfaces";
 import SheetSkeleton from "@/components/sheetSkeleton";
+import { Date } from "./PrimaryTable";
 
 export function SheetDemo({
   isOpen,
@@ -43,9 +43,6 @@ export function SheetDemo({
           },
         );
 
-        if (!res.ok) {
-          console.log(res);
-        }
         const data = await res.json();
         setLeadDetails(data.myBookings);
         const res2 = await fetch(`/api/getLeadLogs`, {
@@ -58,15 +55,10 @@ export function SheetDemo({
         setLogDetails(LeadLogs);
         setIsLoading(false);
       })();
-  }, [isLoading]);
+  }, [SelectedRow]);
 
   return (
     <Sheet open={isOpen}>
-      <Progress
-        hidden={!isLoading}
-        value={progress}
-        className=" fixed  right-0 top-0 z-[80] h-[2px]"
-      />
       <SheetContent
         className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
         setIsOpen={setIsOpen}
@@ -105,7 +97,7 @@ export function SheetDemo({
 
                     {leadDetails && (
                       <EvaluationReport
-                        formData={leadDetails.formData}
+                        formData={leadDetails}
                         devicetype={SelectedRow.devicetype}
                       />
                     )}

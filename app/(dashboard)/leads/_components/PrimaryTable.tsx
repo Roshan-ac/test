@@ -10,12 +10,10 @@ import {
 } from "@/components/ui/table";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { InvoiceInterface } from "./sectionOne";
-import { SheetDemo } from "./Sheet";
-import { Date } from "@/components/Internals/PrimaryTable";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
-import { deviceType } from "@/interfaces";
+import { parseISO } from "date-fns";
 
 export function PrimaryTable({
   invoices,
@@ -28,7 +26,7 @@ export function PrimaryTable({
 }: {
   invoices: InvoiceInterface[];
   currentPage: number;
-  setIsOpen:Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   SetSelectedRow: Dispatch<
     SetStateAction<{
       lead: string;
@@ -39,7 +37,6 @@ export function PrimaryTable({
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }) {
-
   return (
     <>
       <ScrollArea className="relative h-max w-full rounded-md">
@@ -56,7 +53,7 @@ export function PrimaryTable({
 
           {invoices && (
             <TableBody className="w-full">
-              {invoices.map((invoice, index) => (
+              {invoices?.map((invoice, index) => (
                 <TableRow
                   onClick={() => {
                     SetSelectedRow({
@@ -85,28 +82,31 @@ export function PrimaryTable({
                   <TableCell className="">
                     <span
                       className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90  ${
-                        invoice.status == null
+                        invoice?.status === null
                           ? "!bg-white"
-                          : invoice.status == "Cn-Cancelled by Customer"
+                          : invoice?.status == "Cn-Cancelled by Customer"
                             ? "!bg-[#FFA0A0] text-[#222222]"
-                            : invoice.status == "Cn-Cancelled by Cashkr"
+                            : invoice?.status == "Cn-Cancelled by Cashkr"
                               ? " !bg-[#0ed380] text-[#111a1c]"
-                              : invoice.status == "F-Cancelled by Cashkr"
+                              : invoice?.status == "F-Cancelled by Cashkr"
                                 ? " !bg-[#0ed380] text-[#111a1c]"
-                                : invoice.status == "Failed"
+                                : invoice?.status == "Failed"
                                   ? "!bg-[#F64848] text-white"
-                                  : invoice.status == "Assigned"
+                                  : invoice?.status == "Assigned"
                                     ? "!bg-[#FF974A]"
-                                    : invoice.status === "F-Sold Somewhere else"
+                                    : invoice?.status ===
+                                        "F-Sold Somewhere else"
                                       ? "!bg-[#bf2fb8]"
-                                      : invoice.status == "C-Completed"
+                                      : invoice?.status == "C-Completed"
                                         ? "!bg-[#82C43C]"
-                                        : invoice.status ===
+                                        : invoice?.status ===
                                             "V-Out For Pickup" &&
                                           "!bg-[#92B7FF]"
                       } bg-red-400 p-1 px-2 text-black  `}
                     >
-                      {invoice.status.split("-")[1]}
+                      {invoice.status
+                        ? invoice.status.split("-")[1]
+                        : "generated"}
                     </span>
                   </TableCell>
                 </TableRow>
@@ -118,15 +118,35 @@ export function PrimaryTable({
           )}
           {!invoices && isLoading && <TableSkeleton skeleton={5} />}
         </Table>
-        <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
-          <TabelPagination
-            tableType="Primary"
-            totalPage={totalPage}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </div>
+        {totalPage && (
+          <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
+            <TabelPagination
+              tableType="Primary"
+              totalPage={totalPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
+        )}
       </ScrollArea>
     </>
   );
+}
+
+export function Date({ dateString }: { dateString: string }) {
+  const date = parseISO(dateString);
+  // Extract components
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Months are zero-based
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const hour = String(date.getUTCHours()).padStart(2, "0");
+  const minute = String(date.getUTCMinutes()).padStart(2, "0");
+  const adjustedHour = (date.getUTCHours() + 5) % 24;
+  const adjustedMinute = String((date.getUTCMinutes() + 30) % 60).padStart(
+    2,
+    "0",
+  );
+  // Construct the formatted string
+  const formattedDateTime = `${year}-${month}-${day} - ${adjustedHour}:${adjustedMinute}`;
+  return <time dateTime={dateString}>{formattedDateTime}</time>;
 }
