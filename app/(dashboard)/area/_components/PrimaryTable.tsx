@@ -95,7 +95,7 @@ export function PrimaryTable({
                           : " bg-red-500 text-white"
                     } m-auto h-max w-max rounded-[18px] p-1 px-4 text-center opacity-90 `}
                   >
-                    {invoice.state == "active"
+                    {invoice.status == "active"
                       ? "Live"
                       : invoice.status == "hold"
                         ? "Hold"
@@ -108,7 +108,7 @@ export function PrimaryTable({
             <p className=" p-4 text-xl">No Search Results Found.</p>
           )}
           </TableBody>
-        ) : (
+        ) : isLoading && (
           <TableSkeleton skeleton={5} />
         )}
       </Table>

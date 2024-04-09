@@ -35,6 +35,7 @@ const BasePage = () => {
   const [isApplied, setIsApplied] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isAreaUpdating, setIsAreaUpdating] = useState<boolean>(false);
   const [invoice, setInvoice] = useState<InvoiceInterface>();
   const [selectInvoice, setSelectInvoice] = useState<{
     pid: string;
@@ -88,13 +89,17 @@ const BasePage = () => {
     // setInvoice(invoice);
   };
   useEffect(() => {
+    setIsLoading(true);
     (async function () {
       const response = await fetch("/api/getAreaCovered");
       const invoice = await response.json();
       console.log(invoice);
       setInvoice(invoice);
+      if(response.ok){
+        setIsLoading(false);
+      }
     })();
-  }, [isLoading]);
+  }, [isLoading,isAreaUpdating]);
   return (
     <div className=" w-full space-y-2 py-4">
       <FilterMenubar
@@ -192,7 +197,7 @@ const BasePage = () => {
                       type="submit"
                       className=" !h-max rounded-none !bg-[#82C43C] px-8"
                     >
-                     {isLoading?'updating':'update'}
+                     {isAreaUpdating?'updating':'update'}
                     </Button>
                   </div>
                 </form>
@@ -206,7 +211,7 @@ const BasePage = () => {
         invoice={selectInvoice}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        setIsUpdated={setIsLoading}
+        setIsUpdated={setIsAreaUpdating}
       />
     </div>
   );

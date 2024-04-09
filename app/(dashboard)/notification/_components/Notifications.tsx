@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import React from "react";
+import { AddNewNotification } from "./addNewNotiModal";
 
 const Notifications = () => {
   return (
@@ -9,7 +10,10 @@ const Notifications = () => {
       Push  Notifications
       </h4>
       <ScrollArea className="relative h-full w-full rounded-2xl">
-        <div className="gap-3 px-4 grid grid-cols-2">
+        <div className="px-4">
+        <AddNewNotification/>
+        </div>
+        <div className="gap-3 my-2 px-4 grid grid-cols-2">
           {Array.from({ length: 12 }).map((item, ind) => (
             <div
               key={ind}

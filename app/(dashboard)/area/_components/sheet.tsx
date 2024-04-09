@@ -18,6 +18,17 @@ import { Input } from "@/components/ui/input";
 import { allDeviceType } from "@/interfaces/devicetype";
 import { FormLabel } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export function SheetDemo({
   isOpen,
@@ -44,12 +55,26 @@ export function SheetDemo({
     state: string;
   }>();
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const [LogDetails, setLogDetails] = useState<any>();
-  async function updateNewPincode() {
-    console.log(newpincode);
+  async function updateAreaStatus({status}){
+    setIsUpdated(true);
+    const res = await fetch("/api/updateAreaStatus",{
+      method:"POST",
+      body:JSON.stringify({
+        status:status,
+        pid:invoice.pid
+      })
+    })
+    const result = await res.json()
+    if(res.ok){
+      setIsUpdated(false);
+      toast({
+        description: (
+          <p className={`${result.success?' text-green-500':' text-red-500'}`}>{result.message}</p>
+        ),
+      });
+    }
   }
-  useEffect(() => {}, []);
   return (
     <Sheet open={isOpen}>
       <Progress
@@ -64,7 +89,6 @@ export function SheetDemo({
         <ScrollArea className="!h-[100vh] pb-6">
           <div className=" space-y-6">
             <div className=" flex items-start space-x-4">
-         
               <div className="w-max space-y-3">
                 <div className=" flex justify-between px-2 text-white">
                   <Label className=" px-2 text-base font-semibold text-white">
@@ -100,15 +124,93 @@ export function SheetDemo({
                   </div>
                 </div>
                 <div className=" space-x-6 px-4">
-                  <Button className=" !h-max rounded-none !bg-[#ffda36] px-8">
-                    Update
-                  </Button>
-                  <Button className=" !h-max rounded-none !bg-[#82C43C] px-8">
-                    Go Live
-                  </Button>
-                  <Button className=" !h-max rounded-none !bg-[#d45c2d] px-8 !text-white">
-                    Hold
-                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button className=" !h-max rounded-none !bg-[#cc6336] px-8 !text-white">
+                        Update
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="text-white">
+                          Are you sure want to change status ?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          You can change status any time.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className="text-white">
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => {
+                            // updateAreaStatus();
+                          }}
+                        >
+                          Continue
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button className=" !h-max rounded-none !bg-[#236f1e] px-8 !text-white">
+                        Go Live
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="text-white">
+                          Are you sure want to change status ?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          You can change status any time.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className="text-white">
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => {
+                            updateAreaStatus({status:"active"});
+                          }}
+                        >
+                          Continue
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button className=" !h-max rounded-none !bg-[#ea433a] px-8 !text-white">
+                        Hold
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="text-white">
+                          Are you sure want to change status ?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          You can change status any time.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className="text-white">
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => {
+                            updateAreaStatus({status:"hold"});
+                          }}
+                        >
+                          Continue
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             </div>
