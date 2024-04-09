@@ -14,7 +14,7 @@ const GET = async (request: NextRequest) => {
     });
   } catch (error) {
     // console.log(error);
-    return error
+    return new Response(JSON.stringify({ success: false, message: error }));
   }
 };
 
