@@ -249,7 +249,7 @@ export function SheetDemo({
     setTimeout(() => setProgress(100), 500);
     setTimeout(() => setIsLoading(false), 1000);
   };
-
+console.log(orderDetails)
   return (
     <Sheet open={isOpen}>
       <Progress
@@ -264,8 +264,8 @@ export function SheetDemo({
         <ScrollArea className="!h-[100vh] pb-6">
           {orderDetails && orderDetails.myBookings ? (
             <div className=" my-4 space-y-4">
-              <div className="flex h-full w-full gap-4">
-                <div className="relative h-max w-[55%] bg-tertiaryBackground p-4 pt-8 text-hoverColor">
+              <div className="flex p-1 h-full w-full gap-2">
+                <div className="relative h-max w-[55%] bg-tertiaryBackground px-4 pt-8 text-hoverColor">
                   <Badge className=" absolute -top-[10px] left-6 z-10 w-max rounded-none !bg-purple-500 px-6 py-1 !text-white">
                     {orderDetails.myBookings.devicetype}
                   </Badge>
@@ -352,7 +352,7 @@ export function SheetDemo({
                     </AlertDialog>
                   </div>
                 </div>
-                <div className="h-max w-[45%] space-y-4">
+                <div className="h-full p-2 w-[45%] space-y-4">
                   <div className="h-max w-full bg-tertiaryBackground px-6 py-4">
                     <div className="my-4 flex flex-col space-y-6 text-hoverColor">
                       <Label
@@ -390,7 +390,7 @@ export function SheetDemo({
                       </Label>
                     </div>
                   </div>
-                  <div className="h-max overflow-x-hidden overflow-y-scroll break-words bg-tertiaryBackground py-4 pl-4 pr-3">
+                  <div className="h-full overflow-x-hidden overflow-y-scroll break-words bg-tertiaryBackground py-4 pl-4 pr-3">
                     <div className="mt-4 flex flex-col space-y-6 text-hoverColor">
                       <Label
                         htmlFor="terms"
@@ -423,22 +423,6 @@ export function SheetDemo({
                         htmlFor="terms"
                         className=" grid w-full grid-cols-3 items-center"
                       >
-                        <p className="inline-block min-w-max"> Alternate :</p>
-                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
-                          {""}
-                        </p>
-                      </Label>
-                      <Label
-                        htmlFor="terms"
-                        className="  grid w-full  grid-cols-3 space-x-4  "
-                      >
-                        <p className="inline-block">Address Type :</p>
-                        <p className=" col-span-2 inline-block w-full">{""}</p>
-                      </Label>
-                      <Label
-                        htmlFor="terms"
-                        className=" grid w-full grid-cols-3 items-center"
-                      >
                         <p className="inline-block min-w-max">Main Address :</p>
                         <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
                           {orderDetails.myBookings.owneraddress}
@@ -461,7 +445,7 @@ export function SheetDemo({
                       >
                         <p className="inline-block min-w-max"> City :</p>
                         <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
-                          {orderDetails.myBookings.owneraddress.split(", ")[5]}
+                          {orderDetails.myBookings.city}
                         </p>
                       </Label>
                       <Label

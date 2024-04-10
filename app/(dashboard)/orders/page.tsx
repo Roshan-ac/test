@@ -6,7 +6,7 @@ import BasePage from "./_components/BasePage";
 
 const page = async () => {
   const user: UserType = await getCurrentUser();
-  console.log(user)
+
   if (!user) {
     redirect("/login");
   }
