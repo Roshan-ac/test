@@ -92,9 +92,11 @@ export function SheetDemo({
   isOpen,
   setIsOpen,
   setIsUpdated,
+  isUpdated,
   SelectedRow,
 }: {
   isOpen: boolean;
+  isUpdated:boolean;
   setIsUpdated: React.Dispatch<React.SetStateAction<boolean>>;
   varient: "leads" | "orders" | "failed" | "vendors";
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -198,7 +200,7 @@ export function SheetDemo({
           <p className=" text-green-500">Vendor is successfully assigned</p>
         ),
       });
-      setIsUpdated(true);
+      setIsUpdated(prev=>!prev);
     } else {
       toast({
         title: "Unable to Assign",
@@ -234,7 +236,7 @@ export function SheetDemo({
       setLogDetails(LeadLogs);
       setIsLoading(false);
     })();
-  }, [SelectedRow]);
+  }, [SelectedRow,isUpdated]);
 
   const ShowProgress = () => {
     setIsLoading(true);
@@ -306,7 +308,7 @@ export function SheetDemo({
 
                   <div className="flex w-full items-center space-x-4 py-8">
                     <div>
-                      <AssignDialog handleAssign={handleAssign} />
+                      <AssignDialog devicetype={orderDetails.myBookings.devicetype} pincode={orderDetails.myBookings.pincode} handleAssign={handleAssign} />
                     </div>
                     <div>
                       <ReschedulePickup

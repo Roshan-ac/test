@@ -160,6 +160,7 @@ const BasePage = () => {
           <SheetDemo
             SelectedRow={SelectedRow}
             varient={"orders"}
+            isUpdated={isUpdated}
             setIsUpdated={setIsUpdated}
             setIsOpen={setIsOpen}
             isOpen={isOpen}

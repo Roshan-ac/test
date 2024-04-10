@@ -11,6 +11,7 @@ import {
 import { SelectVendor } from "./SelectVendor";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { deviceType } from "@/interfaces";
 
 type AssignData = {
   leadid: number;
@@ -19,8 +20,12 @@ type AssignData = {
 
 export function AssignDialog({
   handleAssign,
+  devicetype,
+  pincode
 }: {
   handleAssign: (vendorId: string) => {};
+  devicetype:deviceType;
+  pincode:number;
 }) {
   const [vendorId, setVendorId] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +43,7 @@ export function AssignDialog({
           <DialogTitle>Assign Vendor</DialogTitle>
         </DialogHeader>
         <div>
-          <SelectVendor setVendorId={setVendorId} />
+          <SelectVendor devicetype={devicetype} pincode={pincode} setVendorId={setVendorId} />
         </div>
         <DialogFooter>
           <Button

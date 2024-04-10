@@ -66,11 +66,11 @@ const useChipList = (data: PincodeInterface[]) => {
     }
   }
 
+
   return {
     selectedItems,
     // filteredItems,
     highlightedIndex,
-    // addToSelectionWithId,
     removeFromSelection,
     searchQuery,
     updateSearchParams,

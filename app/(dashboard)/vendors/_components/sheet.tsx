@@ -16,6 +16,7 @@ import { VendorsInterface } from "./BasePage";
 import PincodeTextArea from "./PincodeTextArea";
 import VendorPayment from "../../payments/_components/VendorPayment";
 import SheetSkeleton from "@/components/sheetSkeleton";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type OrderDetails = {
   success: boolean;
@@ -135,15 +136,10 @@ export function SheetDemo({
       >
         <ScrollArea className="!h-[100vh] pb-6">
           {SelectedRow ? (
-            <div className="my-4 space-y-4">
+            <div className="my-4  w-full space-y-4">
               <div className="flex h-full w-full gap-4">
-                <div className="relative h-max w-[55%] space-y-2 text-hoverColor">
-                  <h4>Servicable Pincodes:</h4>
-                  <div className="">
-                    <PincodeTextArea vendorId={SelectedRow.id} />
-                  </div>
-                </div>
-                <div className="h-max w-[45%] space-y-4">
+                <PincodeTextArea vendorId={SelectedRow.id} />
+                <div className="h-max w-[40%] space-y-4">
                   <div className="h-max w-full bg-tertiaryBackground px-6 py-4">
                     <div className="my-4 flex flex-col space-y-6 text-hoverColor">
                       <Label
