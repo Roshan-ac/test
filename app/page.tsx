@@ -11,4 +11,5 @@ export default async function Home() {
   } else {
     redirect("/dashboard");
   }
+  return (<>hello world</>)
 }
