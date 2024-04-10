@@ -64,12 +64,7 @@ export function SelectVendor({
                 {item.name}
               </SelectItem>
             ))}
-            {
-              allvendors.data.length < 1 &&
-              <span>
-                {"No vendor Found"}
-              </span>
-            }
+          {allvendors.data.length < 1 && <span>{"No vendor Found"}</span>}
         </SelectGroup>
       </SelectContent>
     </Select>
