@@ -130,7 +130,7 @@ export function SheetDemo({
 }
 
 const ExtraInfo = ({ lead }: any) => {
-  console.log(lead);
+
   return (
     <div className="h-max w-[45%] space-y-4">
       <div className="h-max w-full bg-tertiaryBackground px-6 py-4">

@@ -71,6 +71,7 @@ const SectionOne = ({
     category: "",
   });
   useEffect(() => {
+    setInvoices(undefined);
     setIsLoading(true),
       (async function () {
         const res = await fetch("/api/getallleads", {

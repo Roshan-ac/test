@@ -56,19 +56,26 @@ const BasePage = () => {
     category: "",
   });
   useEffect(() => {
-    setIsLoading(true),
+    setInvoices(undefined);
+    setIsLoading(true);
       (async function () {
         const res = await fetch("/api/getAllFailedLeads", {
           method: "POST",
           body: JSON.stringify({
             orderPage: currentPage,
+            search: filterQueries.search,
+            city: filterQueries.city,
+            status: filterQueries.status,
+            fromDate: filterQueries.fromDate,
+            toDate: filterQueries.toDate,
+            category: filterQueries.category,
           }),
         });
         const data = await res.json();
         setInvoices(data);
         setIsLoading(false);
       })();
-  }, [currentPage]);
+  }, [currentPage, filterQueries]);
 
   return (
     <div className=" w-full space-y-2 py-4">

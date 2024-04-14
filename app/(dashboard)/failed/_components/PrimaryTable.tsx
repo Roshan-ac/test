@@ -86,9 +86,11 @@ export function PrimaryTable({
                     {invoice.devicetype}
                   </span>
                 </TableCell>
+
                 <TableCell className="border-r border-r-tableSeperator">
-                  {/* {invoice?.reason.split("-")[1] ?? "null"} */}
+                  {invoice?.reason?.split("-")[1]}
                 </TableCell>
+
                 <TableCell className="w-max">
                   <span
                     className={`inline-block h-max min-w-full rounded-[18px] px-4 text-center opacity-90  ${

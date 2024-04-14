@@ -87,7 +87,8 @@ const BasePage = () => {
     devicetype: deviceType;
   }>();
   useEffect(() => {
-    setIsLoading(true), setInvoices(undefined);
+    setInvoices(undefined);
+    setIsLoading(true);
     (async function () {
       const res = await fetch(`/api/getallorders`, {
         method: "POST",

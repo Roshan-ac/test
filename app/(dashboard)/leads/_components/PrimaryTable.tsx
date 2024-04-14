@@ -37,6 +37,7 @@ export function PrimaryTable({
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }) {
+  
   return (
     <>
       <ScrollArea className="relative h-max w-full rounded-md">
