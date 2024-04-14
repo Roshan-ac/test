@@ -87,7 +87,7 @@ export function PrimaryTable({
                   </span>
                 </TableCell>
                 <TableCell className="border-r border-r-tableSeperator">
-                  {invoice.reason.split("-")[1] ?? "null"}
+                  {/* {invoice?.reason.split("-")[1] ?? "null"} */}
                 </TableCell>
                 <TableCell className="w-max">
                   <span

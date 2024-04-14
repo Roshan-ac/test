@@ -192,7 +192,7 @@ export function SheetDemo({
       setIsLoading(false);
     })();
   }, [SelectedRow]);
-
+  console.log(orderDetails);
   const ShowProgress = () => {
     setIsLoading(true);
     setProgress(8);
@@ -417,9 +417,11 @@ export function SheetDemo({
                           {orderDetails.myBookings.devicegeneratedprice}
                         </span>
                       </Label>
+                      {
+                        orderDetails.myBookings.devicefinalprice &&
                       <Label
-                        htmlFor="terms"
-                        className=" flex w-full space-x-4  "
+                      htmlFor="terms"
+                      className=" flex w-full space-x-4  "
                       >
                         <span className="inline-block w-[80%]">
                           Final Price :
@@ -428,6 +430,7 @@ export function SheetDemo({
                           {orderDetails.myBookings.devicefinalprice}
                         </span>
                       </Label>
+                      }
                     </div>
                   </div>
                   <div className="h-max overflow-x-hidden overflow-y-scroll break-words bg-tertiaryBackground py-4 pl-4 pr-3">
@@ -461,19 +464,12 @@ export function SheetDemo({
                       </Label>
                       <Label
                         htmlFor="terms"
-                        className=" grid w-full grid-cols-3 items-center"
-                      >
-                        <p className="inline-block min-w-max"> Alternate :</p>
-                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
-                          {""}
-                        </p>
-                      </Label>
-                      <Label
-                        htmlFor="terms"
                         className="  grid w-full  grid-cols-3 space-x-4  "
                       >
-                        <p className="inline-block">Address Type :</p>
-                        <p className=" col-span-2 inline-block w-full">{""}</p>
+                        <p className="inline-block">order Type :</p>
+                        <p className=" col-span-2 inline-block w-full">
+                          {orderDetails.myBookings.ordertype}
+                        </p>
                       </Label>
                       <Label
                         htmlFor="terms"
@@ -481,7 +477,7 @@ export function SheetDemo({
                       >
                         <p className="inline-block min-w-max">Main Address :</p>
                         <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
-                          {/* {orderDetails.myBookings.owneraddress ??''} */}
+                          {orderDetails.myBookings.owneraddress}
                         </p>
                       </Label>
                       <Label
@@ -490,20 +486,21 @@ export function SheetDemo({
                       >
                         <p className="inline-block min-w-max"> Pincode :</p>
                         <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
-                          {/* {orderDetails.myBookings.owneraddress
-                            .split(", ")
-                            .pop()} */}
+                          {orderDetails.myBookings.pincode}
                         </p>
                       </Label>
+                    {
+                      orderDetails.myBookings.city &&
                       <Label
-                        htmlFor="terms"
-                        className=" grid w-full grid-cols-3 items-center"
+                      htmlFor="terms"
+                      className=" grid w-full grid-cols-3 items-center"
                       >
                         <p className="inline-block min-w-max"> City :</p>
                         <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
-                          {/* {orderDetails.myBookings.owneraddress.split(", ")[5]} */}
+                          {orderDetails.myBookings.city}
                         </p>
                       </Label>
+                      }
                       <Label
                         htmlFor="terms"
                         className=" grid w-full grid-cols-3 items-center"

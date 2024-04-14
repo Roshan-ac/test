@@ -56,7 +56,7 @@ export function SheetDemo({
         setIsLoading(false);
       })();
   }, [SelectedRow]);
-
+  console.log(leadDetails);
   return (
     <Sheet open={isOpen}>
       <SheetContent
@@ -129,7 +129,8 @@ export function SheetDemo({
   );
 }
 
-const ExtraInfo = (lead: any) => {
+const ExtraInfo = ({ lead }: any) => {
+  console.log(lead);
   return (
     <div className="h-max w-[45%] space-y-4">
       <div className="h-max w-full bg-tertiaryBackground px-6 py-4">
@@ -137,64 +138,81 @@ const ExtraInfo = (lead: any) => {
           <Label htmlFor="terms" className="flex w-full space-x-4  ">
             <span className="inline-block w-[80%]">Quoted Price :</span>
             <span className="inline-block w-full">
-              {lead.deviceoriginalprice}
+              {lead.deviceoriginalprice} -/
             </span>
           </Label>
 
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
             <span className="inline-block w-[80%]">Requote Price :</span>
             <span className="inline-block w-full">
-              {lead.devicegeneratedprice}/
+              {lead.devicegeneratedprice} -/
             </span>
           </Label>
+          {
+            lead.devicefinalprice &&
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
             <span className="inline-block w-[80%]">Final Price :</span>
             <span className="inline-block w-full">
-              {lead.devicefinalprice}/
+              {lead.devicefinalprice} -/
             </span>
           </Label>
+          }
         </div>
       </div>
       <div className="h-max w-full overflow-y-auto bg-tertiaryBackground  px-6 py-4">
         <div className="mt-4 flex flex-col space-y-6 text-hoverColor">
-          <Label htmlFor="terms" className="flex w-full space-x-4  ">
-            <span className="inline-block w-[60%]">Name :</span>
-            <span className="inline-block w-full">{lead.ownername}</span>
-          </Label>
-          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[60%]">Email :</span>
-            <span className="inline-block w-full">{lead.owneremail}</span>
-          </Label>
-          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[60%]">Phone :</span>
-            <span className="inline-block w-full">{lead.owneraddress}</span>
-          </Label>
-          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[60%]">Alternate :</span>
-            <span className="inline-block w-full">919767774963</span>
-          </Label>
-          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[60%]">Address Type :</span>
-            <span className="inline-block w-full">Home</span>
-          </Label>
-          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[60%]">Main Address :</span>
-            <span className="inline-block w-full leading-6">
-              {lead.owneraddress}
-            </span>
-          </Label>
+          {lead.ownername && (
+            <Label htmlFor="terms" className="flex w-full space-x-4  ">
+              <span className="inline-block w-[60%]">Name :</span>
+              <span className="inline-block w-full">{lead.ownername}</span>
+            </Label>
+          )}
+          {lead.owneremail && (
+            <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+              <span className="inline-block w-[60%]">Email :</span>
+              <span className="inline-block w-full">{lead.owneremail}</span>
+            </Label>
+          )}
+          {lead.ownerphoneno && (
+            <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+              <span className="inline-block w-[60%]">Phone :</span>
+              <span className="inline-block w-full">{lead.ownerphoneno}</span>
+            </Label>
+          )}
+          {lead.ordertype && (
+            <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+              <span className="inline-block w-[60%]">ordertype :</span>
+              <span className="inline-block w-full">{lead.ordertype}</span>
+            </Label>
+          )}
+          {/* {
+            lead.
+          } */}
+
+          {lead.owneraddress && (
+            <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+              <span className="inline-block w-[60%]">Main Address :</span>
+              <span className="inline-block w-full leading-6">
+                {lead.owneraddress}
+              </span>
+            </Label>
+          )}
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
             <span className="inline-block w-[60%]">Pincode :</span>
             <span className="inline-block w-full">{lead.pincode}</span>
           </Label>
-          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[60%]">City :</span>
-            <span className="inline-block w-full">{lead.city}</span>
-          </Label>
-          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[60%]">Payment :</span>
-            <span className="inline-block w-full">{lead.paymentmode}</span>
-          </Label>
+          {lead.city && (
+            <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+              <span className="inline-block w-[60%]">City :</span>
+              <span className="inline-block w-full">{lead.city}</span>
+            </Label>
+          )}
+          {lead.paymentmode && (
+            <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+              <span className="inline-block w-[60%]">Payment :</span>
+              <span className="inline-block w-full">{lead.paymentmode}</span>
+            </Label>
+          )}
         </div>
       </div>
     </div>

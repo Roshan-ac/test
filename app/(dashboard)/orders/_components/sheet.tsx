@@ -96,7 +96,7 @@ export function SheetDemo({
   SelectedRow,
 }: {
   isOpen: boolean;
-  isUpdated:boolean;
+  isUpdated: boolean;
   setIsUpdated: React.Dispatch<React.SetStateAction<boolean>>;
   varient: "leads" | "orders" | "failed" | "vendors";
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -200,7 +200,7 @@ export function SheetDemo({
           <p className=" text-green-500">Vendor is successfully assigned</p>
         ),
       });
-      setIsUpdated(prev=>!prev);
+      setIsUpdated((prev) => !prev);
     } else {
       toast({
         title: "Unable to Assign",
@@ -236,7 +236,7 @@ export function SheetDemo({
       setLogDetails(LeadLogs);
       setIsLoading(false);
     })();
-  }, [SelectedRow,isUpdated]);
+  }, [SelectedRow, isUpdated]);
 
   const ShowProgress = () => {
     setIsLoading(true);
@@ -249,7 +249,7 @@ export function SheetDemo({
     setTimeout(() => setProgress(100), 500);
     setTimeout(() => setIsLoading(false), 1000);
   };
-console.log(orderDetails)
+  console.log(orderDetails);
   return (
     <Sheet open={isOpen}>
       <Progress
@@ -264,7 +264,7 @@ console.log(orderDetails)
         <ScrollArea className="!h-[100vh] pb-6">
           {orderDetails && orderDetails.myBookings ? (
             <div className=" my-4 space-y-4">
-              <div className="flex p-1 h-full w-full gap-2">
+              <div className="flex h-full w-full gap-2 p-1">
                 <div className="relative h-max w-[55%] bg-tertiaryBackground px-4 pt-8 text-hoverColor">
                   <Badge className=" absolute -top-[10px] left-6 z-10 w-max rounded-none !bg-purple-500 px-6 py-1 !text-white">
                     {orderDetails.myBookings.devicetype}
@@ -308,7 +308,11 @@ console.log(orderDetails)
 
                   <div className="flex w-full items-center space-x-4 py-8">
                     <div>
-                      <AssignDialog devicetype={orderDetails.myBookings.devicetype} pincode={orderDetails.myBookings.pincode} handleAssign={handleAssign} />
+                      <AssignDialog
+                        devicetype={orderDetails.myBookings.devicetype}
+                        pincode={orderDetails.myBookings.pincode}
+                        handleAssign={handleAssign}
+                      />
                     </div>
                     <div>
                       <ReschedulePickup
@@ -352,42 +356,48 @@ console.log(orderDetails)
                     </AlertDialog>
                   </div>
                 </div>
-                <div className="h-full p-2 w-[45%] space-y-4">
+                <div className="h-full w-[45%] space-y-4 p-2">
                   <div className="h-max w-full bg-tertiaryBackground px-6 py-4">
                     <div className="my-4 flex flex-col space-y-6 text-hoverColor">
-                      <Label
-                        htmlFor="QuotedPrice"
-                        className=" flex w-full space-x-4  "
-                      >
-                        <span className="inline-block w-[80%]">
-                          Quoted Price :
-                        </span>
-                        <span className="inline-block w-full">
-                          {orderDetails.myBookings.deviceoriginalprice}
-                        </span>
-                      </Label>
-                      <Label
-                        htmlFor="terms"
-                        className=" flex w-full space-x-4  "
-                      >
-                        <span className="inline-block w-[80%]">
-                          Requote Price :
-                        </span>
-                        <span className="inline-block w-full">
-                          {orderDetails.myBookings.devicegeneratedprice}
-                        </span>
-                      </Label>
-                      <Label
-                        htmlFor="terms"
-                        className=" flex w-full space-x-4  "
-                      >
-                        <span className="inline-block w-[80%]">
-                          Final Price :
-                        </span>
-                        <span className="inline-block w-full">
-                          {orderDetails.myBookings.devicefinalprice}
-                        </span>
-                      </Label>
+                      {orderDetails.myBookings.deviceoriginalprice && (
+                        <Label
+                          htmlFor="QuotedPrice"
+                          className=" flex w-full space-x-4  "
+                        >
+                          <span className="inline-block w-[80%]">
+                            Quoted Price :
+                          </span>
+                          <span className="inline-block w-full">
+                            {orderDetails.myBookings.deviceoriginalprice}
+                          </span>
+                        </Label>
+                      )}
+                      {orderDetails.myBookings.devicegeneratedprice && (
+                        <Label
+                          htmlFor="terms"
+                          className=" flex w-full space-x-4  "
+                        >
+                          <span className="inline-block w-[80%]">
+                            Requote Price :
+                          </span>
+                          <span className="inline-block w-full">
+                            {orderDetails.myBookings.devicegeneratedprice}
+                          </span>
+                        </Label>
+                      )}
+                      {orderDetails.myBookings.devicefinalprice && (
+                        <Label
+                          htmlFor="terms"
+                          className=" flex w-full space-x-4  "
+                        >
+                          <span className="inline-block w-[80%]">
+                            Final Price :
+                          </span>
+                          <span className="inline-block w-full">
+                            {orderDetails.myBookings.devicefinalprice}
+                          </span>
+                        </Label>
+                      )}
                     </div>
                   </div>
                   <div className="h-full overflow-x-hidden overflow-y-scroll break-words bg-tertiaryBackground py-4 pl-4 pr-3">
@@ -434,20 +444,20 @@ console.log(orderDetails)
                       >
                         <p className="inline-block min-w-max"> Pincode :</p>
                         <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
-                          {orderDetails.myBookings.owneraddress
-                            .split(", ")
-                            .pop()}
+                          {orderDetails.myBookings.pincode}
                         </p>
                       </Label>
-                      <Label
-                        htmlFor="terms"
-                        className=" grid w-full grid-cols-3 items-center"
-                      >
-                        <p className="inline-block min-w-max"> City :</p>
-                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
-                          {orderDetails.myBookings.city}
-                        </p>
-                      </Label>
+                      {orderDetails.myBookings.city && (
+                        <Label
+                          htmlFor="terms"
+                          className=" grid w-full grid-cols-3 items-center"
+                        >
+                          <p className="inline-block min-w-max"> City :</p>
+                          <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
+                            {orderDetails.myBookings.city}
+                          </p>
+                        </Label>
+                      )}
                       <Label
                         htmlFor="terms"
                         className=" grid w-full grid-cols-3 items-center"
