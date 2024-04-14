@@ -417,20 +417,19 @@ export function SheetDemo({
                           {orderDetails.myBookings.devicegeneratedprice}
                         </span>
                       </Label>
-                      {
-                        orderDetails.myBookings.devicefinalprice &&
-                      <Label
-                      htmlFor="terms"
-                      className=" flex w-full space-x-4  "
-                      >
-                        <span className="inline-block w-[80%]">
-                          Final Price :
-                        </span>
-                        <span className="inline-block w-full">
-                          {orderDetails.myBookings.devicefinalprice}
-                        </span>
-                      </Label>
-                      }
+                      {orderDetails.myBookings.devicefinalprice && (
+                        <Label
+                          htmlFor="terms"
+                          className=" flex w-full space-x-4  "
+                        >
+                          <span className="inline-block w-[80%]">
+                            Final Price :
+                          </span>
+                          <span className="inline-block w-full">
+                            {orderDetails.myBookings.devicefinalprice}
+                          </span>
+                        </Label>
+                      )}
                     </div>
                   </div>
                   <div className="h-max overflow-x-hidden overflow-y-scroll break-words bg-tertiaryBackground py-4 pl-4 pr-3">
@@ -489,18 +488,17 @@ export function SheetDemo({
                           {orderDetails.myBookings.pincode}
                         </p>
                       </Label>
-                    {
-                      orderDetails.myBookings.city &&
-                      <Label
-                      htmlFor="terms"
-                      className=" grid w-full grid-cols-3 items-center"
-                      >
-                        <p className="inline-block min-w-max"> City :</p>
-                        <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
-                          {orderDetails.myBookings.city}
-                        </p>
-                      </Label>
-                      }
+                      {orderDetails.myBookings.city && (
+                        <Label
+                          htmlFor="terms"
+                          className=" grid w-full grid-cols-3 items-center"
+                        >
+                          <p className="inline-block min-w-max"> City :</p>
+                          <p className=" col-span-2  w-full  whitespace-pre-wrap text-left leading-6">
+                            {orderDetails.myBookings.city}
+                          </p>
+                        </Label>
+                      )}
                       <Label
                         htmlFor="terms"
                         className=" grid w-full grid-cols-3 items-center"
