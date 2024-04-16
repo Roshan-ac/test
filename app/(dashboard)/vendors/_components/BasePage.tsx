@@ -54,6 +54,7 @@ const BasePage = () => {
             All Vendors
           </h4>
           <PrimaryTable
+            selectedRow={SelectedRow}
             isLoading={isLoading}
             SetSelectedRow={SetSelectedRow}
             setIsOpen={setIsOpen}

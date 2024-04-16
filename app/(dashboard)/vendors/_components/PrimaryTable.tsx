@@ -17,10 +17,12 @@ import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 export function PrimaryTable({
   setIsOpen,
   invoices,
+  selectedRow,
   isLoading,
   SetSelectedRow,
 }: {
   isLoading: boolean;
+  selectedRow: VendorsInterface;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: VendorsInterface[];
   SetSelectedRow: Dispatch<SetStateAction<object>>;
@@ -47,7 +49,7 @@ export function PrimaryTable({
                   SetSelectedRow(invoice);
                   setIsOpen((prev) => !prev);
                 }}
-                className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
+                className={` ${selectedRow?.id === invoice.id ? " bg-hoverColor text-black" : ""} group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60`}
                 key={index}
               >
                 <TableCell className="border-r border-r-tableSeperator">

@@ -14,7 +14,7 @@ export interface InvoiceInterface {
   leads: {
     pagelimit: number;
     data: {
-      id: string;
+      id: number;
       pickupdate: string;
       devicename: string;
       pickuptime: string;
@@ -58,23 +58,23 @@ const BasePage = () => {
   useEffect(() => {
     setInvoices(undefined);
     setIsLoading(true);
-      (async function () {
-        const res = await fetch("/api/getAllFailedLeads", {
-          method: "POST",
-          body: JSON.stringify({
-            orderPage: currentPage,
-            search: filterQueries.search,
-            city: filterQueries.city,
-            status: filterQueries.status,
-            fromDate: filterQueries.fromDate,
-            toDate: filterQueries.toDate,
-            category: filterQueries.category,
-          }),
-        });
-        const data = await res.json();
-        setInvoices(data);
-        setIsLoading(false);
-      })();
+    (async function () {
+      const res = await fetch("/api/getAllFailedLeads", {
+        method: "POST",
+        body: JSON.stringify({
+          orderPage: currentPage,
+          search: filterQueries.search,
+          city: filterQueries.city,
+          status: filterQueries.status,
+          fromDate: filterQueries.fromDate,
+          toDate: filterQueries.toDate,
+          category: filterQueries.category,
+        }),
+      });
+      const data = await res.json();
+      setInvoices(data);
+      setIsLoading(false);
+    })();
   }, [currentPage, filterQueries]);
 
   return (
@@ -92,13 +92,14 @@ const BasePage = () => {
             Failed Leads
           </h4>
           <PrimaryTable
+            selectedRow={SelectedRow}
             isLoading={isLoading}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            totalPage={invoices?.leads.pagelimit}
+            totalPage={invoices?.leads?.pagelimit}
             SetSelectedRow={SetSelectedRow}
             setIsOpen={setIsOpen}
-            invoices={invoices?.leads.data}
+            invoices={invoices?.leads?.data}
           />
         </div>
 

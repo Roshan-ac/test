@@ -108,6 +108,7 @@ const SectionOne = ({
             Recent Leads
           </h4>
           <PrimaryTable
+          selectedRow={SelectedRow}
             key={SelectedRow?.lead}
             setIsOpen={setIsOpen}
             SetSelectedRow={SetSelectedRow}

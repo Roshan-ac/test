@@ -14,9 +14,11 @@ import { Dispatch, SetStateAction } from "react";
 import { InvoiceInterface } from "./sectionOne";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { parseISO } from "date-fns";
+import { deviceType } from "@/interfaces";
 
 export function PrimaryTable({
   invoices,
+  selectedRow,
   setCurrentPage,
   currentPage,
   SetSelectedRow,
@@ -26,6 +28,10 @@ export function PrimaryTable({
 }: {
   invoices: InvoiceInterface[];
   currentPage: number;
+  selectedRow:{
+    lead: string;
+    devicetype: deviceType;
+  }
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   SetSelectedRow: Dispatch<
     SetStateAction<{
@@ -63,7 +69,7 @@ export function PrimaryTable({
                     });
                     setIsOpen((prev) => !prev);
                   }}
-                  className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
+                  className={` ${selectedRow?.lead === invoice.id ? " bg-hoverColor text-black" : ""} group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60`}
                   key={index}
                 >
                   <TableCell className="border-r border-r-tableSeperator">

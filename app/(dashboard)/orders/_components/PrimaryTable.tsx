@@ -13,9 +13,10 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { parseISO, format } from "date-fns";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
+import { deviceType } from "@/interfaces";
 
 type OrdersData = {
-  id: string;
+  id: number;
   timestamp: string;
   devicename: string;
   city: string | null;
@@ -42,12 +43,17 @@ export function PrimaryTable({
   totalPage,
   invoices,
   currentPage,
+  selectedRow,
   setCurrentPage,
 }: {
   isLoading: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   SetSelectedRow: Dispatch<SetStateAction<object>>;
   currentPage: number;
+  selectedRow: {
+    lead: number;
+    devicetype: deviceType;
+  };
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
   invoices: OrdersData[];
@@ -75,7 +81,7 @@ export function PrimaryTable({
                   });
                   setIsOpen((prev) => !prev);
                 }}
-                className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
+                className={` ${selectedRow?.lead === invoice.id ? " bg-hoverColor text-black" : ""} group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60`}
                 key={index}
               >
                 <TableCell className="border-r border-r-tableSeperator">

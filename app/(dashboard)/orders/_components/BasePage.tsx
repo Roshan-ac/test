@@ -14,7 +14,7 @@ export interface InvoiceInterface {
   orders: {
     pagelimit: number;
     data: {
-      id: string;
+      id: number;
       timestamp: string;
       assignedVendor: string;
       devicename: string;
@@ -124,6 +124,7 @@ const BasePage = () => {
             Recent Orders
           </h4>
           <PrimaryTable
+          selectedRow={SelectedRow}
             isLoading={isLoading}
             SetSelectedRow={SetSelectedRow}
             currentPage={currentOrderPage}

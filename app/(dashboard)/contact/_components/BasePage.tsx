@@ -6,7 +6,7 @@ export type MessageInterface = {
   success: boolean;
   pagelimit: number;
   data: {
-    id: string;
+    id: number;
     fullname: string;
     email: string;
     category: string;

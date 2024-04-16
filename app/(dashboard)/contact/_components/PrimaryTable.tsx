@@ -16,6 +16,7 @@ import { MessageInterface } from "./BasePage";
 
 export function PrimaryTable({
   setIsOpen,
+  selectedRow,
   isLoading,
   invoices,
   setCurrentPage,
@@ -25,6 +26,9 @@ export function PrimaryTable({
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: MessageInterface;
+  selectedRow: {
+    id: number;
+  };
   isLoading: boolean;
   currentPage: number;
   totalPage: number;
@@ -53,7 +57,7 @@ export function PrimaryTable({
                   }),
                     setIsOpen(true);
                 }}
-                className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
+                className={` ${selectedRow?.id === invoice.id ? "bg-hoverColor text-black" : ""} group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60`}
                 key={index}
               >
                 <TableCell className="border-r border-r-tableSeperator">

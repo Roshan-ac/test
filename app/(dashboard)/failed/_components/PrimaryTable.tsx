@@ -12,9 +12,10 @@ import { parseISO, format } from "date-fns";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { InvoiceInterface } from "./BasePage";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
+import { deviceType } from "@/interfaces";
 
 type leads = {
-  id: string;
+  id: number;
   pickupdate: string;
   devicename: string;
   pickuptime: string;
@@ -29,6 +30,7 @@ export function PrimaryTable({
   setIsOpen,
   isLoading,
   invoices,
+  selectedRow,
   setCurrentPage,
   currentPage,
   totalPage,
@@ -36,6 +38,10 @@ export function PrimaryTable({
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: leads[];
+  selectedRow: {
+    lead: number;
+    devicetype: deviceType;
+  };
   isLoading: boolean;
   currentPage: number;
   totalPage: number;
@@ -67,7 +73,7 @@ export function PrimaryTable({
                   });
                   setIsOpen((prev) => !prev);
                 }}
-                className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
+                className={`  ${selectedRow?.lead === invoice.id ? " bg-hoverColor text-black" : ""} group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60`}
                 key={index}
               >
                 <TableCell className="border-r border-r-tableSeperator">

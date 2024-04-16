@@ -117,6 +117,7 @@ const BasePage = () => {
               currentPage={1}
               totalPage={null}
               invoices={invoice}
+              selectInvoice={selectInvoice}
               isLoading={isLoading}
               setSelectInvoice={setSelectInvoice}
               setIsOpen={setIsOpen}

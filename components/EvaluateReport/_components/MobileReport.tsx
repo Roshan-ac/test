@@ -192,73 +192,69 @@ const MobileReport = ({
         {screencondition !== undefined && (
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
             <span className="inline-block w-[40%]">Screen Condition : </span>
-            <ul className=" w-full space-y-2">
-              <>
-                {screencondition.map((item, index) => (
-                  <span
-                    key={index}
-                    className="caption text-surface-text inline-block text-sm"
-                  >
-                    {item == "S5"
-                      ? "Scratches on Screen"
-                      : item == "S4"
-                        ? "Faulty Screen"
-                        : item == "S3"
-                          ? "Screen Not Usable"
-                          : item == "S2"
-                            ? "Cracked Screen"
-                            : item == "S1"
-                              ? "No Screen Issues"
-                              : "Have Screen Issues"}
-                  </span>
-                ))}
-              </>
-            </ul>
+            <span className="flex w-full flex-col gap-1">
+              {screencondition.map((item, index) => (
+                <span
+                  key={index}
+                  className="caption text-surface-text inline-block text-sm"
+                >
+                  {item == "S5"
+                    ? "Scratches on Screen"
+                    : item == "S4"
+                      ? "Faulty Screen"
+                      : item == "S3"
+                        ? "Screen Not Usable"
+                        : item == "S2"
+                          ? "Cracked Screen"
+                          : item == "S1"
+                            ? "No Screen Issues"
+                            : "Have Screen Issues"}
+                </span>
+              ))}
+            </span>
           </Label>
         )}
         {physicalcondition !== undefined && (
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
             <span className="inline-block w-[40%]">Physical Condition : </span>
-            <ul className=" w-full space-y-2">
-              <>
-                {physicalcondition.map((item, index) => (
-                  <span
-                    key={index}
-                    className="caption text-surface-text inline-block text-sm"
-                  >
-                    {item == "P2"
-                      ? "Back Camera Problem"
-                      : item == "P4"
-                        ? "Fingerprint Problem"
-                        : item == "P9"
-                          ? "Speaker Problem"
-                          : item == "P5"
-                            ? "Face id problem"
-                            : item == "P3"
-                              ? "Battery Service / Problem"
-                              : item == "P7"
-                                ? "Bend Phone"
-                                : item == "P11"
-                                  ? "Network Problem"
-                                  : item == "P10"
-                                    ? "Microphone Problem"
-                                    : item == "P8"
-                                      ? "Display Changed"
-                                      : item == "P12"
-                                        ? "Charging Problem"
-                                        : item == "P6"
-                                          ? "Bluetooth Problem"
-                                          : item == "P1"
-                                            ? "Front Camera"
-                                            : item == "P13"
-                                              ? "Back Glass Broken"
-                                              : item == "P14"
-                                                ? "Wifi Problem"
-                                                : "No Physical Issues"}
-                  </span>
-                ))}
-              </>
-            </ul>
+            <span className="flex w-full flex-col gap-1">
+              {physicalcondition.map((item, index) => (
+                <span
+                  key={index}
+                  className="caption text-surface-text inline-block text-sm"
+                >
+                  {item == "P2"
+                    ? "Back Camera Problem"
+                    : item == "P4"
+                      ? "Fingerprint Problem"
+                      : item == "P9"
+                        ? "Speaker Problem"
+                        : item == "P5"
+                          ? "Face id problem"
+                          : item == "P3"
+                            ? "Battery Service / Problem"
+                            : item == "P7"
+                              ? "Bend Phone"
+                              : item == "P11"
+                                ? "Network Problem"
+                                : item == "P10"
+                                  ? "Microphone Problem"
+                                  : item == "P8"
+                                    ? "Display Changed"
+                                    : item == "P12"
+                                      ? "Charging Problem"
+                                      : item == "P6"
+                                        ? "Bluetooth Problem"
+                                        : item == "P1"
+                                          ? "Front Camera"
+                                          : item == "P13"
+                                            ? "Back Glass Broken"
+                                            : item == "P14"
+                                              ? "Wifi Problem"
+                                              : "No Physical Issues"}
+                </span>
+              ))}
+            </span>
           </Label>
         )}
 
@@ -278,30 +274,31 @@ const MobileReport = ({
             </span>
           </Label>
         )}
-        {accessoriesunavailable !== undefined  && accessoriesunavailable.length>0 && (
-          <Label
-            htmlFor="terms"
-            className=" flex w-full items-start  space-x-4"
-          >
-            <h4 className="inline-block w-[40%]">Device Accessories : </h4>
-            <ul className=" w-full space-y-2  flex flex-col justify-start">
-              {accessoriesunavailable.map((item, index) => (
-                <li
-                  key={index}
-                  className="caption text-surface-text inline-block text-sm"
-                >
-                  {item == "A1"
-                    ? "Charger Cable that comes with box"
-                    : item == "A2"
-                      ? "Earphones of the Device"
-                      : item == "A3"
-                        ? "Device box with IMEI"
-                        : "Bill of the Device"}
-                </li>
-              ))}
-            </ul>
-          </Label>
-        )}
+        {accessoriesunavailable !== undefined &&
+          accessoriesunavailable.length > 0 && (
+            <Label
+              htmlFor="terms"
+              className=" flex w-full items-start  space-x-4"
+            >
+              <h4 className="inline-block w-[40%]">Device Accessories : </h4>
+              <ul className=" flex w-full  flex-col justify-start space-y-2">
+                {accessoriesunavailable.map((item, index) => (
+                  <li
+                    key={index}
+                    className="caption text-surface-text inline-block text-sm"
+                  >
+                    {item == "A1"
+                      ? "Charger Cable that comes with box"
+                      : item == "A2"
+                        ? "Earphones of the Device"
+                        : item == "A3"
+                          ? "Device box with IMEI"
+                          : "Bill of the Device"}
+                  </li>
+                ))}
+              </ul>
+            </Label>
+          )}
       </div>
     </div>
   );

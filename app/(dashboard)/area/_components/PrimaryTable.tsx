@@ -25,6 +25,7 @@ type leads = {
 };
 
 export function PrimaryTable({
+  selectInvoice,
   setIsOpen,
   isLoading,
   invoices,
@@ -36,6 +37,14 @@ export function PrimaryTable({
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   invoices: InvoiceInterface;
   isLoading: boolean;
+  selectInvoice: {
+    pid: string;
+    pvalue: string;
+    city: string;
+    state: string;
+    devicetype: deviceType;
+    status: string;
+  };
   setSelectInvoice: Dispatch<SetStateAction<any>>;
   currentPage: number;
   totalPage: number;
@@ -62,7 +71,7 @@ export function PrimaryTable({
                   setSelectInvoice(invoice);
                   setIsOpen((prev) => !prev);
                 }}
-                className="group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60"
+                className={` ${selectInvoice?.pid === invoice.pid ? "bg-hoverColor text-black" : ""} group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60`}
                 key={index}
               >
                 <TableCell className="border-r border-r-tableSeperator">
