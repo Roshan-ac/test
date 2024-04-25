@@ -113,7 +113,7 @@ export function PickupNewDateTime({
             <FormItem className="flex flex-col">
               <FormLabel>New Pickup Time</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger className="!focus-visible:outline-none flex items-center justify-between whitespace-nowrap rounded-md border border-neutral-200 bg-white px-4 py-2 text-sm font-medium ring-offset-white transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:ring-neutral-950 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-800  dark:bg-neutral-950  dark:ring-offset-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 dark:focus-visible:ring-neutral-300">
+                <SelectTrigger className="">
                   <SelectValue placeholder="Select a pickuptime" />
                 </SelectTrigger>
                 <SelectContent>

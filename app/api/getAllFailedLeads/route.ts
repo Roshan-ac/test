@@ -23,7 +23,7 @@ const POST = async (req: any) => {
       fromDate,
       toDate,
     });
-    const res = await fetch(`${BACKEND_API}/getAllFailedLeads?${queryString}`, {
+    const res = await fetch(`${BACKEND_API}/getAllFailedLeads`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
