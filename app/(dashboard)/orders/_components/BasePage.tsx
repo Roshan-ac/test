@@ -124,7 +124,7 @@ const BasePage = () => {
             Recent Orders
           </h4>
           <PrimaryTable
-          selectedRow={SelectedRow}
+            selectedRow={SelectedRow}
             isLoading={isLoading}
             SetSelectedRow={SetSelectedRow}
             currentPage={currentOrderPage}

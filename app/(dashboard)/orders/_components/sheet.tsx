@@ -69,7 +69,7 @@ type OrderDetails = {
     createdBy: string;
     physicalcondition: string[];
     accessoriesunavailable: string[];
-    screencondition: string[];
+    screencondition: string;
     devicestorage: string;
     deviceram: string;
     warrantystatus: string;
@@ -110,7 +110,7 @@ export function SheetDemo({
   const [orderDetails, setOrderDetails] = useState<OrderDetails>();
   const [LogDetails, setLogDetails] = useState<LogDetails>();
   const router = useRouter();
-
+  console.log(orderDetails);
   const FailedLead = async () => {
     ShowProgress();
     const res = await fetch(`/api/failedLead`, {

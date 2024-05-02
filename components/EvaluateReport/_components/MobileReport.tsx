@@ -193,26 +193,24 @@ const MobileReport = ({
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
             <span className="inline-block w-[40%]">Screen Condition : </span>
             <span className="flex w-full flex-col gap-1">
-              {screencondition.map((item, index) => (
                 <span
-                  key={index}
                   className="caption text-surface-text inline-block text-sm"
                 >
-                  {item == "S5"
+                  {screencondition == "S5"
                     ? "Scratches on Screen"
-                    : item == "S4"
-                      ? "Faulty Screen"
-                      : item == "S3"
-                        ? "Screen Not Usable"
-                        : item == "S2"
+                    : screencondition == "S4"
+                      ? "Dots/Spots"
+                      : screencondition == "S3"
+                        ? "Screen Not Useable"
+                        : screencondition == "S2"
                           ? "Cracked Screen"
-                          : item == "S1"
-                            ? "No Screen Issues"
-                            : "Have Screen Issues"}
+                          : screencondition == "S1"
+                            ? "Scratchless screen"
+                            : screencondition == "S0" && "No Screen Issues"}
                 </span>
-              ))}
             </span>
           </Label>
+       
         )}
         {physicalcondition !== undefined && (
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">

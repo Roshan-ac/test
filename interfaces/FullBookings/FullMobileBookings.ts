@@ -40,7 +40,7 @@ export interface MobileFullBookingsInterface {
   createdBy: string | null;
   physicalcondition: string[];
   accessoriesunavailable: string[];
-  screencondition: string[];
+  screencondition: string;
   devicestorage: string;
   deviceram: string | null;
   warrantystatus: string;
