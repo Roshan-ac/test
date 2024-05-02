@@ -70,7 +70,7 @@ type OrderDetails = {
     createdBy: string;
     physicalcondition: string[];
     accessoriesunavailable: string[];
-    screencondition: string[];
+    screencondition: string;
     devicestorage: string;
     deviceram: string;
     warrantystatus: string;
