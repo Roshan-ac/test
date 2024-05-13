@@ -1,5 +1,3 @@
-import { Navbar } from "@/components/Navbar";
-import { Sidebar } from "@/components/Sidebar";
 import { getCurrentUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 
@@ -11,5 +9,5 @@ export default async function Home() {
   } else {
     redirect("/dashboard");
   }
-  return (<>hello world</>)
+  return null;
 }
