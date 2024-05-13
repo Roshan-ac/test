@@ -65,7 +65,7 @@ export function SelectVendor({
               </SelectItem>
             ))}
           {!allvendors?.data && (
-            <span className=" px-2">{"No vendor Avialable"}</span>
+            <span className=" px-2">{"No vendor Available"}</span>
           )}
         </SelectGroup>
       </SelectContent>
