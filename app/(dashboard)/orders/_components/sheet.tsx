@@ -72,6 +72,7 @@ type OrderDetails = {
     screencondition: string;
     devicestorage: string;
     deviceram: string;
+    size: string;
     warrantystatus: string;
     bodycondition: string;
     deviceclassid: number;
@@ -270,7 +271,26 @@ export function SheetDemo({
                     {orderDetails.myBookings.devicetype}
                   </Badge>
                   <div>
-                    <h1>{orderDetails.myBookings.devicename}</h1>
+                    <h1>
+                      {orderDetails.myBookings.devicename}
+
+                      {orderDetails.myBookings.deviceram !== "null" && (
+                        <span>
+                          {" "}
+                          {orderDetails.myBookings.deviceram} GB{" "}
+                          {orderDetails.myBookings.devicestorage && "/"}{" "}
+                        </span>
+                      )}
+                      {orderDetails.myBookings.size && (
+                        <span>{orderDetails.myBookings.size}</span>
+                      )}
+                      {orderDetails.myBookings.devicestorage && (
+                        <span>
+                          {" "}
+                          {`${orderDetails.myBookings.devicestorage} GB`}{" "}
+                        </span>
+                      )}
+                    </h1>
                   </div>
                   <div className="my-6 flex flex-col space-y-6">
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
