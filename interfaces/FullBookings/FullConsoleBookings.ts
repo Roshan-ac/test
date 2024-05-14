@@ -44,6 +44,7 @@ export interface ConsoleFullBookingsInterface {
   extracontrollers: string;
   numberofcds: string;
   physicalcondition: string[];
+  accessories: string[];
 }
 
 const ConsoleObject = {

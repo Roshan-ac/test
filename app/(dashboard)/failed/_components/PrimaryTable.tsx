@@ -13,6 +13,7 @@ import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { InvoiceInterface } from "./BasePage";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { deviceType } from "@/interfaces";
+import ConsoleReport from "@/components/EvaluateReport/_components/ConsoleReport";
 
 type leads = {
   id: number;
@@ -48,6 +49,7 @@ export function PrimaryTable({
   setCurrentPage: Dispatch<SetStateAction<number>>;
   SetSelectedRow: Dispatch<SetStateAction<object>>;
 }) {
+  console.log(invoices);
   return (
     <ScrollArea className="relative h-max w-full rounded-md">
       <Table>

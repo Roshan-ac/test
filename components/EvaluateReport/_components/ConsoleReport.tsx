@@ -12,8 +12,13 @@ const ConsoleReport = ({
     physicalcondition,
     numberofcds,
     extracontrollers,
+    accessories,
   } = formData;
   console.log(numberofcds);
+
+  const accessoriesunavailable = ["A1", "A2", "A3"].filter((item) =>
+    accessories?.includes(item),
+  );
 
   return (
     <div className="font-primary text-md space-y-4 font-normal">
@@ -44,7 +49,7 @@ const ConsoleReport = ({
                   : bodycondition == "B3"
                     ? "1 or 2 Minor Dents, Major Scratch Colour Loss"
                     : bodycondition == "B4"
-                      ? "Major, Multiple Dents, Bend, Cracking Body"
+                      ? "Major, Multiple Dents, Bend, Cracked Body"
                       : "Have Device Usage Marks"}
             </span>
           </Label>
@@ -100,9 +105,11 @@ const ConsoleReport = ({
         )}
         {numberofcds !== undefined && (
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[40%]">Number of CD&lsquo;s : </span>
+            <span className="inline-block w-[40%]">
+              Number of CD&lsquo;s :{" "}
+            </span>
             <span className="inline-block w-full">
-              {numberofcds == "CD0"
+              {numberofcds === "CD0"
                 ? "No Extra CD"
                 : numberofcds == "CD1"
                   ? "1 Extra CD"
@@ -110,7 +117,31 @@ const ConsoleReport = ({
                     ? "2 Extra CD"
                     : numberofcds == "CD3"
                       ? "3 Extra CD"
-                      : numberofcds == "CD4" && "4 Extra CD"}
+                      : numberofcds == "CD4"
+                        ? "4 Extra CD"
+                        : "Have Extra CD"}
+            </span>
+          </Label>
+        )}
+
+        {accessories !== undefined && (
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[40%]">
+              Accessories Available :{" "}
+            </span>
+            <span className="inline-block w-full">
+              {accessoriesunavailable.map((item, index) => (
+                <li
+                  key={index}
+                  className="caption text-surface-text inline-block text-sm"
+                >
+                  {item == "A1"
+                    ? "Bill"
+                    : item == "A2"
+                      ? "Box"
+                      : item == "A3" && "Controller"}
+                </li>
+              ))}
             </span>
           </Label>
         )}

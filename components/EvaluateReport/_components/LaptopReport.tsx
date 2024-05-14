@@ -14,7 +14,12 @@ const LaptopReport = ({
     laptopage,
     physicalcondition,
     bodycondition,
+    accessories,
   } = formData;
+
+  const accessoriesunavailable = ["A1", "A2", "A3"].filter(
+    (item) => !accessories?.includes(item),
+  );
 
   return (
     <div className="font-primary text-md space-y-4 font-normal">
@@ -79,35 +84,33 @@ const LaptopReport = ({
                     key={index}
                     className="caption text-surface-text inline-block text-sm"
                   >
-                    {item == "P2"
-                      ? "Back Camera Problem"
-                      : item == "P4"
-                        ? "Fingerprint Problem"
-                        : item == "P9"
-                          ? "Speaker Problem"
-                          : item == "P5"
-                            ? "Face id problem"
-                            : item == "P3"
-                              ? "Battery Service / Problem"
-                              : item == "P7"
-                                ? "Bend Phone"
-                                : item == "P11"
-                                  ? "Network Problem"
-                                  : item == "P10"
-                                    ? "Microphone Problem"
-                                    : item == "P8"
-                                      ? "Display Changed"
-                                      : item == "P12"
-                                        ? "Charging Problem"
-                                        : item == "P6"
-                                          ? "Bluetooth Problem"
-                                          : item == "P1"
-                                            ? "Front Camera"
+                    {item == "P1"
+                      ? "Spots on display"
+                      : item == "P2"
+                        ? "Keyboard Issue"
+                        : item == "P3"
+                          ? "TrackPad Issue"
+                          : item == "P4"
+                            ? "Speaker Problem"
+                            : item == "P5"
+                              ? "Wifi problem"
+                              : item == "P6"
+                                ? "Charging problem"
+                                : item == "P7"
+                                  ? "Battery problem"
+                                  : item == "P8"
+                                    ? "USB Port Issue"
+                                    : item == "P9"
+                                      ? "CD Drive Issue"
+                                      : item == "P10"
+                                        ? "WebCam Issue"
+                                        : item == "P11"
+                                          ? "Charger Issue"
+                                          : item == "P12"
+                                            ? "Hard Disk Issue"
                                             : item == "P13"
-                                              ? "Back Glass Broken"
-                                              : item == "P14"
-                                                ? "Wifi Problem"
-                                                : "No Physical Issues"}
+                                              ? " Display Issue"
+                                              : "No Physical Issues"}
                   </span>
                 ))}
               </>
@@ -128,6 +131,29 @@ const LaptopReport = ({
                       ? "Major, Multiple Dents, Bend, Cracking Body"
                       : "Have Device Usage Marks"}
             </span>
+          </Label>
+        )}
+
+        {accessories !== undefined && accessoriesunavailable.length > 0 && (
+          <Label
+            htmlFor="terms"
+            className=" flex w-full items-start  space-x-4"
+          >
+            <h4 className="inline-block w-[40%]">Device Accessories : </h4>
+            <ul className=" flex w-full  flex-col justify-start space-y-2">
+              {accessoriesunavailable.map((item, index) => (
+                <li
+                  key={index}
+                  className="caption text-surface-text inline-block text-sm"
+                >
+                  {item == "A1"
+                    ? "Bill"
+                    : item == "A2"
+                      ? "Box"
+                      : item == "A3" && "Charger"}
+                </li>
+              ))}
+            </ul>
           </Label>
         )}
       </div>

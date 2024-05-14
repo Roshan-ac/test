@@ -6,8 +6,12 @@ const CameraReport = ({
 }: {
   formData: CameraFullBookingsInterface;
 }) => {
-  const { bodycondition, deviceage, accessories } = formData;
-console.log(accessories)
+  const { bodycondition, deviceage, accessories, lens } = formData;
+
+  const accessoriesunavailable = ["A3", "A1", "A2", "A4"].filter(
+    (item) => !accessories?.includes(item),
+  );
+
   return (
     <div className="font-primary text-md space-y-4 font-normal">
       <div className="flex flex-col space-y-6">
@@ -37,30 +41,40 @@ console.log(accessories)
                   : bodycondition == "B3"
                     ? "1 or 2 Minor Dents, Major Scratch Colour Loss"
                     : bodycondition == "B4"
-                      ? "Major, Multiple Dents, Bend, Cracking Body"
+                      ? "Major, Multiple Dents, Bend, Cracked Body"
                       : "Have Device Usage Marks"}
             </span>
           </Label>
         )}
-        {accessories !== undefined && accessories.length>0 && (
+
+        {lens !== undefined && (
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[40%]">Lens : </span>
+            <span className="inline-block w-full">
+              {lens == "1" ? "Have Lens" : lens == "0" ? "No Lens" : `${lens}`}
+            </span>
+          </Label>
+        )}
+
+        {accessories !== undefined && accessoriesunavailable.length > 0 && (
           <Label
             htmlFor="terms"
             className=" flex w-full items-start  space-x-4"
           >
             <h4 className="inline-block w-[40%]">Device Accessories : </h4>
             <ul className=" flex w-full  flex-col justify-start space-y-2">
-              {accessories.map((item, index) => (
+              {accessoriesunavailable.map((item, index) => (
                 <li
                   key={index}
                   className="caption text-surface-text inline-block text-sm"
                 >
                   {item == "A1"
-                    ? "Charger Cable that comes with box"
+                    ? "Charger"
                     : item == "A2"
-                      ? "Earphones of the Device"
+                      ? "Camera Bag"
                       : item == "A3"
-                        ? "Device box with IMEI"
-                        : "Bill of the Device"}
+                        ? "Box"
+                        : item == "A4" && "Tripod"}
                 </li>
               ))}
             </ul>

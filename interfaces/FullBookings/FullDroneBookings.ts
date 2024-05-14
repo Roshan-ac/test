@@ -41,6 +41,7 @@ export interface DroneFullBookingsInterface {
   deviceage: string;
   bodycondition: string;
   deviceclassid: number;
+  accessories: string[];
 }
 
 const DroneObject = {

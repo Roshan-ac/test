@@ -2,7 +2,11 @@ import { Label } from "@/components/ui/label";
 import { MacFullBookingsInterface } from "@/interfaces/FullBookings/FullMacBookings";
 
 const MacReport = ({ formData }: { formData: MacFullBookingsInterface }) => {
-  const { macage, physicalcondition, bodycondition } = formData;
+  const { macage, physicalcondition, bodycondition, accessories } = formData;
+
+  const accessoriesunavailable = ["A1", "A2", "A3"].filter(
+    (item) => !accessories?.includes(item),
+  );
 
   return (
     <div className="flex flex-col space-y-6">
@@ -67,6 +71,28 @@ const MacReport = ({ formData }: { formData: MacFullBookingsInterface }) => {
                                           : "No Physical Issues"}
               </span>
             ))}
+            {accessories !== undefined && accessoriesunavailable.length > 0 && (
+              <Label
+                htmlFor="terms"
+                className=" flex w-full items-start  space-x-4"
+              >
+                <h4 className="inline-block w-[40%]">Device Accessories : </h4>
+                <ul className=" flex w-full  flex-col justify-start space-y-2">
+                  {accessoriesunavailable.map((item, index) => (
+                    <li
+                      key={index}
+                      className="caption text-surface-text inline-block text-sm"
+                    >
+                      {item == "A1"
+                        ? "Bill"
+                        : item == "A2"
+                          ? "Box"
+                          : item == "A3" && "Charger"}
+                    </li>
+                  ))}
+                </ul>
+              </Label>
+            )}
           </>
         </ul>
       </Label>

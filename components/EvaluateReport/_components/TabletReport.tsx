@@ -36,24 +36,15 @@ const TabletReport = ({
             <span className="inline-block w-[40%]">Screen Condition : </span>
             <ul className=" w-full space-y-2">
               <>
-                {screencondition.map((item, index) => (
-                  <span
-                    key={index}
-                    className="caption text-surface-text inline-block text-sm"
-                  >
-                    {item == "S5"
-                      ? "Scratches on Screen"
-                      : item == "S4"
-                        ? "Faulty Screen"
-                        : item == "S3"
-                          ? "Screen Not Usable"
-                          : item == "S2"
-                            ? "Cracked Screen"
-                            : item == "S1"
-                              ? "No Screen Issues"
-                              : "Have Screen Issues"}
-                  </span>
-                ))}
+                {screencondition == "S5"
+                  ? "Scratches on Screen"
+                  : screencondition == "S4"
+                    ? "Faulty Screen"
+                    : screencondition == "S3"
+                      ? "Screen Not Usable"
+                      : screencondition == "S2"
+                        ? "Cracked Screen"
+                        : "Have Screen Issues"}
               </>
             </ul>
           </Label>

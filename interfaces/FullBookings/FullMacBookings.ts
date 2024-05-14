@@ -44,6 +44,7 @@ export interface MacFullBookingsInterface {
   ram: string;
   storage: string;
   physicalcondition: string[];
+  accessories: string[];
 }
 
 const MacBookings = {

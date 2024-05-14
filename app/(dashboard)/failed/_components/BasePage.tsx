@@ -77,6 +77,8 @@ const BasePage = () => {
     })();
   }, [currentPage, filterQueries]);
 
+  console.log(invoices);
+
   return (
     <div className=" w-full space-y-2 py-4">
       <FilterMenubar

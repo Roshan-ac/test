@@ -79,11 +79,11 @@ const DesktopReport = ({
                               : item == "P6"
                                 ? "CD Drive Issues"
                                 : item == "P7"
-                                  ? "HDD/SSD Issues"
+                                  ? "Hard Disk Issues"
                                   : item == "P8"
                                     ? "Display issues"
                                     : item == "P9"
-                                      ? "Spot On Issues"
+                                      ? "Spot On Desktop"
                                       : "No Physical Issues"}
                   </span>
                 ))}
