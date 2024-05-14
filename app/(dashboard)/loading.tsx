@@ -1,15 +1,10 @@
 import Image from "next/image";
+import loaderBar from "../../public/Images/loaderBar.gif";
 
 export default function Loading() {
   return (
     <div className=" flex h-[100vh] w-full items-center justify-center">
-      <Image
-        alt=""
-        height={80}
-        width={80}
-        src={"/images/loaderBar.gif"}
-        unoptimized
-      />
+      <Image alt="loading" src={loaderBar} unoptimized />
     </div>
   );
 }
