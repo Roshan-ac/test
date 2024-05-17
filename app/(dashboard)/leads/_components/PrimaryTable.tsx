@@ -114,10 +114,10 @@ export function PrimaryTable({
                                         "!bg-[#92B7FF]"
                     } bg-red-400 p-1 px-2 text-black  `}
                   >
-                    {invoice.status == null && invoice.assignedVendor == null
+                    {invoice.status == null && invoice.assignedvendor == null
                       ? "Generated"
                       : invoice.status == null &&
-                          invoice.assignedVendor !== null
+                          invoice.assignedvendor !== null
                         ? "Assigned to Vendor"
                         : invoice.status?.startsWith("Cn-")
                           ? "Cancelled"
