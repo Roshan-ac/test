@@ -92,9 +92,9 @@ export function PrimaryTable({
                     
                     
                     ${
-                      invoice.status == null && invoice.assignedVendor !== null
+                      invoice.status == null && invoice.assignedvendor !== null
                       ? "!bg-yellow-400":
-                      invoice.assignedVendor == null && invoice.status == null
+                      invoice.assignedvendor == null && invoice.status == null
                       ? "!bg-white"
                         : invoice.status == "Cn-Cancelled by Customer"
                           ? "!bg-[#FFA0A0] text-[#222222]"
