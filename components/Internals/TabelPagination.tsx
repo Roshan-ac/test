@@ -21,13 +21,13 @@ export function TabelPagination({
   tableType: "Primary" | "Secondary";
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }) {
-  console.log(totalPage)
+
   const array = returnPaginationRange({
     totalPage: totalPage,
     page: currentPage,
     siblings: 1,
   });
-  console.log(array);
+
   return (
     <Pagination className=" flex w-full justify-start p-4">
       <PaginationContent className="">

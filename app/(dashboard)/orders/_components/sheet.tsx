@@ -111,7 +111,7 @@ export function SheetDemo({
   const [orderDetails, setOrderDetails] = useState<OrderDetails>();
   const [LogDetails, setLogDetails] = useState<LogDetails>();
   const router = useRouter();
-  console.log(orderDetails);
+ 
   const FailedLead = async () => {
     ShowProgress();
     const res = await fetch(`/api/failedLead`, {
@@ -250,7 +250,7 @@ export function SheetDemo({
     setTimeout(() => setProgress(100), 500);
     setTimeout(() => setIsLoading(false), 1000);
   };
-  console.log(orderDetails);
+
   return (
     <Sheet open={isOpen}>
       <Progress
