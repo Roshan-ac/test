@@ -21,7 +21,7 @@ type OrdersData = {
   devicename: string;
   city: string | null;
   devicetype: string;
-  assignedVendor: string;
+  assignedvendor: string;
   status:
     | "Generated"
     | "Cn-Cancelled by Customer"
@@ -58,6 +58,7 @@ export function PrimaryTable({
   setCurrentPage: Dispatch<SetStateAction<number>>;
   invoices: OrdersData[];
 }) {
+  console.log(invoices)
   return (
     <ScrollArea className=" relative h-max w-full rounded-md">
       <Table>
@@ -106,9 +107,9 @@ export function PrimaryTable({
                     
                     
                     ${
-                      invoice.status == null && invoice.assignedVendor !== null
+                      invoice.status == null && invoice.assignedvendor !== null
                       ? "!bg-yellow-400":
-                      invoice.assignedVendor == null && invoice.status == null
+                      invoice.assignedvendor == null && invoice.status == null
                       ? "!bg-white"
                         : invoice.status == "Cn-Cancelled by Customer"
                           ? "!bg-[#FFA0A0] text-[#222222]"
@@ -128,10 +129,10 @@ export function PrimaryTable({
                                         "!bg-[#92B7FF]"
                     } bg-red-400 p-1 px-2 text-black  `}
                   >
-                    {invoice.status == null && invoice.assignedVendor == null
+                    {invoice.status == null && invoice.assignedvendor == null
                       ? "Generated"
                       : invoice.status == null &&
-                          invoice.assignedVendor !== null
+                          invoice.assignedvendor !== null
                         ? "Assigned to Vendor"
                         : invoice.status?.startsWith("Cn-")
                           ? "Cancelled"
