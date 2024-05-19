@@ -16,7 +16,7 @@ export interface InvoiceInterface {
     data: {
       id: number;
       timestamp: string;
-      assignedVendor: string;
+      assignedvendor: string;
       devicename: string;
       city: string | null;
       devicetype: string;
