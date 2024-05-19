@@ -1,73 +1,16 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { TabelPagination } from "@/components/Internals/TabelPagination";
-import { useRouter } from "next/navigation";
-
-import { toast } from "@/components/ui/use-toast";
 import { deviceType } from "@/interfaces";
-import { FailedImageGallery } from "@/components/Internals/FailedImageCarousel";
 import { VendorsInterface } from "./BasePage";
 import PincodeTextArea from "./PincodeTextArea";
-import VendorPayment from "../../payments/_components/VendorPayment";
 import SheetSkeleton from "@/components/sheetSkeleton";
-import { Checkbox } from "@/components/ui/checkbox";
+import ImageGallery from "./ImageGallery";
 
-type OrderDetails = {
-  success: boolean;
-  myBookings: {
-    id: number;
-    timestamp: string;
-    devicename: string;
-    devicebrandname: string;
-    deviceimg: string;
-    devicetype: deviceType;
-    deviceoriginalprice: number;
-    devicegeneratedprice: number;
-    devicefinalprice: string;
-    deviceimei: string;
-    ownername: string;
-    owneraddress: string;
-    city: string;
-    ownerphoneno: string;
-    owneremail: string;
-    pincode: number;
-    paymentmode: string;
-    ordertype: string;
-    assignedvendor: string;
-    status: string;
-    customersignature: string;
-    creditpoints: number;
-    pickupdate: string;
-    pickuptime: string;
-    upino: string;
-    bankacno: string;
-    bankbeneficiaryname: string;
-    bankifsccode: string;
-    bankname: string;
-    token: string;
-    failedcustomerexpectedamt: string;
-    failedfinalofferedamt: string;
-    cashboy: string;
-    isCompleted: number;
-    isCallRequested: null;
-    desposition: string;
-    createdBy: string;
-    physicalcondition: string[];
-    accessoriesunavailable: string[];
-    screencondition: string[];
-    devicestorage: string;
-    deviceram: string;
-    warrantystatus: string;
-    bodycondition: string;
-    deviceclassid: number;
-  };
-};
+
 
 type LogDetails = {
   success: boolean;
@@ -259,18 +202,17 @@ export function SheetDemo({
                     Image
                   </h2>
                 </div>
-                <div className="my-2 w-full">
-                  {/* <FailedImageGallery
-                    images={[
-                      SelectedRow.aadharcardimgback,
-                      SelectedRow.aadharcardimgfront,
-                      SelectedRow.pancardimg,
-                      SelectedRow.selfphoto,
-                      SelectedRow.shopphoto,
-                    ]}
-                  /> */}
+                <div>
+                  <ImageGallery
+                    images={{
+                      aadharcardimgback: SelectedRow.aadharcardimgback,
+                      aadharcardimgfront: SelectedRow.aadharcardimgfront,
+                      pancardimg: SelectedRow.pancardimg,
+                      selfphoto: SelectedRow.selfphoto,
+                      shopphoto: SelectedRow.shopphoto,
+                    }}
+                  />
                 </div>
-
                 <div className="flex justify-between">
                   {SelectedRow.applicationStatus === "0" && (
                     <>

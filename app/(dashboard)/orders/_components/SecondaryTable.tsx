@@ -74,29 +74,29 @@ const SecondaryTable = ({
                 <span
                     className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90
                     
-                    
                     ${
                       invoice.status == null && invoice.assignedvendor !== null
-                        ? "!bg-yellow-400":
-                        invoice.assignedvendor == null && invoice.status == null
-                        ? "!bg-white"
-                        : invoice.status == "Cn-Cancelled by Customer"
-                          ? "!bg-[#FFA0A0] text-[#222222]"
-                          : invoice.status?.startsWith("Cn-")
-                            ? " !bg-[#0ed380] text-[#111a1c]"
-                            : invoice.status == "F-Cancelled by Cashkr"
+                        ? "!bg-[#3495eb]"
+                        : invoice.assignedvendor == null &&
+                            invoice.status == null
+                          ? "bg-[#ebd834]"
+                          : invoice.status == "Cn-Cancelled by Customer"
+                            ? "!bg-[#FFA0A0] text-[#222222]"
+                            : invoice.status?.startsWith("Cn-")
                               ? " !bg-[#0ed380] text-[#111a1c]"
-                              : invoice.status?.startsWith("F-")
-                                ? "!bg-[#F64848] text-white"
-                                : invoice.status == "Assigned"
-                                  ? "!bg-[#FF974A]"
-                                  : invoice.status === "F-Sold Somewhere else"
-                                    ? "!bg-[#bf2fb8]"
-                                    : invoice.status?.startsWith("C-")
-                                      ? "!bg-[#82C43C]"
-                                      : invoice.status.startsWith("v-") &&
-                                        "!bg-[#92B7FF]"
-                    } bg-red-400 p-1 px-2 text-black  `}
+                              : invoice.status == "F-Cancelled by Cashkr"
+                                ? " !bg-[#0ed380] text-[#111a1c]"
+                                : invoice.status?.startsWith("F-")
+                                  ? "!bg-[#F64848] text-white"
+                                  : invoice.status == "Assigned"
+                                    ? "!bg-[#FF974A]"
+                                    : invoice.status === "F-Sold Somewhere else"
+                                      ? "!bg-[#bf2fb8]"
+                                      : invoice.status?.startsWith("C-")
+                                        ? "!bg-[#82C43C]"
+                                        : invoice.status.startsWith("V-") &&
+                                          "!bg-[#3446eb] text-white"
+                    } p-1 px-2 text-black  `}
                   >
                     {invoice.status == null && invoice.assignedvendor == null
                       ? "Generated"
@@ -109,7 +109,7 @@ const SecondaryTable = ({
                             ? "Failed"
                             : invoice.status?.startsWith("C-")
                               ? "Completed"
-                              : invoice.status.startsWith("v-")
+                              : invoice.status.startsWith("V-")
                                 ? "In Progress"
                                 : invoice.status?.split("-")[1]}
                   </span>

@@ -5,7 +5,9 @@ import { CardContainer } from "./CardContainer";
 import { SheetDemo } from "./sheet";
 import { PrimaryTable } from "./PrimaryTable";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
+import ImageGallery from "./ImageGallery";
 
+import { PhotoProvider } from "react-photo-view";
 export type VendorsInterface = {
   id: string;
   firebaseid: string;
