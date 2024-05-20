@@ -8,6 +8,7 @@ import { deviceType } from "@/interfaces";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { PrimaryTable } from "./PrimaryTable";
 import { FilterMenubar } from "@/components/FilterMenubar";
+import { ProgressWrapper } from "@/context/progressContext";
 
 export interface InvoiceInterface {
   success: boolean;
@@ -110,66 +111,68 @@ const BasePage = () => {
   }, [currentLeadPage, currentOrderPage, isUpdated, filterQueries]);
 
   return (
-    <div className=" w-full space-y-2 py-4">
-      <FilterMenubar
-        isApplied={isApplied}
-        setIsApplied={setIsApplied}
-        isLoading={isLoading}
-        filterQueries={filterQueries}
-        setFilterQueries={setFilterQueries}
-      />
-      <div className="space-y-6  px-8">
-        <div className="w-full rounded-[12px]  bg-primaryBackground">
-          <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
-            Recent Orders
-          </h4>
-          <PrimaryTable
-            selectedRow={SelectedRow}
-            isLoading={isLoading}
-            SetSelectedRow={SetSelectedRow}
-            currentPage={currentOrderPage}
-            setCurrentPage={setCurrentOrderPage}
-            totalPage={invoices?.orders.pagelimit}
-            setIsOpen={setIsOpen}
-            invoices={invoices?.orders.data}
-          />
-        </div>
-
-        {invoices && (
-          <CardContainer
-            cardsValues={{
-              completedOrdersCount: invoices.completedOrdersCount,
-              assignedOrdersCount: invoices.assignedOrdersCount,
-              availableOrdersCount: invoices.availableOrdersCount,
-              failedOrdersCount: invoices.failedOrdersCount,
-            }}
-          />
-        )}
-        {invoices && (
+    <ProgressWrapper>
+      <div className=" w-full space-y-2 py-4">
+        <FilterMenubar
+          isApplied={isApplied}
+          setIsApplied={setIsApplied}
+          isLoading={isLoading}
+          filterQueries={filterQueries}
+          setFilterQueries={setFilterQueries}
+        />
+        <div className="space-y-6  px-8">
           <div className="w-full rounded-[12px]  bg-primaryBackground">
             <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
-              Order Timeline
+              Recent Orders
             </h4>
-            <SecondaryTable
-              currentPage={currentLeadPage}
-              setCurrentPage={setCurrentLeadPage}
-              totalPage={invoices.leads.pagelimit}
-              leads={invoices.leads.data}
+            <PrimaryTable
+              selectedRow={SelectedRow}
+              isLoading={isLoading}
+              SetSelectedRow={SetSelectedRow}
+              currentPage={currentOrderPage}
+              setCurrentPage={setCurrentOrderPage}
+              totalPage={invoices?.orders.pagelimit}
+              setIsOpen={setIsOpen}
+              invoices={invoices?.orders.data}
             />
           </div>
-        )}
-        {SelectedRow && (
-          <SheetDemo
-            SelectedRow={SelectedRow}
-            varient={"orders"}
-            isUpdated={isUpdated}
-            setIsUpdated={setIsUpdated}
-            setIsOpen={setIsOpen}
-            isOpen={isOpen}
-          />
-        )}
+
+          {invoices && (
+            <CardContainer
+              cardsValues={{
+                completedOrdersCount: invoices.completedOrdersCount,
+                assignedOrdersCount: invoices.assignedOrdersCount,
+                availableOrdersCount: invoices.availableOrdersCount,
+                failedOrdersCount: invoices.failedOrdersCount,
+              }}
+            />
+          )}
+          {invoices && (
+            <div className="w-full rounded-[12px]  bg-primaryBackground">
+              <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
+                Order Timeline
+              </h4>
+              <SecondaryTable
+                currentPage={currentLeadPage}
+                setCurrentPage={setCurrentLeadPage}
+                totalPage={invoices.leads.pagelimit}
+                leads={invoices.leads.data}
+              />
+            </div>
+          )}
+          {SelectedRow && (
+            <SheetDemo
+              SelectedRow={SelectedRow}
+              varient={"orders"}
+              isUpdated={isUpdated}
+              setIsUpdated={setIsUpdated}
+              setIsOpen={setIsOpen}
+              isOpen={isOpen}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </ProgressWrapper>
   );
 };
 

@@ -294,12 +294,10 @@ export function SheetDemo({
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle className="text-white">
-                            Are you absolutely sure?
+                            Think twice before your actions
                           </AlertDialogTitle>
                           <AlertDialogDescription>
-                            This action cannot be undone. This will permanently
-                            delete your account and remove your data from our
-                            servers.
+                            This action may permanently failed your lead.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
@@ -332,9 +330,7 @@ export function SheetDemo({
                             Are you absolutely sure?
                           </AlertDialogTitle>
                           <AlertDialogDescription>
-                            This action cannot be undone. This will permanently
-                            delete your account and remove your data from our
-                            servers.
+                            Want to reverse your lead.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
@@ -367,9 +363,7 @@ export function SheetDemo({
                             Are you absolutely sure?
                           </AlertDialogTitle>
                           <AlertDialogDescription>
-                            This action cannot be undone. This will permanently
-                            delete your account and remove your data from our
-                            servers.
+                            Want to reject your lead.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>

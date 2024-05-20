@@ -27,6 +27,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import SheetSkeleton from "@/components/sheetSkeleton";
+import { useProgressContext } from "@/context/progressContext";
 type OrderDetails = {
   success: boolean;
   myBookings: {
@@ -110,10 +111,9 @@ export function SheetDemo({
   const [isLoading, setIsLoading] = useState(false);
   const [orderDetails, setOrderDetails] = useState<OrderDetails>();
   const [LogDetails, setLogDetails] = useState<LogDetails>();
-  const router = useRouter();
- 
+  const { showProgress } = useProgressContext();
+  
   const FailedLead = async () => {
-    ShowProgress();
     const res = await fetch(`/api/failedLead`, {
       method: "POST",
       body: JSON.stringify({
@@ -128,6 +128,7 @@ export function SheetDemo({
     });
     const data = await res.json();
     if (data.success) {
+      showProgress();
       toast({
         title: "Success",
         description: (
@@ -146,7 +147,6 @@ export function SheetDemo({
   };
 
   async function ReschedulePickupDateTime(data: z.infer<typeof FormSchema>) {
-    ShowProgress();
     const res = await fetch(`api/reschedulePickup`, {
       method: "POST",
       body: JSON.stringify({
@@ -158,7 +158,7 @@ export function SheetDemo({
     });
     const result = await res.json();
     if (result.success) {
-      ShowProgress();
+      showProgress();
       toast({
         title: "Success",
         description: (
@@ -181,8 +181,6 @@ export function SheetDemo({
   }
 
   const handleAssign = async (vendorId: string) => {
-    setIsLoading(true);
-    ShowProgress();
     const res = await fetch(`api/assignVendor`, {
       method: "POST",
       body: JSON.stringify({
@@ -194,11 +192,11 @@ export function SheetDemo({
 
     const result = await res.json();
     if (result.success) {
-      ShowProgress();
+      showProgress();
       toast({
         title: "Success",
         description: (
-          <p className=" text-green-500">Vendor is successfully assigned</p>
+          <p className=" text-green-500">{result.message}</p>
         ),
       });
       setIsUpdated((prev) => !prev);
@@ -206,7 +204,7 @@ export function SheetDemo({
       toast({
         title: "Unable to Assign",
         description: (
-          <p className=" text-[#dd9999]">We are unable to assign vendor</p>
+          <p className=" text-[#dd9999]">{result.message}</p>
         ),
       });
     }
@@ -238,18 +236,6 @@ export function SheetDemo({
       setIsLoading(false);
     })();
   }, [SelectedRow, isUpdated]);
-
-  const ShowProgress = () => {
-    setIsLoading(true);
-    setProgress(8);
-    setTimeout(() => setProgress(32), 500);
-    setTimeout(() => setProgress(52), 500);
-    setTimeout(() => setProgress(67), 500);
-    setTimeout(() => setProgress(79), 500);
-    setTimeout(() => setProgress(94), 500);
-    setTimeout(() => setProgress(100), 500);
-    setTimeout(() => setIsLoading(false), 1000);
-  };
 
   return (
     <Sheet open={isOpen}>
@@ -352,12 +338,10 @@ export function SheetDemo({
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle className="text-white">
-                            Are you absolutely sure?
+                            Think twice before your action.
                           </AlertDialogTitle>
                           <AlertDialogDescription>
-                            This action cannot be undone. This will permanently
-                            delete your account and remove your data from our
-                            servers.
+                           This will permanently lock your lead and cannot be undo.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>

@@ -127,13 +127,13 @@ const SideMenus = () => {
         href={"/products"}
         className={`${
           pathname == "/products"
-            ? "font-bold"
+            ? "font-bold "
             : "font-normal text-secondaryText"
         } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
       >
         <span
           className={`${
-            pathname == "/product" ? "bg-[#82C43C]" : " bg-transparent"
+            pathname == "/products" ? "bg-[#82C43C]" : " bg-transparent"
           } h-[32px] w-[3px] rounded-[0px_100px_100px_0px] group-hover:bg-[#82C43C] `}
         ></span>
         <Smartphone />
