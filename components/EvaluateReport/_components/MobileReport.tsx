@@ -13,7 +13,7 @@ const MobileReport = ({
     screencondition,
     accessoriesunavailable,
   } = formData;
-
+  console.log(screencondition);
   return (
     <div className="font-primary text-md space-y-4 font-normal">
       <div className="flex flex-col space-y-6">
@@ -44,7 +44,9 @@ const MobileReport = ({
                       ? "Screen Not Usable"
                       : screencondition == "S2"
                         ? "Cracked Screen"
-                        : "Have Screen Issues"}
+                        : screencondition == "S0"
+                          ? "No screen Issues"
+                          : "Have screen Issues"}
               </span>
             </span>
           </Label>

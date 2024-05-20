@@ -44,7 +44,9 @@ const TabletReport = ({
                       ? "Screen Not Usable"
                       : screencondition == "S2"
                         ? "Cracked Screen"
-                        : "Have Screen Issues"}
+                        : screencondition == "S0"
+                          ? "No Screen Issues"
+                          : "Have Screen Issues"}
               </>
             </ul>
           </Label>
