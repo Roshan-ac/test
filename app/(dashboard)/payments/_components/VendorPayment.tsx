@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
-
+import { PhotoProvider, PhotoView } from "react-photo-view";
 interface VendorPaymentInterface {
   id: number;
   vendorId: number;
@@ -36,7 +36,6 @@ interface VendorPaymentInterface {
 }
 
 const VendorPayment = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [vendorPayment, setVendorPayment] =
     useState<VendorPaymentInterface[]>();
   const router = useRouter();
@@ -104,23 +103,13 @@ const VendorPayment = () => {
               <TableCell> {item.vendorname} </TableCell>
               <TableCell> {item.amount} </TableCell>
               <TableCell>
-                {
-                  <span
-                    className=" cursor-pointer text-sm font-semibold uppercase underline"
-                    onClick={() => {
-                      setIsOpen((prev) => !prev);
-                    }}
-                  >
-                    view
-                  </span>
-                }
-                <ImgsViewer
-                  imgs={[{ src: `${""}${item.screenshot}` }]}
-                  isOpen={isOpen}
-                  onClose={() => {
-                    setIsOpen((prev) => !prev);
-                  }}
-                />
+                <PhotoProvider>
+                  <PhotoView src={"/images/phone-break.jpg"}>
+                    <span className=" cursor-pointer text-sm font-semibold uppercase underline">
+                      view
+                    </span>
+                  </PhotoView>
+                </PhotoProvider>
               </TableCell>
               <TableCell className="flex gap-2 text-black">
                 <AlertDialog>

@@ -124,7 +124,7 @@ const PincodeTextArea = ({ vendorId }: { vendorId: string }) => {
                     )}
                   </FormDescription>
                 </div>
-                <div className=" grid grid-cols-4 gap-4 bg-tertiaryBackground p-4">
+                <div className=" grid grid-cols-4 gap-4 bg-tertiaryBackground p-4 max-h-52 overflow-x-hidden overflow-y-scroll">
                   {pincodes?.map((item) => (
                     <FormField
                       key={item}
