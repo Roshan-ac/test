@@ -28,10 +28,10 @@ export function PrimaryTable({
 }: {
   invoices: InvoiceInterface[];
   currentPage: number;
-  selectedRow:{
+  selectedRow: {
     lead: string;
     devicetype: deviceType;
-  }
+  };
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   SetSelectedRow: Dispatch<
     SetStateAction<{
@@ -43,7 +43,6 @@ export function PrimaryTable({
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }) {
-  
   return (
     <>
       <ScrollArea className="relative h-max w-full rounded-md">
@@ -87,48 +86,48 @@ export function PrimaryTable({
                     </span>
                   </TableCell>
                   <TableCell className="">
-                  <span
-                    className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90
-                    
+                    <span
+                      className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90
                     
                     ${
                       invoice.status == null && invoice.assignedvendor !== null
-                      ? "!bg-yellow-400":
-                      invoice.assignedvendor == null && invoice.status == null
-                      ? "!bg-white"
-                        : invoice.status == "Cn-Cancelled by Customer"
-                          ? "!bg-[#FFA0A0] text-[#222222]"
-                          : invoice.status?.startsWith("Cn-")
-                            ? " !bg-[#0ed380] text-[#111a1c]"
-                            : invoice.status == "F-Cancelled by Cashkr"
+                        ? "!bg-[#3495eb]"
+                        : invoice.assignedvendor == null &&
+                            invoice.status == null
+                          ? "bg-[#ebd834]"
+                          : invoice.status == "Cn-Cancelled by Customer"
+                            ? "!bg-[#FFA0A0] text-[#222222]"
+                            : invoice.status?.startsWith("Cn-")
                               ? " !bg-[#0ed380] text-[#111a1c]"
-                              : invoice.status?.startsWith("F-")
-                                ? "!bg-[#F64848] text-white"
-                                : invoice.status == "Assigned"
-                                  ? "!bg-[#FF974A]"
-                                  : invoice.status === "F-Sold Somewhere else"
-                                    ? "!bg-[#bf2fb8]"
-                                    : invoice.status?.startsWith("C-")
-                                      ? "!bg-[#82C43C]"
-                                      : invoice.status.startsWith("v-") &&
-                                        "!bg-[#92B7FF]"
-                    } bg-red-400 p-1 px-2 text-black  `}
-                  >
-                    {invoice.status == null && invoice.assignedvendor == null
-                      ? "Generated"
-                      : invoice.status == null &&
-                          invoice.assignedvendor !== null
-                        ? "Assigned to Vendor"
-                        : invoice.status?.startsWith("Cn-")
-                          ? "Cancelled"
-                          : invoice.status?.startsWith("F-")
-                            ? "Failed"
-                            : invoice.status?.startsWith("C-")
-                              ? "Completed"
-                              : invoice.status.startsWith("v-")
-                                ? "In Progress"
-                                : invoice.status?.split("-")[1]}
-                  </span>
+                              : invoice.status == "F-Cancelled by Cashkr"
+                                ? " !bg-[#0ed380] text-[#111a1c]"
+                                : invoice.status?.startsWith("F-")
+                                  ? "!bg-[#F64848] text-white"
+                                  : invoice.status == "Assigned"
+                                    ? "!bg-[#FF974A]"
+                                    : invoice.status === "F-Sold Somewhere else"
+                                      ? "!bg-[#bf2fb8]"
+                                      : invoice.status?.startsWith("C-")
+                                        ? "!bg-[#82C43C]"
+                                        : invoice.status.startsWith("V-") &&
+                                          "!bg-[#3446eb] text-white"
+                    } p-1 px-2 text-black  `}
+                    >
+                      {invoice.status == null && invoice.assignedvendor == null
+                        ? "Generated"
+                        : invoice.status == null &&
+                            invoice.assignedvendor !== null
+                          ? "Assigned to Vendor"
+                          : invoice.status?.startsWith("Cn-")
+                            ? "Cancelled"
+                            : invoice.status?.startsWith("F-")
+                              ? "Failed"
+                              : invoice.status?.startsWith("C-")
+                                ? "Completed"
+                                : invoice.status.startsWith("V-")
+                                  ? "In Progress"
+                                  : invoice.status?.split("-")[1]}
+                    </span>
                   </TableCell>
                 </TableRow>
               ))}

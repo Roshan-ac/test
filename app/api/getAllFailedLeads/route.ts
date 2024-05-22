@@ -3,15 +3,8 @@ import { createQueryString } from "@/lib/utils";
 const { BACKEND_API } = process.env;
 
 const POST = async (req: any) => {
-  const {
-    orderPage,
-    search,
-    category,
-    city,
-    status,
-    fromDate,
-    toDate,
-  } = await req.json();
+  const { orderPage, search, category, city, status, fromDate, toDate } =
+    await req.json();
 
   try {
     const queryString = createQueryString({
@@ -23,7 +16,7 @@ const POST = async (req: any) => {
       fromDate,
       toDate,
     });
-    const res = await fetch(`${BACKEND_API}/getAllFailedLeads`, {
+    const res = await fetch(`${BACKEND_API}/getAllFailedLeads?${queryString}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

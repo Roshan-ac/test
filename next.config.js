@@ -16,6 +16,12 @@ const nextConfig = {
         hostname: "www.cashkr.com",
       },
     ],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "api.cashkr.com",
+      },
+    ],
   },
 };
 

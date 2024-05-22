@@ -8,6 +8,7 @@ import { deviceType } from "@/interfaces";
 import { PrimaryTable } from "./PrimaryTable";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { FilterMenubar } from "@/components/FilterMenubar";
+import { ProgressWrapper } from "@/context/progressContext";
 
 export interface InvoiceInterface {
   success: boolean;
@@ -77,53 +78,55 @@ const BasePage = () => {
     })();
   }, [currentPage, filterQueries]);
 
-  console.log(invoices);
+  console.log(filterQueries);
 
   return (
-    <div className=" w-full space-y-2 py-4">
-      <FilterMenubar
-        isApplied={isApplied}
-        setIsApplied={setIsApplied}
-        isLoading={isLoading}
-        filterQueries={filterQueries}
-        setFilterQueries={setFilterQueries}
-      />
-      <div className="space-y-6  px-8">
-        <div className="w-full rounded-[12px]  bg-primaryBackground">
-          <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
-            Failed Leads
-          </h4>
-          <PrimaryTable
-            selectedRow={SelectedRow}
-            isLoading={isLoading}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalPage={invoices?.leads?.pagelimit}
-            SetSelectedRow={SetSelectedRow}
-            setIsOpen={setIsOpen}
-            invoices={invoices?.leads?.data}
-          />
-        </div>
+    <ProgressWrapper>
+      <div className=" w-full space-y-2 py-4">
+        <FilterMenubar
+          isApplied={isApplied}
+          setIsApplied={setIsApplied}
+          isLoading={isLoading}
+          filterQueries={filterQueries}
+          setFilterQueries={setFilterQueries}
+        />
+        <div className="space-y-6  px-8">
+          <div className="w-full rounded-[12px]  bg-primaryBackground">
+            <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
+              Failed Leads
+            </h4>
+            <PrimaryTable
+              selectedRow={SelectedRow}
+              isLoading={isLoading}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPage={invoices?.leads?.pagelimit}
+              SetSelectedRow={SetSelectedRow}
+              setIsOpen={setIsOpen}
+              invoices={invoices?.leads?.data}
+            />
+          </div>
 
-        {invoices && (
-          <CardContainer
-            cardsValues={{
-              acceptedLeads: invoices.acceptedLeads,
-              pendingLeads: invoices.pendingLeads,
-              rejectedLeads: invoices.rejectedLeads,
-            }}
-          />
-        )}
-        {SelectedRow && (
-          <SheetDemo
-            SelectedRow={SelectedRow}
-            varient={"failed"}
-            setIsOpen={setIsOpen}
-            isOpen={isOpen}
-          />
-        )}
+          {invoices && (
+            <CardContainer
+              cardsValues={{
+                acceptedLeads: invoices.acceptedLeads,
+                pendingLeads: invoices.pendingLeads,
+                rejectedLeads: invoices.rejectedLeads,
+              }}
+            />
+          )}
+          {SelectedRow && (
+            <SheetDemo
+              SelectedRow={SelectedRow}
+              varient={"failed"}
+              setIsOpen={setIsOpen}
+              isOpen={isOpen}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </ProgressWrapper>
   );
 };
 
