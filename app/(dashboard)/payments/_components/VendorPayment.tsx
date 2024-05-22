@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import ImgsViewer from "react-images-viewer";
 import {
   Table,
   TableBody,

@@ -40,12 +40,12 @@ console.log(images)
                 <h3 className="w-full bg-tertiaryBackground p-2 text-center text-xs  font-semibold">
                   {"Font Image"}
                 </h3>
-                <PhotoView  src={`http:${images?.imgdevicefront.split(":")[2]}`}>
+                <PhotoView  src={`${images?.imgdevicefront}`}>
                   <Image
                     className=" h-full w-full object-fill"
                     height={100}
                     width={100}
-                    src={`http:${images?.imgdevicefront.split(":")[2]}`}
+                    src={`${images?.imgdevicefront}`}
                     alt=""
                   ></Image>
                 </PhotoView>
@@ -56,12 +56,12 @@ console.log(images)
                 <h3 className="w-full bg-tertiaryBackground p-2 text-center text-xs  font-semibold">
                   {"Back Image"}
                 </h3>
-                <PhotoView  src={`http:${images?.imgdeviceback.split(":")[2]}`}>
+                <PhotoView  src={`${images?.imgdeviceback}`}>
                   <Image
                     className=" h-full w-full object-fill"
                     height={100}
                     width={100}
-                    src={`http:${images?.imgdeviceback.split(":")[2]}`}
+                    src={`${images?.imgdeviceback}`}
                     alt=""
                   ></Image>
                 </PhotoView>
@@ -72,12 +72,12 @@ console.log(images)
                 <h3 className="w-full bg-tertiaryBackground p-2 text-center text-xs  font-semibold">
                   {"Side 1"}
                 </h3>
-                <PhotoView  src={`http:${images?.imgdeviceside1.split(":")[2]}`}>
+                <PhotoView  src={`${images?.imgdeviceside1}`}>
                   <Image
                     className=" h-full w-full object-fill"
                     height={100}
                     width={100}
-                    src={`http:${images?.imgdeviceside1.split(":")[2]}`}
+                    src={`${images?.imgdeviceside1}`}
                     alt=""
                   ></Image>
                 </PhotoView>
@@ -88,12 +88,12 @@ console.log(images)
                 <h3 className="w-full bg-tertiaryBackground p-2 text-center text-xs  font-semibold">
                   {"Side 2"}
                 </h3>
-                <PhotoView  src={`http:${images?.imgdeviceside2.split(":")[2]}`}>
+                <PhotoView  src={`${images?.imgdeviceside2}`}>
                   <Image
                     className=" h-full w-full object-fill"
                     height={100}
                     width={100}
-                    src={`http:${images?.imgdeviceside2.split(":")[2]}`}
+                    src={`${images?.imgdeviceside2}`}
                     alt=""
                   ></Image>
                 </PhotoView>
@@ -104,12 +104,12 @@ console.log(images)
                 <h3 className="w-full bg-tertiaryBackground p-2 text-center text-xs  font-semibold">
                   {"Side 3"}
                 </h3>
-                <PhotoView  src={`http:${images?.imgdeviceside3.split(":")[2]}`}>
+                <PhotoView  src={`${images?.imgdeviceside3}`}>
                   <Image
                     className=" h-full w-full object-fill"
                     height={100}
                     width={100}
-                    src={`http:${images?.imgdeviceside3.split(":")[2]}`}
+                    src={`${images?.imgdeviceside3}`}
                     alt=""
                   ></Image>
                 </PhotoView>
@@ -120,12 +120,12 @@ console.log(images)
                 <h3 className="w-full bg-tertiaryBackground p-2 text-center text-xs  font-semibold">
                   {"Side 4"}
                 </h3>
-                <PhotoView  src={`http:${images?.imgdeviceside4.split(":")[2]}`}>
+                <PhotoView  src={`${images?.imgdeviceside4}`}>
                   <Image
                     className=" h-full w-full object-fill"
                     height={100}
                     width={100}
-                    src={`http:${images?.imgdeviceside4.split(":")[2]}`}
+                    src={`${images?.imgdeviceside4}`}
                     alt=""
                   ></Image>
                 </PhotoView>
