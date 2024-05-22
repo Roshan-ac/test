@@ -89,12 +89,10 @@ const SecondaryTable = ({
                               ? "!bg-[#F64848] text-white"
                               : invoice.status == "Assigned"
                                 ? "!bg-[#FF974A]"
-                                : invoice.status === "F-Sold Somewhere else"
-                                  ? "!bg-[#bf2fb8]"
-                                  : invoice.status?.startsWith("C-")
-                                    ? "!bg-[#82C43C]"
-                                    : invoice.status.startsWith("V-") &&
-                                      "!bg-[#3446eb] text-white"
+                                : invoice.status?.startsWith("C-")
+                                  ? "!bg-[#82C43C]"
+                                  : invoice.status.startsWith("V-") &&
+                                    "!bg-[#3446eb] text-white"
                     } p-1 px-2 text-black  `}
                   >
                     {invoice.status == null && invoice.assignedvendor == null
@@ -105,7 +103,7 @@ const SecondaryTable = ({
                         : invoice.status?.startsWith("Cn-")
                           ? invoice.status?.replace("Cn-", "")
                           : invoice.status?.startsWith("F-")
-                            ? "Failed"
+                            ? invoice.status?.replace("F-", "")
                             : invoice.status?.startsWith("C-")
                               ? "Completed"
                               : invoice.status.startsWith("V-")

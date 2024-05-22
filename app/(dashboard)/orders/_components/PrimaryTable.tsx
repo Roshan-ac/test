@@ -101,7 +101,7 @@ export function PrimaryTable({
                   </span>
                 </TableCell>
                 <TableCell className="w-max">
-                <span
+                  <span
                     className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90
                     
                     ${
@@ -117,8 +117,6 @@ export function PrimaryTable({
                               ? "!bg-[#F64848] text-white"
                               : invoice.status == "Assigned"
                                 ? "!bg-[#FF974A]"
-                                : invoice.status === "F-Sold Somewhere else"
-                                  ? "!bg-[#bf2fb8]"
                                   : invoice.status?.startsWith("C-")
                                     ? "!bg-[#82C43C]"
                                     : invoice.status.startsWith("V-") &&
@@ -133,7 +131,7 @@ export function PrimaryTable({
                         : invoice.status?.startsWith("Cn-")
                           ? invoice.status?.replace("Cn-", "")
                           : invoice.status?.startsWith("F-")
-                            ? invoice.status?.replace("F-","")
+                            ? invoice.status?.replace("F-", "")
                             : invoice.status?.startsWith("C-")
                               ? "Completed"
                               : invoice.status.startsWith("V-")
