@@ -117,10 +117,10 @@ export function PrimaryTable({
                               ? "!bg-[#F64848] text-white"
                               : invoice.status == "Assigned"
                                 ? "!bg-[#FF974A]"
-                                  : invoice.status?.startsWith("C-")
-                                    ? "!bg-[#82C43C]"
-                                    : invoice.status.startsWith("V-") &&
-                                      "!bg-[#3446eb] text-white"
+                                : invoice.status?.startsWith("C-")
+                                  ? "!bg-[#82C43C]"
+                                  : invoice.status.startsWith("V-") &&
+                                    "!bg-[#3446eb] text-white"
                     } p-1 px-2 text-black  `}
                   >
                     {invoice.status == null && invoice.assignedvendor == null
@@ -152,12 +152,16 @@ export function PrimaryTable({
       </Table>
       {totalPage && (
         <div className="sticky bottom-0 flex w-full border-t border-t-tableSeperator bg-primaryBackground">
-          <TabelPagination
-            tableType="Primary"
-            totalPage={totalPage}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
+          {invoices.length !== 0 ? (
+            <TabelPagination
+              tableType="Primary"
+              totalPage={totalPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          ) : (
+            <div className=" p-4">No Records Found !</div>
+          )}
         </div>
       )}
     </ScrollArea>

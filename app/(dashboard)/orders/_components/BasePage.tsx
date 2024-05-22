@@ -109,7 +109,6 @@ const BasePage = () => {
       setIsLoading(false);
     })();
   }, [currentLeadPage, currentOrderPage, isUpdated, filterQueries]);
-
   return (
     <ProgressWrapper>
       <div className=" w-full space-y-2 py-4">

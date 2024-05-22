@@ -30,8 +30,6 @@ const SecondaryTable = ({
   totalPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }) => {
-  console.log(leads);
-  // FC - ""
   return (
     <ScrollArea className="relative h-max w-full rounded-md">
       <Table>
@@ -117,13 +115,17 @@ const SecondaryTable = ({
             ))}
         </TableBody>
       </Table>
-      <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
-        <TabelPagination
-          tableType="Secondary"
-          totalPage={totalPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
+      <div className="sticky bottom-0 flex w-full flex-col border-t border-t-tableSeperator bg-primaryBackground">
+        {leads.length !== 0 ? (
+          <TabelPagination
+            tableType="Secondary"
+            totalPage={totalPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        ):(
+          <div className=" p-4">No Records Found !</div>
+        )}
       </div>
     </ScrollArea>
   );

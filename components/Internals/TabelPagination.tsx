@@ -27,7 +27,7 @@ export function TabelPagination({
     page: currentPage,
     siblings: 1,
   });
-
+console.log(totalPage)
   return (
     <Pagination className=" flex w-full justify-start p-4">
       <PaginationContent className="">
