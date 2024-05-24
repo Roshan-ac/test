@@ -19,13 +19,13 @@ const DesktopReport = ({
   return (
     <div className="font-primary text-md space-y-4 font-normal">
       <div className="flex flex-col space-y-6">
-        {deviceprocessor !== undefined && (
+        {deviceprocessor !== undefined && deviceprocessor !== "null" && (
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
             <span className="inline-block w-[40%]">Processor : </span>
             <span className="inline-block w-full">{deviceprocessor}</span>
           </Label>
         )}
-        {devicestorage !== undefined && (
+        {devicestorage !== undefined && devicestorage !== "null" && (
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
             <span className="inline-block w-[40%]">Storage : </span>
             <span className="inline-block w-full">{devicestorage}</span>

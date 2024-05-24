@@ -112,7 +112,7 @@ export function SheetDemo({
   const [orderDetails, setOrderDetails] = useState<OrderDetails>();
   const [LogDetails, setLogDetails] = useState<LogDetails>();
   const { showProgress } = useProgressContext();
-  
+
   const FailedLead = async () => {
     const res = await fetch(`/api/failedLead`, {
       method: "POST",
@@ -195,17 +195,13 @@ export function SheetDemo({
       showProgress();
       toast({
         title: "Success",
-        description: (
-          <p className=" text-green-500">{result.message}</p>
-        ),
+        description: <p className=" text-green-500">{result.message}</p>,
       });
       setIsUpdated((prev) => !prev);
     } else {
       toast({
         title: "Unable to Assign",
-        description: (
-          <p className=" text-[#dd9999]">{result.message}</p>
-        ),
+        description: <p className=" text-[#dd9999]">{result.message}</p>,
       });
     }
   };
@@ -236,7 +232,7 @@ export function SheetDemo({
       setIsLoading(false);
     })();
   }, [SelectedRow, isUpdated]);
-
+ console.log(orderDetails)
   return (
     <Sheet open={isOpen}>
       <Progress
@@ -341,7 +337,8 @@ export function SheetDemo({
                             Think twice before your action.
                           </AlertDialogTitle>
                           <AlertDialogDescription>
-                           This will permanently lock your lead and cannot be undo.
+                            This will permanently lock your lead and cannot be
+                            undo.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>

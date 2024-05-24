@@ -44,16 +44,22 @@ const LaptopReport = ({
             <span className="inline-block w-full">{deviceprocessor}</span>
           </Label>
         )}
-        {devicestorage !== undefined && (
+        {deviceram && deviceram !== "null" && (
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[40%]">Storage : </span>
-            <span className="inline-block w-full">{devicestorage}</span>
+            <span className="inline-block w-[40%]">Device Ram : </span>
+            <span className="inline-block w-full">
+              {deviceram}
+              {"GB"}
+            </span>
           </Label>
         )}
-        {deviceram !== undefined && (
+        {devicestorage && devicestorage !== "null" && (
           <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[40%]">Ram : </span>
-            <span className="inline-block w-full">{deviceram}</span>
+            <span className="inline-block w-[40%]">Device Storage : </span>
+            <span className="inline-block w-full">
+              {devicestorage}
+              {"GB"}
+            </span>
           </Label>
         )}
 
