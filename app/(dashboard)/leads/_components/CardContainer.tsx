@@ -32,86 +32,96 @@ export function CardContainer({
   return (
     <div className="grid h-[40vh] grid-cols-3 gap-6">
       <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
-        <div className="flex space-x-10">
+        <div className="flex items-center space-x-10">
           <div>
             <Image
-              src={"/Images/Ok.svg"}
-              width={60}
-              quality={200}
-              height={60}
+              width={40}
+              quality={100}
+              height={40}
               alt=""
+              src={"/Images/Ok.svg"}
             />
           </div>
           <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">{Ringing}</h1>
+            <h1 className=" text-3xl font-medium tabular-nums">
+              {Ringing ?? 0}
+            </h1>
             <h6 className=" text-xl text-secondaryText">Ringing</h6>
           </div>
         </div>
       </Card>
       <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
-        <div className="flex space-x-10">
+      <div className="flex items-center space-x-10">
           <div>
             <Image
-              src={"/Images/Refresh.svg"}
-              width={60}
-              quality={200}
-              height={60}
+              width={40}
+              quality={100}
+              height={40}
               alt=""
+              src={"/Images/Refresh.svg"}
             />
           </div>
           <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">{Callback}</h1>
+            <h1 className=" text-3xl font-medium tabular-nums">
+              {Callback ?? 0}
+            </h1>
             <h6 className=" text-xl text-secondaryText">Callback</h6>
           </div>
         </div>
       </Card>
       <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
-        <div className="flex space-x-10">
+      <div className="flex items-center space-x-10">
           <div>
             <Image
-              src={"/Images/call.svg"}
-              width={60}
-              quality={200}
-              height={60}
+              width={40}
+              quality={100}
+              height={40}
               alt=""
+              src={"/Images/call.svg"}
             />
           </div>
           <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">{SwitchedOff}</h1>
+            <h1 className=" text-3xl font-medium tabular-nums">
+              {SwitchedOff ?? 0}
+            </h1>
             <h6 className=" text-xl text-secondaryText">Switched Off</h6>
           </div>
         </div>
       </Card>
       <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
-        <div className="flex space-x-10">
+      <div className="flex items-center space-x-10">
           <div>
             <Image
-              src={"/Images/call.svg"}
-              width={60}
-              quality={200}
-              height={60}
+              width={40}
+              quality={100}
+              height={40}
               alt=""
+              src={"/Images/call.svg"}
             />
           </div>
           <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">{Converted}</h1>
+            <h1 className=" text-3xl font-medium tabular-nums">
+              {Converted ?? 0}
+            </h1>
             <h6 className=" text-xl text-secondaryText">Converted</h6>
           </div>
         </div>
       </Card>
       <Card className="flex w-full items-center justify-center rounded-[16px] !bg-primaryBackground">
-        <div className="flex space-x-10">
+      <div className="flex items-center space-x-10">
           <div>
             <Image
-              src={"/Images/call.svg"}
-              width={60}
-              quality={200}
-              height={60}
+              width={40}
+              quality={100}
+              height={40}
               alt=""
+              src={"/Images/call.svg"}
             />
           </div>
           <div className="space-y-4 py-1">
-            <h1 className=" text-5xl font-medium">{Pending}</h1>
+            <h1 className=" text-3xl font-medium tabular-nums">
+              {Pending ?? 0}
+            </h1>
             <h6 className=" text-xl text-secondaryText">Pending</h6>
           </div>
         </div>

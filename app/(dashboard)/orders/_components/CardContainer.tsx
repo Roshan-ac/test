@@ -25,19 +25,19 @@ export function CardContainer({ cardsValues }: { cardsValues: cardData }) {
         <div className="flex flex-col items-center justify-center space-y-4">
           <div className="flex items-center space-x-8">
             <Image
-          src={"/Images/Ok.svg"}
-              width={60}
-              quality={200}
-              height={60}
+              src={"/Images/Ok.svg"}
+              width={40}
+              quality={100}
+              height={40}
               alt=""
             />
-            <h1 className=" text-5xl font-medium">
-            {cardsValues.availableOrdersCount}
+            <h1 className=" text-3xl font-medium tabular-nums">
+              {cardsValues.availableOrdersCount}
             </h1>
           </div>
 
           <h6 className=" w-full text-right text-2xl text-secondaryText">
-          Available
+            Available
           </h6>
         </div>
       </Card>
@@ -45,19 +45,19 @@ export function CardContainer({ cardsValues }: { cardsValues: cardData }) {
         <div className="flex flex-col items-center justify-center space-y-4">
           <div className="flex items-center space-x-8">
             <Image
-                src={"/Images/Refresh.svg"}
-              width={60}
-              quality={200}
-              height={60}
+              src={"/Images/Refresh.svg"}
+              width={40}
+              quality={100}
+              height={40}
               alt=""
             />
-            <h1 className=" text-5xl font-medium">
-            {cardsValues.completedOrdersCount}
+            <h1 className=" text-3xl font-medium tabular-nums">
+              {cardsValues.completedOrdersCount}
             </h1>
           </div>
 
           <h6 className=" w-full text-right text-2xl text-secondaryText">
-          Completed
+            Completed
           </h6>
         </div>
       </Card>
@@ -65,19 +65,19 @@ export function CardContainer({ cardsValues }: { cardsValues: cardData }) {
         <div className="flex flex-col items-center justify-center space-y-4">
           <div className="flex items-center space-x-8">
             <Image
-                 src={"/Images/call.svg"}
-              width={60}
-              quality={200}
-              height={60}
+              src={"/Images/call.svg"}
+              width={40}
+              quality={100}
+              height={40}
               alt=""
             />
-            <h1 className=" text-5xl font-medium">
-            {cardsValues.assignedOrdersCount}
+            <h1 className=" text-3xl font-medium tabular-nums">
+              {cardsValues.assignedOrdersCount}
             </h1>
           </div>
 
           <h6 className=" w-full text-right text-2xl text-secondaryText">
-          Assigned
+            Assigned
           </h6>
         </div>
       </Card>
@@ -86,12 +86,12 @@ export function CardContainer({ cardsValues }: { cardsValues: cardData }) {
           <div className="flex items-center space-x-8">
             <Image
               src={"/Images/cancel.svg"}
-              width={60}
-              quality={200}
-              height={60}
+              width={40}
+              quality={100}
+              height={40}
               alt=""
             />
-            <h1 className=" text-5xl font-medium">
+            <h1 className=" text-3xl font-medium tabular-nums">
               {cardsValues.assignedOrdersCount}
             </h1>
           </div>

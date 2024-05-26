@@ -20,9 +20,11 @@ type AssignData = {
 
 export function AssignDialog({
   handleAssign,
+  disabled,
   devicetype,
   pincode
 }: {
+  disabled:boolean;
   handleAssign: (vendorId: string) => {};
   devicetype:deviceType;
   pincode:number;
@@ -34,7 +36,7 @@ export function AssignDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className=" !h-max rounded-none !bg-[#82C43C] px-8">
+        <Button disabled={disabled}  className=" !h-max rounded-none !bg-[#82C43C] px-8">
           Assign
         </Button>
       </DialogTrigger>

@@ -17,13 +17,16 @@ type AssignData = {
 
 export function ReschedulePickup({
   ReschedulePickupDateTime,
+  disabled
 }: {
+  disabled:boolean;
   ReschedulePickupDateTime: (data: z.infer<typeof FormSchema>) => {};
 }) {
+  console.log(disabled)
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className=" !h-max rounded-none !bg-[#FF974A] px-8">
+        <Button disabled={disabled} className=" !h-max rounded-none !bg-[#FF974A] px-8">
           Reschedule
         </Button>
       </DialogTrigger>

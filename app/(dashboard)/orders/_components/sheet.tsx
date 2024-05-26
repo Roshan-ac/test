@@ -232,7 +232,7 @@ export function SheetDemo({
       setIsLoading(false);
     })();
   }, [SelectedRow, isUpdated]);
- console.log(orderDetails)
+  console.log(orderDetails);
   return (
     <Sheet open={isOpen}>
       <Progress
@@ -295,7 +295,7 @@ export function SheetDemo({
                     >
                       <span className="inline-block w-[40%]">Vendor :</span>
                       <span className="inline-block w-full">
-                        {orderDetails.myBookings.assignedvendor ??
+                        {orderDetails.myBookings?.assignedvendor ??
                           "No vendor assigned !"}
                       </span>
                     </Label>
@@ -311,6 +311,12 @@ export function SheetDemo({
                   <div className="flex w-full items-center space-x-4 py-8">
                     <div>
                       <AssignDialog
+                        disabled={
+                          orderDetails.myBookings.status?.startsWith("Cn") ||
+                          orderDetails.myBookings.status?.startsWith("F-") ||
+                          orderDetails.myBookings.status?.startsWith("C-") ||
+                          orderDetails.myBookings.status?.startsWith("FC-")
+                        }
                         devicetype={orderDetails.myBookings.devicetype}
                         pincode={orderDetails.myBookings.pincode}
                         handleAssign={handleAssign}
@@ -318,6 +324,12 @@ export function SheetDemo({
                     </div>
                     <div>
                       <ReschedulePickup
+                        disabled={
+                          orderDetails.myBookings.status?.startsWith("Cn") ||
+                          orderDetails.myBookings.status?.startsWith("F-") ||
+                          orderDetails.myBookings.status?.startsWith("C-") ||
+                          orderDetails.myBookings.status?.startsWith("FC-")
+                        }
                         ReschedulePickupDateTime={ReschedulePickupDateTime}
                       />
                     </div>
@@ -325,7 +337,12 @@ export function SheetDemo({
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button
-                          disabled={orderDetails.myBookings.status !== null}
+                          disabled={
+                            orderDetails.myBookings.status?.startsWith("Cn") ||
+                            orderDetails.myBookings.status?.startsWith("F-") ||
+                            orderDetails.myBookings.status?.startsWith("C-") ||
+                            orderDetails.myBookings.status?.startsWith("FC-")
+                          }
                           className=" !h-max rounded-none !bg-[#cd6235] px-8 !text-white"
                         >
                           Fail Lead
