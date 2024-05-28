@@ -69,7 +69,7 @@ export function ProgressWrapper({ children }: { children: React.ReactNode }) {
       <Progress
         hidden={!progress.state}
         value={progress.value}
-        className="fixed right-0 top-0 z-[80] h-[2px]"
+        className=" fixed right-0 top-0 z-[80] h-[2px]"
       />
       {children}
     </ProgressContext.Provider>

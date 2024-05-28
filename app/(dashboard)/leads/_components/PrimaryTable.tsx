@@ -10,24 +10,27 @@ import {
 } from "@/components/ui/table";
 import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Dispatch, SetStateAction } from "react";
-import { InvoiceInterface } from "./sectionOne";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { InvoiceInterface, LeadInterface } from "./sectionOne";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { parseISO } from "date-fns";
 import { deviceType } from "@/interfaces";
+import { useProgressContext } from "@/context/progressContext";
 
 export function PrimaryTable({
-  invoices,
   selectedRow,
-  setCurrentPage,
-  currentPage,
+  filterQueries,
   SetSelectedRow,
   setIsOpen,
-  isLoading,
-  totalPage,
 }: {
-  invoices: InvoiceInterface[];
-  currentPage: number;
+  filterQueries: {
+    search: string;
+    city: string;
+    status: string;
+    fromDate: Date;
+    toDate: Date;
+    category: string;
+  };
   selectedRow: {
     lead: string;
     devicetype: deviceType;
@@ -39,10 +42,35 @@ export function PrimaryTable({
       devicetype: string;
     }>
   >;
-  isLoading: boolean;
-  totalPage: number;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
 }) {
+  const [invoices, setInvoices] = useState<LeadInterface>();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { showProgress } = useProgressContext();
+  useEffect(() => {
+    setInvoices(undefined);
+    setIsLoading(true),
+      (async function () {
+        const res = await fetch("/api/getallleads", {
+          method: "POST",
+          body: JSON.stringify({
+            orderPage: currentPage,
+            search: filterQueries.search,
+            city: filterQueries.city,
+            status: filterQueries.status,
+            fromDate: filterQueries.fromDate,
+            toDate: filterQueries.toDate,
+            category: filterQueries.category,
+          }),
+        });
+
+        const data = await res.json();
+        console.log(data);
+        setInvoices(data);
+        setIsLoading(false);
+      })();
+  }, [currentPage, filterQueries,showProgress]);
+
   return (
     <>
       <ScrollArea className="relative h-max w-full rounded-md">
@@ -59,7 +87,7 @@ export function PrimaryTable({
 
           {invoices && (
             <TableBody className="w-full">
-              {invoices?.map((invoice, index) => (
+              {invoices?.leads.data.map((invoice, index) => (
                 <TableRow
                   onClick={() => {
                     SetSelectedRow({
@@ -86,60 +114,22 @@ export function PrimaryTable({
                     </span>
                   </TableCell>
                   <TableCell className="">
-                  <span
-                    className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90
-                    
-                    ${
-                      invoice.status == null && invoice.assignedvendor !== null
-                        ? "!bg-[#3495eb]"
-                        : invoice.assignedvendor == null &&
-                            invoice.status == null
-                          ? "bg-[#ebd834]"
-                          : invoice.status.startsWith("Cn-")
-                            ? "!bg-[#c14646] text-white"
-                            : invoice.status?.startsWith("F-") ||
-                                invoice.status?.startsWith("FC-")
-                              ? "!bg-[#F64848] text-white"
-                              : invoice.status == "Assigned"
-                                ? "!bg-[#FF974A]"
-                                  : invoice.status?.startsWith("C-")
-                                    ? "!bg-[#82C43C]"
-                                    : invoice.status.startsWith("V-") &&
-                                      "!bg-[#3446eb] text-white"
-                    } p-1 px-2 text-black  `}
-                  >
-                    {invoice.status == null && invoice.assignedvendor == null
-                      ? "Generated"
-                      : invoice.status == null &&
-                          invoice.assignedvendor !== null
-                        ? "Assigned to Vendor"
-                        : invoice.status?.startsWith("Cn-")
-                          ? invoice.status?.replace("Cn-", "")
-                          : invoice.status?.startsWith("F-")
-                            ? invoice.status?.replace("F-", "")
-                            : invoice.status?.startsWith("C-")
-                              ? "Completed"
-                              : invoice.status.startsWith("V-")
-                                ? "In Progress"
-                                : invoice.status.startsWith("FC-")
-                                  ? invoice.status.replace("FC-", "")
-                                  : invoice.status?.split("-")[1]}
-                  </span>
+                    <span>{invoice.desposition}</span>
                   </TableCell>
                 </TableRow>
               ))}
-              {invoices?.length < 1 && (
+              {invoices?.leads.data.length < 1 && (
                 <p className=" p-4 text-xl">No Search Results Found.</p>
               )}
             </TableBody>
           )}
           {!invoices && isLoading && <TableSkeleton skeleton={5} />}
         </Table>
-        {totalPage && (
+        {invoices?.leads?.pagelimit && (
           <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
             <TabelPagination
               tableType="Primary"
-              totalPage={totalPage}
+              totalPage={invoices.leads.pagelimit}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />

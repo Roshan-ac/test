@@ -6,6 +6,7 @@ import { CardContainer } from "./CardContainer";
 import { FilterMenubar } from "./FilterMenubar";
 import { deviceType } from "@/interfaces";
 import { SheetDemo } from "./Sheet";
+import { ProgressWrapper, useProgressContext } from "@/context/progressContext";
 
 export interface LeadInterface {
   success: boolean;
@@ -25,6 +26,7 @@ export interface InvoiceInterface {
   pickupdate: string;
   timestamp: string;
   devicename: string;
+  desposition: string;
   pickuptime: string;
   devicetype: string;
   status:
@@ -46,15 +48,14 @@ const SectionOne = ({
 }: {
   varient: "lead" | "orders" | "failed" | "vendors";
 }) => {
-  const [invoices, setInvoices] = useState<LeadInterface>();
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [SelectedRow, SetSelectedRow] = useState<{
     lead: string;
     devicetype: deviceType;
   }>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isApplied, setIsApplied] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [filterQueries, setFilterQueries] = useState<{
     search: string;
     city: string;
@@ -70,73 +71,39 @@ const SectionOne = ({
     toDate: undefined,
     category: "",
   });
-  useEffect(() => {
-    setInvoices(undefined);
-    setIsLoading(true),
-      (async function () {
-        const res = await fetch("/api/getallleads", {
-          method: "POST",
-          body: JSON.stringify({
-            orderPage: currentPage,
-            search: filterQueries.search,
-            city: filterQueries.city,
-            status: filterQueries.status,
-            fromDate: filterQueries.fromDate,
-            toDate: filterQueries.toDate,
-            category: filterQueries.category,
-          }),
-        });
-
-        const data = await res.json();
-        setInvoices(data);
-        setIsLoading(false);
-      })();
-  }, [currentPage, filterQueries]);
 
   return (
-    <div className=" w-full space-y-2 py-4">
-      <FilterMenubar
-        isApplied={isApplied}
-        setIsApplied={setIsApplied}
-        isLoading={isLoading}
-        filterQueries={filterQueries}
-        setFilterQueries={setFilterQueries}
-      />
-      <div className="space-y-6  px-8">
-        <div className="w-full rounded-[12px]  bg-primaryBackground">
-          <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
-            Recent Leads
-          </h4>
-          <PrimaryTable
-          selectedRow={SelectedRow}
-            key={SelectedRow?.lead}
-            setIsOpen={setIsOpen}
-            SetSelectedRow={SetSelectedRow}
-            isLoading={isLoading}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalPage={invoices?.leads.pagelimit}
-            invoices={invoices?.leads.data}
-          />
+    <ProgressWrapper>
+      <div className=" w-full space-y-2 py-4">
+        <FilterMenubar
+          isApplied={isApplied}
+          setIsApplied={setIsApplied}
+          isLoading={isLoading}
+          filterQueries={filterQueries}
+          setFilterQueries={setFilterQueries}
+        />
+        <div className="space-y-6  px-8">
+          <div className="w-full rounded-[12px]  bg-primaryBackground">
+            <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
+              Recent Leads
+            </h4>
+            <PrimaryTable
+              filterQueries={filterQueries}
+              selectedRow={SelectedRow}
+              setIsOpen={setIsOpen}
+              SetSelectedRow={SetSelectedRow}
+            />
+          </div>
+          {SelectedRow && (
+            <SheetDemo
+              SelectedRow={SelectedRow}
+              setIsOpen={setIsOpen}
+              isOpen={isOpen}
+            />
+          )}
         </div>
-        {invoices && (
-          <CardContainer
-            Callback={invoices.Callback}
-            Converted={invoices.Converted}
-            Pending={invoices.Pending}
-            Ringing={invoices.Ringing}
-            SwitchedOff={invoices.SwitchedOff}
-          />
-        )}
-        {SelectedRow && (
-          <SheetDemo
-            SelectedRow={SelectedRow}
-            setIsOpen={setIsOpen}
-            isOpen={isOpen}
-          />
-        )}
       </div>
-    </div>
+    </ProgressWrapper>
   );
 };
 

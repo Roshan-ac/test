@@ -17,10 +17,17 @@ import Link from "next/link";
 
 const SideMenus = () => {
   const pathname = usePathname();
+  const isBrowser = () => typeof window !== "undefined"; //The approach recommended by Next.js
+
+  function scrollToTop() {
+    if (!isBrowser()) return;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
   return (
     <div className="w-full space-y-6 py-6">
       <Link
         href={"/dashboard"}
+        scroll={false}
         className={`${
           pathname == "/dashboard"
             ? "font-bold"
@@ -37,6 +44,8 @@ const SideMenus = () => {
       </Link>
       <Link
         href={"/orders"}
+        onClick={() => scrollToTop}
+        scroll={false}
         className={`${
           pathname == "/orders" ? "font-bold" : "font-normal text-secondaryText"
         } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
@@ -51,6 +60,7 @@ const SideMenus = () => {
       </Link>
       <Link
         href={"/leads"}
+        scroll={false}
         className={`${
           pathname == "/leads" ? "font-bold" : "font-normal text-secondaryText"
         } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}
@@ -65,6 +75,7 @@ const SideMenus = () => {
       </Link>
       <Link
         href={"/failed"}
+        scroll={false}
         className={`${
           pathname == "/failed" ? "font-bold" : "font-normal text-secondaryText"
         } group flex cursor-pointer items-center gap-4 py-1 transition-all duration-500 ease-in-out hover:bg-tertiaryBackground hover:font-bold hover:text-primaryText`}

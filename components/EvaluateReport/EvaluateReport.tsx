@@ -46,6 +46,7 @@ const EvaluationReport = ({
     | ACFullBookingsInterface
     | TvFullBookingsInterface;
 }) => {
+  
   if (devicetype === "mobile") {
     return (
       <div>

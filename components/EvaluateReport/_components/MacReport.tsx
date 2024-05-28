@@ -2,14 +2,34 @@ import { Label } from "@/components/ui/label";
 import { MacFullBookingsInterface } from "@/interfaces/FullBookings/FullMacBookings";
 
 const MacReport = ({ formData }: { formData: MacFullBookingsInterface }) => {
-  const { macage, physicalcondition, bodycondition, accessories } = formData;
+  const { macage, physicalcondition, storage,ram, bodycondition, accessoriesunavailable } =
+    formData;
 
-  const accessoriesunavailable = ["A1", "A2", "A3"].filter(
-    (item) => !accessories?.includes(item),
+  const accessoriesAvailable = ["A1", "A2", "A3"].filter(
+    (item) => !accessoriesunavailable?.includes(item),
   );
+  console.log(accessoriesAvailable);
 
   return (
     <div className="flex flex-col space-y-6">
+          {ram && ram !== "null" && (
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[40%]">Device Ram : </span>
+            <span className="inline-block w-full">
+              {ram}
+              {"GB"}
+            </span>
+          </Label>
+        )}
+        {storage && storage !== "null" && (
+          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+            <span className="inline-block w-[40%]">Device Storage : </span>
+            <span className="inline-block w-full">
+              {storage}
+              {"GB"}
+            </span>
+          </Label>
+        )}
       <Label htmlFor="terms" className=" flex w-full space-x-4  ">
         <span className="inline-block w-[40%]">Device Age : </span>
         <span className="inline-block w-full">
@@ -71,31 +91,34 @@ const MacReport = ({ formData }: { formData: MacFullBookingsInterface }) => {
                                           : "No Physical Issues"}
               </span>
             ))}
-            {accessories !== undefined && accessoriesunavailable.length > 0 && (
-              <Label
-                htmlFor="terms"
-                className=" flex w-full items-start  space-x-4"
-              >
-                <h4 className="inline-block w-[40%]">Device Accessories : </h4>
-                <ul className=" flex w-full  flex-col justify-start space-y-2">
-                  {accessoriesunavailable.map((item, index) => (
-                    <li
-                      key={index}
-                      className="caption text-surface-text inline-block text-sm"
-                    >
-                      {item == "A1"
-                        ? "Bill"
-                        : item == "A2"
-                          ? "Box"
-                          : item == "A3" && "Charger"}
-                    </li>
-                  ))}
-                </ul>
-              </Label>
-            )}
           </>
         </ul>
       </Label>
+      <>
+        {accessoriesAvailable !== undefined &&
+          accessoriesAvailable.length > 0 && (
+            <Label
+              htmlFor="terms"
+              className=" flex w-full items-start  space-x-4"
+            >
+              <h4 className="inline-block w-[40%]">Device Accessories : </h4>
+              <ul className=" flex w-full  flex-col justify-start gap-2">
+                {accessoriesAvailable.map((item, index) => (
+                  <li
+                    key={index}
+                    className="caption text-surface-text inline-block text-sm"
+                  >
+                    {item == "A1"
+                      ? "Bill"
+                      : item == "A2"
+                        ? "Box"
+                        : item == "A3" && "Charger"}
+                  </li>
+                ))}
+              </ul>
+            </Label>
+          )}
+      </>
     </div>
   );
 };

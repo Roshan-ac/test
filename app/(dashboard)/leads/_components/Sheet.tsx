@@ -13,6 +13,7 @@ import { LeadActions } from "@/app/(dashboard)/leads/_components/LeadActions";
 import { deviceType } from "@/interfaces";
 import SheetSkeleton from "@/components/sheetSkeleton";
 import { Date } from "./PrimaryTable";
+import { useProgressContext } from "@/context/progressContext";
 
 export function SheetDemo({
   isOpen,
@@ -26,10 +27,11 @@ export function SheetDemo({
   };
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [progress, setProgress] = useState(13);
   const [isLoading, setIsLoading] = useState(false);
+  const [logsUpdate, setLogsUpdate] = useState(false);
   const [LogDetails, setLogDetails] = useState();
   const [leadDetails, setLeadDetails] = useState<any>();
+  const { showProgress } = useProgressContext();
   useEffect(() => {
     setIsLoading(true),
       (async function () {
@@ -45,18 +47,23 @@ export function SheetDemo({
 
         const data = await res.json();
         setLeadDetails(data.myBookings);
-        const res2 = await fetch(`/api/getLeadLogs`, {
-          method: "POST",
-          body: JSON.stringify({
-            leadId: SelectedRow.lead,
-          }),
-        });
-        const LeadLogs = await res2.json();
-        setLogDetails(LeadLogs);
-        setIsLoading(false);
       })();
-  }, [SelectedRow]);
+  }, [SelectedRow, showProgress]);
+  useEffect(() => {
+    (async function () {
+      const res2 = await fetch(`/api/getLeadLogs`, {
+        method: "POST",
+        body: JSON.stringify({
+          leadId: SelectedRow.lead,
+        }),
+      });
+      const LeadLogs = await res2.json();
+      setLogDetails(LeadLogs);
+      setIsLoading(false);
+    })();
+  }, [showProgress]);
   console.log(leadDetails);
+
   return (
     <Sheet open={isOpen}>
       <SheetContent
@@ -72,7 +79,32 @@ export function SheetDemo({
                     {SelectedRow.devicetype}
                   </Badge>
                   <div>
-                    <h1 className="">{leadDetails.devicename}</h1>
+                    <h1>
+                      {leadDetails.devicename}
+
+                      {leadDetails.deviceram !== "null" && (
+                        <>
+                          <span>
+                            {" "}
+                            {leadDetails.deviceram &&
+                              leadDetails.deviceram + " GB"}
+                            {leadDetails.devicestorage && " /"}{" "}
+                          </span>
+                          <span>
+                            {" "}
+                            {leadDetails.ram && leadDetails.ram + " GB"}
+                            {leadDetails.storage && " /"}{" "}
+                          </span>
+                        </>
+                      )}
+                      {leadDetails.size && <span>{leadDetails.size}</span>}
+                      {leadDetails.devicestorage && (
+                        <span> {`${leadDetails.devicestorage} GB`} </span>
+                      )}
+                      {leadDetails.storage && (
+                        <span> {`${leadDetails.storage} GB`} </span>
+                      )}
+                    </h1>
                   </div>
                   <div className="my-6 flex flex-col space-y-6">
                     <Label htmlFor="terms" className=" flex w-full space-x-4  ">
@@ -113,7 +145,14 @@ export function SheetDemo({
                     </Label>
                   </div>
 
-                  <div>{leadDetails && <LeadActions lead={leadDetails} />}</div>
+                  <div>
+                    {leadDetails && (
+                      <LeadActions
+                        setLogsUpdate={setLogsUpdate}
+                        lead={leadDetails}
+                      />
+                    )}
+                  </div>
                 </div>
                 <ExtraInfo lead={leadDetails} />
               </div>
@@ -130,7 +169,6 @@ export function SheetDemo({
 }
 
 const ExtraInfo = ({ lead }: any) => {
-
   return (
     <div className="h-max w-[45%] space-y-4">
       <div className="h-max w-full bg-tertiaryBackground px-6 py-4">
@@ -148,15 +186,14 @@ const ExtraInfo = ({ lead }: any) => {
               {lead.devicegeneratedprice} -/
             </span>
           </Label>
-          {
-            lead.devicefinalprice &&
-          <Label htmlFor="terms" className=" flex w-full space-x-4  ">
-            <span className="inline-block w-[80%]">Final Price :</span>
-            <span className="inline-block w-full">
-              {lead.devicefinalprice} -/
-            </span>
-          </Label>
-          }
+          {lead.devicefinalprice && (
+            <Label htmlFor="terms" className=" flex w-full space-x-4  ">
+              <span className="inline-block w-[80%]">Final Price :</span>
+              <span className="inline-block w-full">
+                {lead.devicefinalprice} -/
+              </span>
+            </Label>
+          )}
         </div>
       </div>
       <div className="h-max w-full overflow-y-auto bg-tertiaryBackground  px-6 py-4">

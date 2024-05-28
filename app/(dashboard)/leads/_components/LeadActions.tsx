@@ -16,6 +16,7 @@ import { toast } from "../../../../components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { Dialog } from "../../../../components/ui/dialog";
 import LeadDialog from "@/app/(dashboard)/leads/_components/LeadDialog";
+import { useProgressContext } from "@/context/progressContext";
 
 export interface DispositionInterface {
   disposition1: string;
@@ -23,11 +24,15 @@ export interface DispositionInterface {
   remarks: string;
 }
 
-export function LeadActions({ lead }: { lead: any }) {
+export function LeadActions({
+  lead,
+  setLogsUpdate,
+}: {
+  lead: any;
+  setLogsUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const { register, handleSubmit } = useForm<DispositionInterface>();
-  const [progress, setProgress] = React.useState(1);
   const [isLoading, setIsLoading] = React.useState(false);
-  const router = useRouter();
   const [select, setSelect] = React.useState<DispositionInterface>({
     disposition1: "",
     disposition2: "",
@@ -35,7 +40,7 @@ export function LeadActions({ lead }: { lead: any }) {
   });
 
   const [isDialogOpen, setDialogOpen] = React.useState<boolean>(false);
-
+  const { showProgress } = useProgressContext();
   const submitHandler = async (data: DispositionInterface) => {
     const desposition = `${select.disposition1}-${select.disposition2}-(${data.remarks.length > 0 ? data.remarks : "no remarks"})`;
     const res = await fetch("/api/updateDesposition", {
@@ -47,30 +52,17 @@ export function LeadActions({ lead }: { lead: any }) {
     });
     const result = await res.json();
     if (result.success) {
-      ShowProgress();
+      showProgress()
       toast({
         title: "Success",
         description: <p className=" text-green-500">{result.message}</p>,
       });
-      router.refresh();
     } else {
       toast({
         title: "Unable to update",
         description: <p className=" text-[#dd9999]">{result.message}</p>,
       });
     }
-  };
-
-  const ShowProgress = () => {
-    setIsLoading(true);
-    setProgress(8);
-    setTimeout(() => setProgress(32), 500);
-    setTimeout(() => setProgress(52), 500);
-    setTimeout(() => setProgress(67), 500);
-    setTimeout(() => setProgress(79), 500);
-    setTimeout(() => setProgress(94), 500);
-    setTimeout(() => setProgress(100), 500);
-    setTimeout(() => setIsLoading(false), 1000);
   };
 
   return (
@@ -83,7 +75,7 @@ export function LeadActions({ lead }: { lead: any }) {
               ...select,
               disposition1: value as string,
             });
-            if (value === "create lead") {
+            if (value === "Cl") {
               setDialogOpen(true);
             }
           }}
@@ -93,14 +85,14 @@ export function LeadActions({ lead }: { lead: any }) {
           </SelectTrigger>
           <SelectContent className="">
             <SelectGroup {...register("disposition1")}>
-              <SelectItem value="connected">Connected</SelectItem>
-              <SelectItem value="not connected">Not Connected</SelectItem>
-              <SelectItem value="create lead">Create Lead</SelectItem>
+              <SelectItem value="Con">Connected</SelectItem>
+              <SelectItem value="Nc">Not Connected</SelectItem>
+              <SelectItem value="Cl">Create Lead</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
 
-        {select.disposition1 === "connected" && (
+        {select.disposition1 === "Con" && (
           <Select
             onValueChange={(value) =>
               setSelect({
@@ -138,7 +130,7 @@ export function LeadActions({ lead }: { lead: any }) {
           </Select>
         )}
 
-        {select.disposition1 === "not connected" && (
+        {select.disposition1 === "Nc" && (
           <Select
             onValueChange={(value) =>
               setSelect({

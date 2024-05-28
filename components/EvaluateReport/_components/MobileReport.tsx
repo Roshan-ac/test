@@ -15,6 +15,10 @@ const MobileReport = ({
     screencondition,
     accessoriesunavailable,
   } = formData;
+  let accessoriesAvailable = ["A3", "A1", "A2", "A4"].filter(
+    (item) => !accessoriesunavailable?.includes(item)
+  );
+
   return (
     <div className="font-primary text-md space-y-4 font-normal">
       <div className="flex flex-col space-y-6">
@@ -132,15 +136,15 @@ const MobileReport = ({
             </span>
           </Label>
         )}
-        {accessoriesunavailable !== undefined &&
-          accessoriesunavailable.length > 0 && (
+        {accessoriesAvailable !== undefined &&
+          accessoriesAvailable.length > 0 && (
             <Label
               htmlFor="terms"
               className=" flex w-full items-start  space-x-4"
             >
               <h4 className="inline-block w-[40%]">Device Accessories : </h4>
               <ul className=" flex w-full  flex-col justify-start space-y-2">
-                {accessoriesunavailable.map((item, index) => (
+                {accessoriesAvailable.map((item, index) => (
                   <li
                     key={index}
                     className="caption text-surface-text inline-block text-sm"

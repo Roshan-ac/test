@@ -73,6 +73,8 @@ type OrderDetails = {
     screencondition: string;
     devicestorage: string;
     deviceram: string;
+    storage: string;
+    ram: string;
     size: string;
     warrantystatus: string;
     bodycondition: string;
@@ -131,17 +133,13 @@ export function SheetDemo({
       showProgress();
       toast({
         title: "Success",
-        description: (
-          <p className=" text-green-500">Lead status successfully changed</p>
-        ),
+        description: <p className=" text-green-500">{data.message}</p>,
       });
       setIsUpdated(true);
     } else {
       toast({
-        title: "Sorry!",
-        description: (
-          <p className=" text-green-500">Unable to update lead status.</p>
-        ),
+        title: "Unable to Update",
+        description: <p className=" text-[#dd9999]">{data.message}</p>,
       });
     }
   };
@@ -161,21 +159,13 @@ export function SheetDemo({
       showProgress();
       toast({
         title: "Success",
-        description: (
-          <p className=" text-green-500">
-            Pickup Date and Time succesfully updated
-          </p>
-        ),
+        description: <p className=" text-green-500">{result.message}</p>,
       });
       setIsUpdated(true);
     } else {
       toast({
         title: "Unable to Update",
-        description: (
-          <p className=" text-[#dd9999]">
-            We are unable to update pickup time and date at the moment.
-          </p>
-        ),
+        description: <p className=" text-[#dd9999]">{result.message}</p>,
       });
     }
   }
@@ -232,14 +222,14 @@ export function SheetDemo({
       setIsLoading(false);
     })();
   }, [SelectedRow, isUpdated]);
-  console.log(orderDetails);
+
   return (
     <Sheet open={isOpen}>
-      <Progress
+      {/* <Progress
         hidden={!isLoading}
         value={progress}
         className=" absolute  -top-6 right-0 z-[80] h-[2px]"
-      />
+      /> */}
       <SheetContent
         className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
         setIsOpen={setIsOpen}
@@ -257,11 +247,20 @@ export function SheetDemo({
                       {orderDetails.myBookings.devicename}
 
                       {orderDetails.myBookings.deviceram !== "null" && (
-                        <span>
-                          {" "}
-                          {orderDetails.myBookings.deviceram} GB{" "}
-                          {orderDetails.myBookings.devicestorage && "/"}{" "}
-                        </span>
+                        <>
+                          <span>
+                            {" "}
+                            {orderDetails.myBookings.deviceram &&
+                              orderDetails.myBookings.deviceram + " GB"}
+                            {orderDetails.myBookings.devicestorage && " /"}{" "}
+                          </span>
+                          <span>
+                            {" "}
+                            {orderDetails.myBookings.ram &&
+                              orderDetails.myBookings.ram + " GB"}
+                            {orderDetails.myBookings.storage && " /"}{" "}
+                          </span>
+                        </>
                       )}
                       {orderDetails.myBookings.size && (
                         <span>{orderDetails.myBookings.size}</span>
@@ -270,6 +269,12 @@ export function SheetDemo({
                         <span>
                           {" "}
                           {`${orderDetails.myBookings.devicestorage} GB`}{" "}
+                        </span>
+                      )}
+                      {orderDetails.myBookings.storage && (
+                        <span>
+                          {" "}
+                          {`${orderDetails.myBookings.storage} GB`}{" "}
                         </span>
                       )}
                     </h1>
