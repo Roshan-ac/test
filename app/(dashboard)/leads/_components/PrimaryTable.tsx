@@ -16,6 +16,7 @@ import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { parseISO } from "date-fns";
 import { deviceType } from "@/interfaces";
 import { useProgressContext } from "@/context/progressContext";
+import { CardContainer } from "./CardContainer";
 
 export function PrimaryTable({
   selectedRow,
@@ -65,14 +66,13 @@ export function PrimaryTable({
         });
 
         const data = await res.json();
-        console.log(data);
         setInvoices(data);
         setIsLoading(false);
       })();
   }, [currentPage, filterQueries,showProgress]);
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <ScrollArea className="relative h-max w-full rounded-md">
         <Table>
           <TableHeader className=" !sticky  left-0 top-0 w-full dark:hover:bg-hoverColor">
@@ -86,7 +86,7 @@ export function PrimaryTable({
           </TableHeader>
 
           {invoices && (
-            <TableBody className="w-full">
+            <TableBody className="w-full bg-primaryBackground">
               {invoices?.leads.data.map((invoice, index) => (
                 <TableRow
                   onClick={() => {
@@ -123,7 +123,7 @@ export function PrimaryTable({
               )}
             </TableBody>
           )}
-          {!invoices && isLoading && <TableSkeleton skeleton={5} />}
+          {isLoading &&<TableSkeleton skeleton={5} />}
         </Table>
         {invoices?.leads?.pagelimit && (
           <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
@@ -136,7 +136,15 @@ export function PrimaryTable({
           </div>
         )}
       </ScrollArea>
-    </>
+
+      <CardContainer
+        Callback={invoices?.Callback}
+        Converted={invoices?.Converted}
+        Pending={invoices?.Pending}
+        Ringing={invoices?.Ringing}
+        SwitchedOff={invoices?.SwitchedOff}
+      />
+    </div>
   );
 }
 

@@ -83,7 +83,7 @@ const SectionOne = ({
           setFilterQueries={setFilterQueries}
         />
         <div className="space-y-6  px-8">
-          <div className="w-full rounded-[12px]  bg-primaryBackground">
+          <div className="w-full rounded-[12px]">
             <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
               Recent Leads
             </h4>
@@ -94,6 +94,7 @@ const SectionOne = ({
               SetSelectedRow={SetSelectedRow}
             />
           </div>
+
           {SelectedRow && (
             <SheetDemo
               SelectedRow={SelectedRow}

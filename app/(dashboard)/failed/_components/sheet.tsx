@@ -144,7 +144,21 @@ export function SheetDemo({
         pending: pending,
       }),
     });
-
+  };
+  const ChangeToBe = async ({ actiontype }) => {
+    const Newstatus = `FC-${orderDetails.myBookings.status.split("-")[1]}`;
+    console.log(Newstatus);
+    const res = await fetch("/api/changetobe", {
+      method: "POST",
+      cache: "no-cache",
+      body: JSON.stringify({
+        leadid: SelectedRow.lead,
+        vendorid: orderDetails.myBookings.assignedvendor,
+        status: Newstatus,
+        creditpoints: orderDetails.myBookings.creditpoints,
+        actiontype: actiontype,
+      }),
+    });
     const result = await res.json();
     if (result.success) {
       showProgress();
@@ -152,7 +166,6 @@ export function SheetDemo({
         title: "Success",
         description: <p className=" text-green-500">{result.message}</p>,
       });
-      router.refresh();
     }
   };
 
@@ -160,12 +173,11 @@ export function SheetDemo({
     <>
       {isOpen && (
         <div className=" fixed bottom-0 right-0 z-50 flex h-screen w-full justify-end">
-              <div
+          <div
             onClick={() => setIsOpen(false)}
             className="w-[30%] bg-black bg-opacity-60"
           ></div>
-          <div
-            className=" h-full w-[70%]  rounded  !border-none !bg-secondaryBackground p-4">
+          <div className=" h-full w-[70%]  rounded  !border-none !bg-secondaryBackground p-4">
             <ScrollArea className="!h-[100vh] pb-6">
               {orderDetails && orderDetails.myBookings ? (
                 <div className=" my-4 space-y-4">
@@ -243,6 +255,7 @@ export function SheetDemo({
                                     rejected: 0,
                                     pending: 0,
                                   });
+                                  ChangeToBe({ actiontype: "accept" });
                                 }}
                               >
                                 Continue
@@ -276,6 +289,7 @@ export function SheetDemo({
                                     rejected: 1,
                                     pending: 0,
                                   });
+                                  ChangeToBe({ actiontype: "reverse" });
                                 }}
                               >
                                 Continue
@@ -309,6 +323,7 @@ export function SheetDemo({
                                     rejected: 1,
                                     pending: 0,
                                   });
+                                  ChangeToBe({ actiontype: "reject" });
                                 }}
                               >
                                 Continue

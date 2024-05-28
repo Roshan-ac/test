@@ -14,11 +14,11 @@ const LaptopReport = ({
     laptopage,
     physicalcondition,
     bodycondition,
-    accessories,
+    accessoriesunavailable,
   } = formData;
 
-  const accessoriesunavailable = ["A1", "A2", "A3"].filter(
-    (item) => !accessories?.includes(item),
+  const accessoriesavailable = ["A1", "A2", "A3"].filter(
+    (item) => !accessoriesunavailable?.includes(item),
   );
 
   return (
@@ -140,14 +140,14 @@ const LaptopReport = ({
           </Label>
         )}
 
-        {accessories !== undefined && accessoriesunavailable.length > 0 && (
+        {accessoriesavailable !== undefined && accessoriesavailable.length > 0 && (
           <Label
             htmlFor="terms"
             className=" flex w-full items-start  space-x-4"
           >
             <h4 className="inline-block w-[40%]">Device Accessories : </h4>
             <ul className=" flex w-full  flex-col justify-start space-y-2">
-              {accessoriesunavailable.map((item, index) => (
+              {accessoriesavailable.map((item, index) => (
                 <li
                   key={index}
                   className="caption text-surface-text inline-block text-sm"

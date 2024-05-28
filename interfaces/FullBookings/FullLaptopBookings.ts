@@ -46,7 +46,7 @@ export interface LaptopFullBookingsInterface {
   laptopage: string;
   bodycondition: string;
   deviceclassid: number;
-  accessories: string[];
+  accessoriesunavailable: string[];
 }
 
 const LaptopObject = {
