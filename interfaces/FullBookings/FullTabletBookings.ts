@@ -39,7 +39,7 @@ export interface TabletFullBookingsInterface {
   desposition: null | string;
   createdBy: null | string;
   physicalcondition: string[];
-  accessories: string[];
+  accessoriesunavailable: string[];
   screencondition: string;
   devicestorage: string;
   deviceram: null | string;

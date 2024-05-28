@@ -145,11 +145,16 @@ export function SheetDemo({
   };
 
   async function ReschedulePickupDateTime(data: z.infer<typeof FormSchema>) {
+    // console.log(data.newpickupdate)
+    const formattedDate = data.newpickupdate
+      .toISOString()
+      .split("T")[0]
+      .replace(/-/g, "-");
     const res = await fetch(`api/reschedulePickup`, {
       method: "POST",
       body: JSON.stringify({
         leadid: SelectedRow.lead,
-        newPickupDate: data.newpickupdate.toLocaleDateString("en-GB"),
+        newPickupDate: formattedDate,
         newPickupTime: data.newpickuptime,
         deviceType: SelectedRow.devicetype,
       }),
@@ -272,10 +277,7 @@ export function SheetDemo({
                         </span>
                       )}
                       {orderDetails.myBookings.storage && (
-                        <span>
-                          {" "}
-                          {`${orderDetails.myBookings.storage} GB`}{" "}
-                        </span>
+                        <span> {`${orderDetails.myBookings.storage} GB`} </span>
                       )}
                     </h1>
                   </div>
