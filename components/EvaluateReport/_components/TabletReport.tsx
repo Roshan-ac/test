@@ -13,7 +13,7 @@ const TabletReport = ({
     screencondition,
     accessoriesunavailable,
   } = formData;
-  console.log(accessoriesunavailable);
+
   return (
     <div className="font-primary text-md space-y-4 font-normal">
       <div className="flex flex-col space-y-6">
