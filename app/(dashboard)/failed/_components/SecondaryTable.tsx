@@ -11,7 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { parseISO, format } from "date-fns";
 import { InvoiceInterface } from "./BasePage";
-import { TabelPagination } from "@/components/Internals/TabelPagination";
+// import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { Date } from "./PrimaryTable";
 
 type leadsData = {

@@ -9,7 +9,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { parseISO, format } from "date-fns";
-import { TabelPagination } from "@/components/Internals/TabelPagination";
+// import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { VendorsInterface } from "./BasePage";
 import { cn } from "@/lib/utils";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";

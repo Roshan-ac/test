@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { TabelPagination } from "@/components/Internals/TabelPagination";
+// import { TabelPagination } from "@/components/Internals/TabelPagination";
 
 type leadsData = {
   id: string;

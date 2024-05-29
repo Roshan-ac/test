@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { TabelPagination } from "@/components/Internals/TabelPagination";
+// import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/ui/progress";

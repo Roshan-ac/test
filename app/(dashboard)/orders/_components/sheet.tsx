@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { TabelPagination } from "@/components/Internals/TabelPagination";
+// import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { AssignDialog } from "./AssignDialog";
 import { useRouter } from "next/navigation";
 import { ReschedulePickup } from "./ReschedulePickup";

@@ -155,14 +155,15 @@ export function PrimaryTable({
       {totalPage && (
         <div className="sticky bottom-0 flex w-full border-t border-t-tableSeperator bg-primaryBackground">
           {invoices.length !== 0 ? (
-            <DataTablePagination
-              pageSizeOptions={[10, 20, 30, 50]}
-              table={totalPage}
-              // tableType="Primary"
-              // totalPage={totalPage}
-              // currentPage={currentPage}
-              // setCurrentPage={setCurrentPage}
-            />
+            // <DataTablePagination
+            //   pageSizeOptions={[10, 20, 30, 50]}
+            //   table={totalPage}
+            //   // tableType="Primary"
+            //   // totalPage={totalPage}
+            //   // currentPage={currentPage}
+            //   // setCurrentPage={setCurrentPage}
+            // />
+            <></>
           ) : (
             <div className=" p-4">No Records Found !</div>
           )}

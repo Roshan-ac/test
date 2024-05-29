@@ -10,7 +10,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { parseISO, format } from "date-fns";
-import { TabelPagination } from "@/components/Internals/TabelPagination";
+// import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { MessageInterface } from "./BasePage";
 
@@ -85,12 +85,12 @@ export function PrimaryTable({
       </Table>
       {totalPage && (
         <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
-          <TabelPagination
+          {/* <TabelPagination
             tableType="Primary"
             totalPage={totalPage}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-          />
+          /> */}
         </div>
       )}
     </ScrollArea>
