@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import type { DataTableFilterField } from "@/types";
+// import type { DataTableFilterField } from "@/types";
 import {
   getCoreRowModel,
   getFacetedRowModel,
@@ -87,7 +87,6 @@ interface UseDataTableProps<TData, TValue> {
    * ];
    * ```
    */
-  filterFields?: DataTableFilterField<TData>[];
 
   /**
    * Enable notion like column filters.
@@ -108,7 +107,6 @@ export function useOrdersTimelineTableData<TData, TValue>({
   columns,
   defaultPerPage = 10,
   defaultSort,
-  filterFields = [],
   enableAdvancedFilter = false,
 }: UseDataTableProps<TData, TValue>) {
   const router = useRouter();
@@ -121,14 +119,6 @@ export function useOrdersTimelineTableData<TData, TValue>({
   const perPage = search.per_page ?? defaultPerPage;
   const sort = search.sort ?? defaultSort;
   const [column, order] = sort?.split(".") ?? [];
-
-  // Memoize computation of searchableColumns and filterableColumns
-  const { searchableColumns, filterableColumns } = React.useMemo(() => {
-    return {
-      searchableColumns: filterFields.filter((field) => !field.options),
-      filterableColumns: filterFields.filter((field) => field.options),
-    };
-  }, [filterFields]);
 
   // Create query string
   const createQueryString = React.useCallback(
@@ -149,40 +139,11 @@ export function useOrdersTimelineTableData<TData, TValue>({
   );
 
   // Initial column filters
-  const initialColumnFilters: ColumnFiltersState = React.useMemo(() => {
-    return Array.from(searchParams.entries()).reduce<ColumnFiltersState>(
-      (filters, [key, value]) => {
-        const filterableColumn = filterableColumns.find(
-          (column) => column.value === key,
-        );
-        const searchableColumn = searchableColumns.find(
-          (column) => column.value === key,
-        );
-
-        if (filterableColumn) {
-          filters.push({
-            id: key,
-            value: value.split("."),
-          });
-        } else if (searchableColumn) {
-          filters.push({
-            id: key,
-            value: [value],
-          });
-        }
-
-        return filters;
-      },
-      [],
-    );
-  }, [filterableColumns, searchableColumns, searchParams]);
 
   // Table states
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
-  const [columnFilters, setColumnFilters] =
-    React.useState<ColumnFiltersState>(initialColumnFilters);
 
   // Handle server-side pagination
   const [{ pageIndex, pageSize }, setPagination] =
@@ -249,8 +210,8 @@ export function useOrdersTimelineTableData<TData, TValue>({
       setIsData(true);
       setIsLoading(false);
     })();
-  }, [currentLeadPage, currentOrderPage, isUpdated, filterQueries,pageIndex]);
- 
+  }, [currentLeadPage, currentOrderPage, isUpdated, filterQueries, pageIndex]);
+
   React.useEffect(() => {
     router.push(
       `${pathname}?${createQueryString({
@@ -285,81 +246,7 @@ export function useOrdersTimelineTableData<TData, TValue>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sorting]);
 
-  // Handle server-side filtering
-  const debouncedSearchableColumnFilters = JSON.parse(
-    useDebounce(
-      JSON.stringify(
-        columnFilters.filter((filter) => {
-          return searchableColumns.find((column) => column.value === filter.id);
-        }),
-      ),
-      500,
-    ),
-  ) as ColumnFiltersState;
-
-  const filterableColumnFilters = columnFilters.filter((filter) => {
-    return filterableColumns.find((column) => column.value === filter.id);
-  });
-
   const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    // Opt out when advanced filter is enabled, because it contains additional params
-    if (enableAdvancedFilter) return;
-
-    // Prevent resetting the page on initial render
-    if (!mounted) {
-      setMounted(true);
-      return;
-    }
-
-    // Initialize new params
-    const newParamsObject = {
-      page: 1,
-    };
-
-    // Handle debounced searchable column filters
-    for (const column of debouncedSearchableColumnFilters) {
-      if (typeof column.value === "string") {
-        Object.assign(newParamsObject, {
-          [column.id]: typeof column.value === "string" ? column.value : null,
-        });
-      }
-    }
-
-    // Handle filterable column filters
-    for (const column of filterableColumnFilters) {
-      if (typeof column.value === "object" && Array.isArray(column.value)) {
-        Object.assign(newParamsObject, { [column.id]: column.value.join(".") });
-      }
-    }
-
-    // Remove deleted values
-    // for (const key of searchParams.keys()) {
-    //   if (
-    //     (searchableColumns.find((column) => column.value === key) &&
-    //       !debouncedSearchableColumnFilters.find(
-    //         (column) => column.id === key,
-    //       )) ||
-    //     (filterableColumns.find((column) => column.value === key) &&
-    //       !filterableColumnFilters.find((column) => column.id === key))
-    //   ) {
-    //     Object.assign(newParamsObject, { [key]: null });
-    //   }
-    // }
-
-    // After cumulating all the changes, push new params
-    router.push(`${pathname}?${createQueryString(newParamsObject)}`);
-
-    table.setPageIndex(0);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    JSON.stringify(debouncedSearchableColumnFilters),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    JSON.stringify(filterableColumnFilters),
-  ]);
 
   const table = useReactTable({
     data: data?.leads.data,
@@ -370,13 +257,11 @@ export function useOrdersTimelineTableData<TData, TValue>({
       sorting,
       columnVisibility,
       rowSelection,
-      columnFilters,
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onPaginationChange: setPagination,
     onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
