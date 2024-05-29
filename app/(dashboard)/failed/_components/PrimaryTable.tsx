@@ -9,7 +9,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { parseISO, format } from "date-fns";
-import { TabelPagination } from "@/components/Internals/TabelPagination";
+// import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { InvoiceInterface } from "./BasePage";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { deviceType } from "@/interfaces";
@@ -150,14 +150,15 @@ export function PrimaryTable({
         {!invoices && isLoading && <TableSkeleton skeleton={6} />}
       </Table>
       {totalPage && (
-        <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
-          <TabelPagination
-            tableType="Primary"
-            totalPage={totalPage}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </div>
+        // <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
+        //   <TabelPagination
+        //     tableType="Primary"
+        //     totalPage={totalPage}
+        //     currentPage={currentPage}
+        //     setCurrentPage={setCurrentPage}
+        //   />
+        // </div>
+        <></>
       )}
     </ScrollArea>
   );

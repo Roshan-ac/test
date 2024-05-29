@@ -11,9 +11,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import { parseISO, format } from "date-fns";
-import { TabelPagination } from "@/components/Internals/TabelPagination";
+// import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { deviceType } from "@/interfaces";
+import { DataTablePagination } from "@/components/Internals/TabelPagination";
 
 type OrdersData = {
   id: number;
@@ -58,7 +59,7 @@ export function PrimaryTable({
   setCurrentPage: Dispatch<SetStateAction<number>>;
   invoices: OrdersData[];
 }) {
-  console.log(invoices)
+  console.log(invoices);
   return (
     <ScrollArea className=" relative h-max w-full rounded-md">
       <Table>
@@ -154,11 +155,13 @@ export function PrimaryTable({
       {totalPage && (
         <div className="sticky bottom-0 flex w-full border-t border-t-tableSeperator bg-primaryBackground">
           {invoices.length !== 0 ? (
-            <TabelPagination
-              tableType="Primary"
-              totalPage={totalPage}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
+            <DataTablePagination
+              pageSizeOptions={[10, 20, 30, 50]}
+              table={totalPage}
+              // tableType="Primary"
+              // totalPage={totalPage}
+              // currentPage={currentPage}
+              // setCurrentPage={setCurrentPage}
             />
           ) : (
             <div className=" p-4">No Records Found !</div>

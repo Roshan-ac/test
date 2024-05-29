@@ -1,35 +1,15 @@
 "use client";
 
+import { ResponseImageType } from "@/app/(dashboard)/failed/_components/sheet";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 
-type ResponseImageType = {
-  success: true;
-  imgdevicefront: string;
-  imgdeviceback: string;
-  imgdeviceside1: string;
-  imgdeviceside2: string;
-  imgdeviceside3: string;
-  imgdeviceside4: string;
-};
 
-export function FailedImageGallery({ leadId }: { leadId: number }) {
-  const [images, setImages] = useState<ResponseImageType>();
-  useEffect(() => {
-    (async function () {
-      const res = await fetch("/api/getDeviceConditionImage", {
-        method: "POST",
-        body: JSON.stringify({ leadid: leadId }),
-        cache: "no-cache",
-      });
 
-      const data = await res.json();
-      setImages(data);
-    })();
-  }, []);
-console.log(images)
+export function FailedImageGallery({ images }: { images:ResponseImageType  }) {
+
   return (
     <PhotoProvider>
       <div className="flex !flex-wrap gap-2 p-2">

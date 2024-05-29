@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { TabelPagination } from "@/components/Internals/TabelPagination";
+// import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { AssignDialog } from "./AssignDialog";
 import { useRouter } from "next/navigation";
 import { ReschedulePickup } from "./ReschedulePickup";
@@ -89,6 +89,15 @@ type LogDetails = {
     description: string;
   }[];
 };
+export type ResponseImageType = {
+  success: true;
+  imgdevicefront: string;
+  imgdeviceback: string;
+  imgdeviceside1: string;
+  imgdeviceside2: string;
+  imgdeviceside3: string;
+  imgdeviceside4: string;
+};
 
 export function SheetDemo({
   isOpen,
@@ -108,7 +117,7 @@ export function SheetDemo({
   const [LogDetails, setLogDetails] = useState<LogDetails>();
   const router = useRouter();
   const { showProgress } = useProgressContext();
-
+  const [images, setImages] = useState<ResponseImageType>();
   useEffect(() => {
     (async function () {
       const res = await fetch(
@@ -133,7 +142,20 @@ export function SheetDemo({
       setIsLoading(false);
     })();
   }, [SelectedRow]);
+ 
+  useEffect(() => {
+    (async function () {
+      const res = await fetch("/api/getDeviceConditionImage", {
+        method: "POST",
+        body: JSON.stringify({ leadid: SelectedRow.lead }),
+        cache: "no-cache",
+      });
 
+      const data = await res.json();
+      setImages(data);
+    })();
+  }, [SelectedRow.lead]);
+ 
   const UpdateFailedCounts = async ({ accepted, rejected, pending }) => {
     const res = await fetch("api/updateFailedCounts", {
       method: "POST",
@@ -463,7 +485,7 @@ export function SheetDemo({
                       </h2>
                     </div>
                     <div className="my-2 w-full">
-                      <FailedImageGallery leadId={orderDetails.myBookings.id} />
+                      <FailedImageGallery images={images} />
                     </div>
                   </div>
 

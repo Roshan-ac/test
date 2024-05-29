@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { TabelPagination } from "@/components/Internals/TabelPagination";
+// import { TabelPagination } from "@/components/Internals/TabelPagination";
 
 type leadsData = {
   id: string;
@@ -117,12 +117,13 @@ const SecondaryTable = ({
       </Table>
       <div className="sticky bottom-0 flex w-full flex-col border-t border-t-tableSeperator bg-primaryBackground">
         {leads.length !== 0 ? (
-          <TabelPagination
-            tableType="Secondary"
-            totalPage={totalPage}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
+          // <TabelPagination
+          //   tableType="Secondary"
+          //   totalPage={totalPage}
+          //   currentPage={currentPage}
+          //   setCurrentPage={setCurrentPage}
+          // />
+          <></>
         ):(
           <div className=" p-4">No Records Found !</div>
         )}

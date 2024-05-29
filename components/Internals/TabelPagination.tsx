@@ -1,77 +1,179 @@
+// import {
+//   Pagination,
+//   PaginationContent,
+//   PaginationEllipsis,
+//   PaginationItem,
+//   PaginationLink,
+//   PaginationNext,
+//   PaginationPrevious,
+// } from "@/components/ui/pagination";
+// import { returnPaginationRange } from "@/lib/utils/returnPaginationRange";
+// import { Dispatch, SetStateAction } from "react";
+
+// export function TabelPagination({
+//   currentPage,
+//   tableType,
+//   totalPage,
+//   setCurrentPage,
+// }: {
+//   currentPage: number;
+//   totalPage: number;
+//   tableType: "Primary" | "Secondary";
+//   setCurrentPage: Dispatch<SetStateAction<number>>;
+// }) {
+
+//   const array = returnPaginationRange({
+//     totalPage: totalPage,
+//     page: currentPage,
+//     siblings: 1,
+//   });
+// console.log(totalPage)
+//   return (
+//     <Pagination className=" flex w-full justify-start p-4">
+//       <PaginationContent className="">
+//         <PaginationItem className=" cursor-pointer" hidden={currentPage === 1}>
+//           <PaginationPrevious
+//             onClick={() => {
+//               setCurrentPage(currentPage - 1);
+//               window.scrollTo({ top: tableType == "Primary" ? 0 : 900 });
+//             }}
+//           />
+//         </PaginationItem>
+
+//         {array.map((item, index) => {
+//           return (
+//             <PaginationItem
+//             key={index}
+//               className=" cursor-pointer"
+//               aria-current={currentPage === index + 1 ? "page" : undefined}
+//             >
+//               <PaginationLink
+//                 onClick={() => {
+//                   setCurrentPage(index + 1);
+//                   window.scrollTo({ top: tableType == "Primary" ? 0 : 900 });
+//                 }}
+//                 isActive={currentPage == index + 1}
+//               >
+//                 {item}
+//               </PaginationLink>
+//             </PaginationItem>
+//           );
+//         })}
+
+//         <PaginationItem
+//           className=" cursor-pointer"
+//           hidden={currentPage === totalPage}
+//         >
+//           <PaginationNext
+//             onClick={() => {
+//               setCurrentPage(currentPage + 1);
+//               window.scrollTo({ top: tableType == "Primary" ? 0 : 900 });
+//             }}
+//           />
+//         </PaginationItem>
+//       </PaginationContent>
+//     </Pagination>
+//   );
+// }
 import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { returnPaginationRange } from "@/lib/utils/returnPaginationRange";
-import { Dispatch, SetStateAction } from "react";
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  DoubleArrowLeftIcon,
+  DoubleArrowRightIcon,
+} from "@radix-ui/react-icons";
+import { type Table } from "@tanstack/react-table";
 
-export function TabelPagination({
-  currentPage,
-  tableType,
-  totalPage,
-  setCurrentPage,
-}: {
-  currentPage: number;
-  totalPage: number;
-  tableType: "Primary" | "Secondary";
-  setCurrentPage: Dispatch<SetStateAction<number>>;
-}) {
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-  const array = returnPaginationRange({
-    totalPage: totalPage,
-    page: currentPage,
-    siblings: 1,
-  });
-console.log(totalPage)
+interface DataTablePaginationProps<TData> {
+  table: Table<TData>;
+  pageSizeOptions?: number[];
+}
+
+export function DataTablePagination<TData>({
+  table,
+  pageSizeOptions = [10, 20, 30, 40, 50],
+}: DataTablePaginationProps<TData>) {
   return (
-    <Pagination className=" flex w-full justify-start p-4">
-      <PaginationContent className="">
-        <PaginationItem className=" cursor-pointer" hidden={currentPage === 1}>
-          <PaginationPrevious
-            onClick={() => {
-              setCurrentPage(currentPage - 1);
-              window.scrollTo({ top: tableType == "Primary" ? 0 : 900 });
+    <div className="flex w-full flex-col-reverse items-center justify-between gap-4 overflow-auto p-1 sm:flex-row sm:gap-8">
+      <div className="text-muted-foreground flex-1 whitespace-nowrap text-sm">
+        {/* {table.getFilteredSelectedRowModel().rows.length} of{" "}
+        {table.getFilteredRowModel().rows.length} row(s) selected. */}
+      </div>
+      {/* <div className="flex flex-col-reverse items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
+        <div className="flex items-center space-x-2">
+          <p className="whitespace-nowrap text-sm font-medium">Rows per page</p>
+          <Select
+            value={`${table.getState().pagination.pageSize}`}
+            onValueChange={(value) => {
+              table.setPageSize(Number(value));
             }}
-          />
-        </PaginationItem>
-
-        {array.map((item, index) => {
-          return (
-            <PaginationItem
-            key={index}
-              className=" cursor-pointer"
-              aria-current={currentPage === index + 1 ? "page" : undefined}
-            >
-              <PaginationLink
-                onClick={() => {
-                  setCurrentPage(index + 1);
-                  window.scrollTo({ top: tableType == "Primary" ? 0 : 900 });
-                }}
-                isActive={currentPage == index + 1}
-              >
-                {item}
-              </PaginationLink>
-            </PaginationItem>
-          );
-        })}
-
-        <PaginationItem
-          className=" cursor-pointer"
-          hidden={currentPage === totalPage}
-        >
-          <PaginationNext
-            onClick={() => {
-              setCurrentPage(currentPage + 1);
-              window.scrollTo({ top: tableType == "Primary" ? 0 : 900 });
-            }}
-          />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+          >
+            <SelectTrigger className="h-8 w-[4.5rem]">
+              <SelectValue placeholder={table.getState().pagination.pageSize} />
+            </SelectTrigger>
+            <SelectContent side="top">
+              {pageSizeOptions.map((pageSize) => (
+                <SelectItem key={pageSize} value={`${pageSize}`}>
+                  {pageSize}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex items-center justify-center text-sm font-medium">
+          Page {table.getState().pagination.pageIndex + 1} of{" "}
+          {table.getPageCount()}
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button
+            aria-label="Go to first page"
+            variant="outline"
+            className="hidden size-8 p-0 lg:flex"
+            onClick={() => table.setPageIndex(0)}
+            disabled={!table.getCanPreviousPage()}
+          >
+            <DoubleArrowLeftIcon className="size-4" aria-hidden="true" />
+          </Button>
+          <Button
+            aria-label="Go to previous page"
+            variant="outline"
+            size="icon"
+            className="size-8"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            <ChevronLeftIcon className="size-4" aria-hidden="true" />
+          </Button>
+          <Button
+            aria-label="Go to next page"
+            variant="outline"
+            size="icon"
+            className="size-8"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            <ChevronRightIcon className="size-4" aria-hidden="true" />
+          </Button>
+          <Button
+            aria-label="Go to last page"
+            variant="outline"
+            size="icon"
+            className="hidden size-8 lg:flex"
+            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+            disabled={!table.getCanNextPage()}
+          >
+            <DoubleArrowRightIcon className="size-4" aria-hidden="true" />
+          </Button>
+        </div>
+      </div> */}
+    </div>
   );
 }
