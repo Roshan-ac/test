@@ -8,167 +8,130 @@ import {
 } from "@/components/ui/table";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  Suspense,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import { parseISO, format } from "date-fns";
 // import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { deviceType } from "@/interfaces";
 import { DataTablePagination } from "@/components/Internals/TabelPagination";
+import {
+  ColumnDef,
+  flexRender,
+  type Table as TanstackTable,
+} from "@tanstack/react-table";
+import { cn } from "@/lib/utils";
+interface DataTableProps<TData, TValue>
+  extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * The table instance returned from useDataTable hook with pagination, sorting, filtering, etc.
+   * @type TanstackTable<TData>
+   */
+  table: TanstackTable<TData>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  SetSelectedRow: Dispatch<
+    SetStateAction<{ lead: string; devicetype: deviceType }>
+  >;
+  isLoading: boolean;
+  currentPage: number;
+  selectedRow: { lead: string; devicetype: deviceType };
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+  /**
+   * The floating bar to render at the bottom of the table on row selection.
+   * @default null
+   * @type React.ReactNode | null
+   * @example floatingBar={<TasksTableFloatingBar table={table} />}
+   */
+  floatingBar?: React.ReactNode | null;
+}
 
-type OrdersData = {
-  id: number;
-  timestamp: string;
-  devicename: string;
-  city: string | null;
-  devicetype: string;
-  assignedvendor: string;
-  status:
-    | "Generated"
-    | "Cn-Cancelled by Customer"
-    | "F-Cancelled by Customer"
-    | "F-Cancelled by Cashkr"
-    | "Cn-Cancelled by Cashkr"
-    | "Failed"
-    | "V-Out For Pickup"
-    | "Assigned"
-    | "F-Sold Somewhere else"
-    | "C-Completed"
-    | null;
-};
-
-export function PrimaryTable({
+export function PrimaryTable<TData, TValue>({
   setIsOpen,
   SetSelectedRow,
   isLoading,
-  totalPage,
-  invoices,
+  table,
   currentPage,
   selectedRow,
   setCurrentPage,
-}: {
-  isLoading: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-  SetSelectedRow: Dispatch<SetStateAction<object>>;
-  currentPage: number;
-  selectedRow: {
-    lead: number;
-    devicetype: deviceType;
-  };
-  totalPage: number;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
-  invoices: OrdersData[];
-}) {
-  console.log(invoices);
+}: DataTableProps<TData, TValue>) {
   return (
     <ScrollArea className=" relative h-max w-full rounded-md">
-      <Table>
-        <TableHeader className=" !sticky left-0  top-0 z-[1] w-full dark:hover:bg-hoverColor">
-          <TableRow className="bg-tertiaryBackground ">
-            <TableHead className="w-max">Order Date</TableHead>
-            <TableHead>Model</TableHead>
-            <TableHead className="">City</TableHead>
-            <TableHead className="text-center">Type</TableHead>
-            <TableHead className="text-center">Status</TableHead>
-          </TableRow>
-        </TableHeader>
-        {invoices && (
-          <TableBody className="w-full">
-            {invoices.map((invoice, index) => (
-              <TableRow
-                onClick={() => {
-                  SetSelectedRow({
-                    lead: invoice.id,
-                    devicetype: invoice.devicetype,
-                  });
-                  setIsOpen((prev) => !prev);
-                }}
-                className={` ${selectedRow?.lead === invoice.id ? " bg-hoverColor text-black" : ""} group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60`}
-                key={index}
-              >
-                <TableCell className="border-r border-r-tableSeperator">
-                  <Date dateString={invoice.timestamp} />
-                </TableCell>
-                <TableCell className="max-w-[280px] overflow-hidden truncate border-r border-r-tableSeperator">
-                  {invoice.devicename}
-                </TableCell>
-                <TableCell className="border-r border-r-tableSeperator">
-                  {invoice.city ?? "null"}
-                </TableCell>
-                <TableCell className="border-r border-r-tableSeperator">
-                  <span
-                    className={`inline-block h-max min-w-full rounded-[18px] bg-purple-600 p-1 px-2 text-center !text-white opacity-90`}
+      <div className={cn("w-full space-y-2.5 overflow-auto")}>
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className=" !sticky left-0  top-0 z-[1] w-full dark:hover:bg-hoverColor">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow
+                  key={headerGroup.id}
+                  className="bg-tertiaryBackground "
+                >
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table?.getRowModel().rows?.length ? (
+                table?.getRowModel().rows.map((row: any) => (
+                  <TableRow
+                    key={row.id}
+                    onClick={() => {
+                      SetSelectedRow({
+                        lead: `${row.original.id}`,
+                        devicetype: row.original.devicetype,
+                      });
+                      setIsOpen((prev) => !prev);
+                    }}
+                    data-state={row.getIsSelected() && "selected"}
+                    className={` ${selectedRow?.lead === row.original.id ? " bg-hoverColor text-black" : ""} group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60`}
                   >
-                    {invoice.devicetype}
-                  </span>
-                </TableCell>
-                <TableCell className="w-max">
-                  <span
-                    className={`m-auto inline-block h-max min-w-max rounded-[18px] px-4 text-center opacity-90
-                    
-                    ${
-                      invoice.status == null && invoice.assignedvendor !== null
-                        ? "!bg-[#3495eb]"
-                        : invoice.assignedvendor == null &&
-                            invoice.status == null
-                          ? "bg-[#ebd834]"
-                          : invoice.status.startsWith("Cn-")
-                            ? "!bg-[#c14646] text-white"
-                            : invoice.status?.startsWith("F-") ||
-                                invoice.status?.startsWith("FC-")
-                              ? "!bg-[#F64848] text-white"
-                              : invoice.status == "Assigned"
-                                ? "!bg-[#FF974A]"
-                                : invoice.status?.startsWith("C-")
-                                  ? "!bg-[#82C43C]"
-                                  : invoice.status.startsWith("V-") &&
-                                    "!bg-[#3446eb] text-white"
-                    } p-1 px-2 text-black  `}
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell
+                        className="!w-max truncate text-nowrap"
+                        key={cell.id}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={table.getAllColumns().length}
+                    className="h-24 text-center"
                   >
-                    {invoice.status == null && invoice.assignedvendor == null
-                      ? "Generated"
-                      : invoice.status == null &&
-                          invoice.assignedvendor !== null
-                        ? "Assigned to Vendor"
-                        : invoice.status?.startsWith("Cn-")
-                          ? invoice.status?.replace("Cn-", "")
-                          : invoice.status?.startsWith("F-")
-                            ? invoice.status?.replace("F-", "")
-                            : invoice.status?.startsWith("C-")
-                              ? "Completed"
-                              : invoice.status.startsWith("V-")
-                                ? "In Progress"
-                                : invoice.status.startsWith("FC-")
-                                  ? invoice.status.replace("FC-", "")
-                                  : invoice.status?.split("-")[1]}
-                  </span>
-                </TableCell>
-              </TableRow>
-            ))}
-            {invoices?.length < 1 && (
-              <p className=" p-4 text-xl">No Search Results Found.</p>
-            )}
-          </TableBody>
-        )}
-        {!invoices && isLoading && <TableSkeleton skeleton={5} />}
-      </Table>
-      {totalPage && (
-        <div className="sticky bottom-0 flex w-full border-t border-t-tableSeperator bg-primaryBackground">
-          {invoices.length !== 0 ? (
-            // <DataTablePagination
-            //   pageSizeOptions={[10, 20, 30, 50]}
-            //   table={totalPage}
-            //   // tableType="Primary"
-            //   // totalPage={totalPage}
-            //   // currentPage={currentPage}
-            //   // setCurrentPage={setCurrentPage}
-            // />
-            <></>
-          ) : (
-            <div className=" p-4">No Records Found !</div>
-          )}
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </div>
-      )}
+        <div className="flex flex-col gap-2.5">
+          <DataTablePagination table={table} />
+        </div>
+      </div>
     </ScrollArea>
   );
 }

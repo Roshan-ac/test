@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 export function TableSkeleton({ skeleton }: { skeleton: number }) {
   return (
-    <TableBody>
+    <div>
       {Array.from({ length: 20 }).map((item, index) => (
         <TableRow
           className=" !gap-2 border !border-tableSeperator text-sm"
@@ -23,6 +23,6 @@ export function TableSkeleton({ skeleton }: { skeleton: number }) {
           ))}
         </TableRow>
       ))}
-    </TableBody>
+    </div>
   );
 }

@@ -105,7 +105,7 @@ export function SheetDemo({
   varient: "leads" | "orders" | "failed" | "vendors";
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   SelectedRow: {
-    lead: number;
+    lead: string;
     devicetype: deviceType;
   };
 }) {
@@ -522,9 +522,6 @@ export function SheetDemo({
                       </>
                     )}
                   </div>
-                </div>
-                <div className="flex justify-center">
-                  {/* <TabelPagination /> */}
                 </div>
               </div>
             </div>
