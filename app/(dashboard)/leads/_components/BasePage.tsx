@@ -133,7 +133,7 @@ export interface LeadInterface<TData, TValue> {
   Converted: number;
 }
 
-const SectionOne = () => {
+const BasePage = () => {
   const columns = useMemo(() => getColumns(), []);
   const {
     table,
@@ -204,4 +204,4 @@ const SectionOne = () => {
   );
 };
 
-export default SectionOne;
+export default BasePage;

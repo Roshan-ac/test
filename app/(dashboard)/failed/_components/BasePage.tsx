@@ -1,12 +1,8 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
-
-import SecondaryTable from "./SecondaryTable";
+import React, { useMemo } from "react";
 import { CardContainer } from "./CardContainer";
 import { SheetDemo } from "./sheet";
-import { deviceType } from "@/interfaces";
-import { Date, PrimaryTable } from "./PrimaryTable";
-import { TableSkeleton } from "@/components/Internals/tableSkeleton";
+import { PrimaryTable } from "./PrimaryTable";
 import { FilterMenubar } from "@/components/FilterMenubar";
 import { ProgressWrapper } from "@/context/progressContext";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
@@ -76,15 +72,18 @@ export function getColumns(): ColumnDef<any>[] {
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="reason" />
       ),
-      cell: ({ row }) => (
-        <div className="flex w-[8rem] items-left">
-          <span
-            className={`inline-block h-max min-w-full text-xs rounded-[18px]  text-center  !text-white opacity-90`}
-          >
-            {row.getValue("reason")}
-          </span>
-        </div>
-      ),
+      cell: ({ row }) => {
+        const reason: string = row.getValue("reason");
+        return (
+          <div className="items-left flex w-[8rem]">
+            <span
+              className={`inline-block h-max min-w-full rounded-[18px] text-center  text-xs  !text-white opacity-90`}
+            >
+              {reason.replace("-", "")}
+            </span>
+          </div>
+        );
+      },
     },
     // {
     //   accessorKey: "assignedvendor",
@@ -97,7 +96,7 @@ export function getColumns(): ColumnDef<any>[] {
     //     return (
     //       <span
     //         className={`m-auto inline-block h-max min-w-max rounded-[18px] px-3 text-center text-xs font-semibold opacity-90
-                    
+
     //                 ${
     //                   status == "null" && assignedVendor !== "null"
     //                     ? "!bg-[#3495eb]"

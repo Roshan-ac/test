@@ -26,7 +26,7 @@ import { z } from "zod";
 import { useDebounce } from "@/hooks/use-debounce";
 import { deviceType } from "@/interfaces";
 import { InvoiceInterface } from "@/app/(dashboard)/orders/_components/BasePage";
-import { LeadInterface } from "@/app/(dashboard)/leads/_components/sectionOne";
+import { LeadInterface } from "@/app/(dashboard)/leads/_components/BasePage";
 
 interface UseDataTableProps<TData, TValue> {
   /**
