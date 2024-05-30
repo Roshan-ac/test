@@ -13,12 +13,11 @@ import {
   type Table as TanstackTable,
 } from "@tanstack/react-table";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { PaginationState } from "@tanstack/react-table";
-import { DataTablePagination } from "@/components/Internals/TabelPagination";
 import { useOrdersTimelineTableData } from "@/hooks/use-orders-timeline";
-import { DataTableColumnHeader } from "./data-table-column-header";
+import { DataTableColumnHeader } from "../../../../components/data-table/data-table-column-header";
 import { Date } from "./PrimaryTable";
 import { DataTableSkeleton } from "@/components/data-table-skeleton";
+import { SecondaryPagination } from "./paginations/secondaryPagination";
 
 export function getColumns(): ColumnDef<any>[] {
   return [
@@ -162,29 +161,8 @@ export function getColumns(): ColumnDef<any>[] {
 
 const SecondaryTable = () => {
   const columns = useMemo(() => getColumns(), []);
-  const {
-    isData,
-    currentLeadPage,
-    isOpen,
-    data,
-    table,
-    currentOrderPage,
-    isUpdated,
-    setIsUpdated,
-    isApplied,
-    setIsApplied,
-    isLoading,
-    setFilterQueries,
-    SetSelectedRow,
-    setCurrentOrderPage,
-    setIsOpen,
-    SelectedRow,
-    filterQueries,
-  } = useOrdersTimelineTableData({
+  const { data, table } = useOrdersTimelineTableData({
     columns,
-    // optional props
-    defaultPerPage: 10,
-    defaultSort: "createdAt.desc",
   });
 
   return (
@@ -219,13 +197,6 @@ const SecondaryTable = () => {
                   table?.getRowModel().rows.map((row: any) => (
                     <TableRow
                       key={row.id}
-                      onClick={() => {
-                        SetSelectedRow({
-                          lead: `${row.original.id}`,
-                          devicetype: row.original.devicetype,
-                        });
-                        setIsOpen((prev) => !prev);
-                      }}
                       data-state={row.getIsSelected() && "selected"}
                       className={`  group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60`}
                     >
@@ -254,18 +225,18 @@ const SecondaryTable = () => {
                 )}
               </TableBody>
             </Table>
-          ):(
+          ) : (
             <DataTableSkeleton
-            columnCount={5}
-            searchableColumnCount={1}
-            filterableColumnCount={2}
-            cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem"]}
-            shrinkZero
-          />
+              columnCount={5}
+              searchableColumnCount={1}
+              filterableColumnCount={2}
+              cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem"]}
+              shrinkZero
+            />
           )}
         </div>
         <div className="flex flex-col gap-2.5">
-          {data && <DataTablePagination table={table} />}
+          {data && <SecondaryPagination table={table} />}
         </div>
       </div>
     </ScrollArea>

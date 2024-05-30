@@ -9,37 +9,13 @@ import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { Date, PrimaryTable } from "./PrimaryTable";
 import { FilterMenubar } from "@/components/FilterMenubar";
 import { ProgressWrapper } from "@/context/progressContext";
-import { useDataTable } from "@/hooks/use-data-table";
-import { DataTableColumnHeader } from "./data-table-column-header";
+import { useDataTable } from "@/hooks/use-orders-table";
+import { DataTableColumnHeader } from "../../../../components/data-table/data-table-column-header";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableSkeleton } from "@/components/data-table-skeleton";
 export function getColumns(): ColumnDef<any>[] {
   return [
-    // {
-    //   id: "select",
-    //   header: ({ table }) => (
-    //     <Checkbox
-    //       // checked={
-    //       //   table.getIsAllPageRowsSelected() ||
-    //       //   (table.getIsSomePageRowsSelected() && "indeterminate")
-    //       // }
-    //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-    //       aria-label="Select all"
-    //       className="translate-y-0.5"
-    //     />
-    //   ),
-    //   cell: ({ row }) => (
-    //     <Checkbox
-    //       checked={row.getIsSelected()}
-    //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-    //       aria-label="Select row"
-    //       className="translate-y-0.5"
-    //     />
-    //   ),
-    //   enableSorting: false,
-    //   enableHiding: false,
-    // },
     {
       accessorKey: "timestamp",
       header: ({ column }) => (
@@ -55,13 +31,8 @@ export function getColumns(): ColumnDef<any>[] {
         <DataTableColumnHeader column={column} title="Model" />
       ),
       cell: ({ row }) => {
-        // const label = tasks.label.enumValues.find(
-        //   (label) => label === row.original.label
-        // )
-
         return (
           <div className="flex space-x-2">
-            {/* {label && <Badge variant="outline">{label}</Badge>} */}
             <span className="max-w-[31.25rem] truncate font-medium">
               {row.getValue("devicename")}
             </span>
@@ -75,20 +46,8 @@ export function getColumns(): ColumnDef<any>[] {
         <DataTableColumnHeader column={column} title="City" />
       ),
       cell: ({ row }) => {
-        // const city = tasks.status.enumValues.find(
-        //   (status) => status === row.original.status
-        // )
-
-        // if (!status) return null
-
-        // const Icon = getStatusIcon(status)
-
         return (
           <div className="flex w-[6.25rem] items-center">
-            {/* <Icon
-              className="mr-2 size-4 text-muted-foreground"
-              aria-hidden="true"
-            /> */}
             <span className="capitalize">{row.getValue("city")}</span>
           </div>
         );
@@ -187,10 +146,8 @@ const BasePage = <TData, TValue>() => {
   const {
     table,
     isData,
-    currentLeadPage,
     isOpen,
     data,
-    currentOrderPage,
     isUpdated,
     setIsUpdated,
     isApplied,
@@ -204,9 +161,6 @@ const BasePage = <TData, TValue>() => {
     filterQueries,
   } = useDataTable({
     columns,
-    // optional props
-    defaultPerPage: 10,
-    defaultSort: "createdAt.desc",
   });
   return (
     <ProgressWrapper>
@@ -228,7 +182,6 @@ const BasePage = <TData, TValue>() => {
                 selectedRow={SelectedRow}
                 isLoading={isLoading}
                 SetSelectedRow={SetSelectedRow}
-                currentPage={currentOrderPage}
                 setCurrentPage={setCurrentOrderPage}
                 setIsOpen={setIsOpen}
                 table={table}
@@ -243,20 +196,17 @@ const BasePage = <TData, TValue>() => {
               />
             )}
           </div>
-
-          {isData && (
-            <CardContainer
-              cardsValues={{
-                completedOrdersCount: data.completedOrdersCount,
-                assignedOrdersCount: data.assignedOrdersCount,
-                availableOrdersCount: data.availableOrdersCount,
-                failedOrdersCount: data.failedOrdersCount,
-              }}
-            />
-          )}
+          <CardContainer
+            cardsValues={{
+              completedOrdersCount: data?.completedOrdersCount,
+              assignedOrdersCount: data?.assignedOrdersCount,
+              availableOrdersCount: data?.availableOrdersCount,
+              failedOrdersCount: data?.failedOrdersCount,
+            }}
+          />
           {isData && (
             <div className="w-full rounded-[12px]  bg-primaryBackground">
-              <SecondaryTable/>
+              <SecondaryTable />
             </div>
           )}
           {SelectedRow && (

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter,redirect , useSearchParams } from "next/navigation";
 // import type { DataTableFilterField } from "@/types";
 import {
   getCoreRowModel,
@@ -18,7 +18,6 @@ import {
   type VisibilityState,
 } from "@tanstack/react-table";
 import { z } from "zod";
-
 import { useDebounce } from "@/hooks/use-debounce";
 import { deviceType } from "@/interfaces";
 import { InvoiceInterface } from "@/app/(dashboard)/orders/_components/BasePage";
@@ -87,6 +86,7 @@ interface UseDataTableProps<TData, TValue> {
    * ];
    * ```
    */
+  // filterFields?: DataTableFilterField<TData>[];
 
   /**
    * Enable notion like column filters.
@@ -98,15 +98,16 @@ interface UseDataTableProps<TData, TValue> {
 }
 
 const schema = z.object({
-  lead_Page: z.coerce.number().default(1),
+  order_page: z.coerce.number().default(1),
   per_page: z.coerce.number().optional(),
   sort: z.string().optional(),
 });
 
-export function useOrdersTimelineTableData<TData, TValue>({
+export function useDataTable<TData, TValue>({
   columns,
   defaultPerPage = 10,
   defaultSort,
+  // filterFields = [],
   enableAdvancedFilter = false,
 }: UseDataTableProps<TData, TValue>) {
   const router = useRouter();
@@ -115,10 +116,18 @@ export function useOrdersTimelineTableData<TData, TValue>({
   const searchParams = useSearchParams();
   // Search params
   const search = schema.parse(Object.fromEntries(searchParams));
-  const page = search.lead_Page;
+  const page = search.order_page;
   const perPage = search.per_page ?? defaultPerPage;
   const sort = search.sort ?? defaultSort;
   const [column, order] = sort?.split(".") ?? [];
+
+  // Memoize computation of searchableColumns and filterableColumns
+  // const { searchableColumns, filterableColumns } = React.useMemo(() => {
+  //   return {
+  //     searchableColumns: filterFields.filter((field) => !field.options),
+  //     filterableColumns: filterFields.filter((field) => field.options),
+  //   };
+  // }, [filterFields]);
 
   // Create query string
   const createQueryString = React.useCallback(
@@ -138,9 +147,6 @@ export function useOrdersTimelineTableData<TData, TValue>({
     [searchParams],
   );
 
-  // Initial column filters
-
-  // Table states
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -195,8 +201,8 @@ export function useOrdersTimelineTableData<TData, TValue>({
       const res = await fetch(`/api/getallorders`, {
         method: "POST",
         body: JSON.stringify({
-          orderPage: 1,
-          leadPage: pageIndex + 1,
+          orderPage: pageIndex + 1,
+          leadPage: currentLeadPage,
           search: filterQueries.search,
           city: filterQueries.city,
           status: filterQueries.status,
@@ -213,15 +219,13 @@ export function useOrdersTimelineTableData<TData, TValue>({
   }, [currentLeadPage, currentOrderPage, isUpdated, filterQueries, pageIndex]);
 
   React.useEffect(() => {
-    router.push(
-      `${pathname}?${createQueryString({
-        lead_page: pageIndex + 1,
-        per_page: pageSize,
-      })}`,
-      {
-        scroll: false,
-      },
-    );
+    const query = createQueryString({
+      order_page: pageIndex + 1,
+      per_page: pageSize,
+    });
+    router.push(`${pathname}?${query}`, {
+      scroll: false,
+    });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageIndex, pageSize]);
@@ -246,22 +250,22 @@ export function useOrdersTimelineTableData<TData, TValue>({
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [sorting]);
 
-  const [mounted, setMounted] = React.useState(false);
-
   const table = useReactTable({
-    data: data?.leads.data,
+    data: data?.orders.data,
     columns,
-    pageCount: data?.leads.pagelimit,
+    pageCount: data?.orders.pagelimit,
     state: {
       pagination,
       sorting,
       columnVisibility,
       rowSelection,
+      // columnFilters,
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onPaginationChange: setPagination,
     onSortingChange: setSorting,
+    // onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -278,6 +282,8 @@ export function useOrdersTimelineTableData<TData, TValue>({
     table,
     isData,
     data,
+    currentLeadPage,
+    currentOrderPage,
     setIsUpdated,
     isOpen,
     isUpdated,

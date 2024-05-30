@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { DataTablePagination } from "./TabelPagination"
+import { DataTablePagination } from "../../app/(dashboard)/orders/_components/TabelPagination"
 
 
 interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {

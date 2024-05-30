@@ -8,26 +8,13 @@ import {
 } from "@/components/ui/table";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Dispatch,
-  SetStateAction,
-  Suspense,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction } from "react";
 
 import { parseISO, format } from "date-fns";
-// import { TabelPagination } from "@/components/Internals/TabelPagination";
-import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { deviceType } from "@/interfaces";
-import { DataTablePagination } from "@/components/Internals/TabelPagination";
-import {
-  ColumnDef,
-  flexRender,
-  type Table as TanstackTable,
-} from "@tanstack/react-table";
+import { flexRender, type Table as TanstackTable } from "@tanstack/react-table";
 import { cn } from "@/lib/utils";
+import { PrimaryPagination } from "./paginations/primaryPagination";
 interface DataTableProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -40,7 +27,6 @@ interface DataTableProps<TData, TValue>
     SetStateAction<{ lead: string; devicetype: deviceType }>
   >;
   isLoading: boolean;
-  currentPage: number;
   selectedRow: { lead: string; devicetype: deviceType };
   setCurrentPage: Dispatch<SetStateAction<number>>;
   /**
@@ -55,12 +41,10 @@ interface DataTableProps<TData, TValue>
 export function PrimaryTable<TData, TValue>({
   setIsOpen,
   SetSelectedRow,
-  isLoading,
   table,
-  currentPage,
   selectedRow,
-  setCurrentPage,
 }: DataTableProps<TData, TValue>) {
+  
   return (
     <ScrollArea className=" relative h-max w-full rounded-md">
       <div className={cn("w-full space-y-2.5 overflow-auto")}>
@@ -129,7 +113,7 @@ export function PrimaryTable<TData, TValue>({
           </Table>
         </div>
         <div className="flex flex-col gap-2.5">
-          <DataTablePagination table={table} />
+          <PrimaryPagination table={table} />
         </div>
       </div>
     </ScrollArea>

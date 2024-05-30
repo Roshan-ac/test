@@ -92,15 +92,17 @@ export function DataTableSkeleton(props: DataTableSkeletonProps) {
     >
       <div className="rounded-md">
         <Table className=" !bg-transparent">
-          <TableHeader className="!bg-transparent !border-none">
+          <TableHeader className="!border-none !bg-transparent">
             {Array.from({ length: 1 }).map((_, i) => (
-              <TableRow key={i} className="hover:bg-transparent !border-none ">
+              <TableRow key={i} className="!border-none hover:bg-transparent ">
                 {Array.from({ length: columnCount }).map((_, j) => (
                   <TableHead
                     key={j}
                     style={{
                       width: cellWidths[j],
-                      minWidth: shrinkZero ? cellWidths[j] : "auto !border-none",
+                      minWidth: shrinkZero
+                        ? cellWidths[j]
+                        : "auto !border-none",
                     }}
                   >
                     <Skeleton className="h-6 w-full" />
@@ -111,12 +113,9 @@ export function DataTableSkeleton(props: DataTableSkeletonProps) {
           </TableHeader>
           <TableBody>
             {Array.from({ length: rowCount }).map((_, i) => (
-              <TableRow key={i} className="hover:bg-transparent !border-none">
+              <TableRow key={i} className="!border-none hover:bg-transparent">
                 {Array.from({ length: columnCount }).map((_, j) => (
-                  <TableCell
-                    key={j}
-                   className=" !w-max"
-                  >
+                  <TableCell key={j} className=" !w-max">
                     <Skeleton className="h-6 w-full" />
                   </TableCell>
                 ))}
@@ -126,8 +125,7 @@ export function DataTableSkeleton(props: DataTableSkeletonProps) {
         </Table>
       </div>
       {withPagination ? (
-        <div className="flex w-full p-6  items-center justify-between gap-4 overflow-hidden  sm:gap-8">
-          <Skeleton className="h-7 w-40 shrink-0" />
+        <div className="flex w-full items-center  justify-between gap-4 overflow-hidden p-6  sm:gap-8">
           <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
             <div className="flex items-center space-x-2">
               <Skeleton className="h-7 w-24" />

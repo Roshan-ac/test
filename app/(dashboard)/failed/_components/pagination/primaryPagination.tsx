@@ -1,80 +1,3 @@
-// import {
-//   Pagination,
-//   PaginationContent,
-//   PaginationEllipsis,
-//   PaginationItem,
-//   PaginationLink,
-//   PaginationNext,
-//   PaginationPrevious,
-// } from "@/components/ui/pagination";
-// import { returnPaginationRange } from "@/lib/utils/returnPaginationRange";
-// import { Dispatch, SetStateAction } from "react";
-
-// export function TabelPagination({
-//   currentPage,
-//   tableType,
-//   totalPage,
-//   setCurrentPage,
-// }: {
-//   currentPage: number;
-//   totalPage: number;
-//   tableType: "Primary" | "Secondary";
-//   setCurrentPage: Dispatch<SetStateAction<number>>;
-// }) {
-
-//   const array = returnPaginationRange({
-//     totalPage: totalPage,
-//     page: currentPage,
-//     siblings: 1,
-//   });
-// console.log(totalPage)
-//   return (
-//     <Pagination className=" flex w-full justify-start p-4">
-//       <PaginationContent className="">
-//         <PaginationItem className=" cursor-pointer" hidden={currentPage === 1}>
-//           <PaginationPrevious
-//             onClick={() => {
-//               setCurrentPage(currentPage - 1);
-//               window.scrollTo({ top: tableType == "Primary" ? 0 : 900 });
-//             }}
-//           />
-//         </PaginationItem>
-
-//         {array.map((item, index) => {
-//           return (
-//             <PaginationItem
-//             key={index}
-//               className=" cursor-pointer"
-//               aria-current={currentPage === index + 1 ? "page" : undefined}
-//             >
-//               <PaginationLink
-//                 onClick={() => {
-//                   setCurrentPage(index + 1);
-//                   window.scrollTo({ top: tableType == "Primary" ? 0 : 900 });
-//                 }}
-//                 isActive={currentPage == index + 1}
-//               >
-//                 {item}
-//               </PaginationLink>
-//             </PaginationItem>
-//           );
-//         })}
-
-//         <PaginationItem
-//           className=" cursor-pointer"
-//           hidden={currentPage === totalPage}
-//         >
-//           <PaginationNext
-//             onClick={() => {
-//               setCurrentPage(currentPage + 1);
-//               window.scrollTo({ top: tableType == "Primary" ? 0 : 900 });
-//             }}
-//           />
-//         </PaginationItem>
-//       </PaginationContent>
-//     </Pagination>
-//   );
-// }
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -97,17 +20,12 @@ interface DataTablePaginationProps<TData> {
   pageSizeOptions?: number[];
 }
 
-export function DataTablePagination<TData>({
+export function PrimaryPagination<TData>({
   table,
   pageSizeOptions = [10, 20, 30, 40, 50],
 }: DataTablePaginationProps<TData>) {
-  console.log(table)
   return (
-    <div className="flex w-full border-t !border-opacity-0 p-6 flex-col-reverse items-center justify-between gap-4 overflow-auto sm:flex-row sm:gap-8">
-      <div className="text-muted-foreground flex-1 whitespace-nowrap text-sm">
-        {/* {table.getFilteredSelectedRowModel().rows.length} of{" "}
-        {table.getFilteredRowModel().rows.length} row(s) selected. */}
-      </div>
+    <div className="flex w-full flex-col-reverse items-center justify-between gap-4 overflow-auto border-t !border-opacity-0 p-6 sm:flex-row sm:gap-8">
       <div className="flex flex-col-reverse items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
         <div className="flex items-center space-x-2">
           <p className="whitespace-nowrap text-sm font-medium">Rows per page</p>

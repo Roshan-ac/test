@@ -7,7 +7,6 @@ const CameraReport = ({
   formData: CameraFullBookingsInterface;
 }) => {
   const { bodycondition, deviceage, accessories, lens } = formData;
-
   const accessoriesunavailable = ["A3", "A1", "A2", "A4"].filter(
     (item) => !accessories?.includes(item),
   );
