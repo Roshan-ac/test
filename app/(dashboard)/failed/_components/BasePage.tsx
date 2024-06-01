@@ -79,7 +79,7 @@ export function getColumns(): ColumnDef<any>[] {
             <span
               className={`inline-block h-max min-w-full rounded-[18px] text-center  text-xs  !text-white opacity-90`}
             >
-              {reason.replace("-", "")}
+              {reason.split("-")[1]}
             </span>
           </div>
         );
