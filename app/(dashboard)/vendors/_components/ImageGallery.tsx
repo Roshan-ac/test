@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Eye, X } from "lucide-react";
+import { Eye, ImageOff, X } from "lucide-react";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 import { PhotoProvider, PhotoView } from "react-photo-view";
@@ -16,7 +16,7 @@ const ImageGallery = ({
     shopphoto: string;
   };
 }) => {
-  console.log(images.selfphoto)
+
   const [viewImage, setViewImage] = useState<{
     state: boolean,
     src: string
@@ -26,99 +26,101 @@ const ImageGallery = ({
   })
   return (
     <>
-      <div className=" py-2 grid grid-cols-5 h-full gap-4">
-        {/* <PhotoProvider className=" !z-[100]">
-        <PhotoView src={images.selfphoto}>
-        <img
-        className=" h-40 cursor-pointer rounded-md border bg-tertiaryBackground object-cover transition-all duration-500 hover:scale-100 hover:border-green-400"
-        src={images.selfphoto}
-        alt=""
-        />
-        </PhotoView>
-        <PhotoView src={images.shopphoto}>
-        <img
-        className=" h-40 cursor-pointer rounded-md border bg-tertiaryBackground object-cover transition-all duration-500 hover:scale-100 hover:border-green-400"
-        src={images.shopphoto}
-        alt=""
-        />
-        </PhotoView>
-        <PhotoView src={images.aadharcardimgback}>
-        <img
-        className=" h-40 cursor-pointer rounded-md border bg-tertiaryBackground object-cover transition-all duration-500 hover:scale-100 hover:border-green-400"
-        src={images.aadharcardimgback}
-        alt=""
-        />
-        </PhotoView>
-        <PhotoView src={images.aadharcardimgfront}>
-        <img
-        className=" h-40 cursor-pointer rounded-md border bg-tertiaryBackground object-cover transition-all duration-500 hover:scale-100 hover:border-green-400"
-        src={images.aadharcardimgfront}
-        alt=""
-        />
-        </PhotoView>
-        <PhotoView src={images.pancardimg}>
-        <img
-        className=" h-40 cursor-pointer rounded-md border bg-tertiaryBackground object-cover transition-all duration-500 hover:scale-100 hover:border-green-400"
-        src={images.pancardimg}
-        alt=""
-        />
-        </PhotoView>
-      </PhotoProvider> */}
-
+      <div className=" py-3 grid grid-cols-5 h-full gap-4">
         <Card onClick={() => {
-          setViewImage({
-            src: `${images.selfphoto}`,
-            state: true
-          })
-        }} className=" w-full overflow-hidden cursor-pointer">
-          <div className=" bg-white p-2 text-black text-center">
+          images.selfphoto &&
+            setViewImage({
+              src: `${images.selfphoto}`,
+              state: true
+            })
+        }} className=" w-full h-full cursor-pointer">
+          <div className=" bg-white h-[20%] p-2 text-black text-center">
             <p>Self Photo</p>
           </div>
-          <Image src={images.selfphoto} alt="Self photo" height={100} width={100} className="w-full h-full object-cover" />
-        </Card>
-        <Card onClick={() => {
-          setViewImage({
-            src: `${images.aadharcardimgback}`,
-            state: true
-          })
-        }} className=" w-full overflow-hidden cursor-pointer">
-          <div className=" bg-white p-2 text-black text-center">
-            <p>Aadharcard Back</p>
+          <div className="flex items-center justify-center w-full h-[80%]">
+            {
+              images.selfphoto ?
+                <Image src={images.selfphoto} alt="Shop photo" height={100} width={100} className="w-full h-full object-cover" /> : (
+                  <ImageOff size={28} />
+                )
+            }
           </div>
-          <Image src={images.aadharcardimgback} alt="Self photo" height={100} width={100} className="w-full h-full object-cover" />
         </Card>
         <Card onClick={() => {
-          setViewImage({
-            src: `${images.aadharcardimgfront}`,
-            state: true
-          })
-        }} className=" w-full overflow-hidden cursor-pointer">
-          <div className=" bg-white p-2 text-black text-center">
-            <p>Aadharcard Front</p>
-          </div>
-          <Image src={images.aadharcardimgfront} alt="Self photo" height={100} width={100} className="w-full h-full object-cover" />
-        </Card>
-        <Card onClick={() => {
-          setViewImage({
-            src: `${images.pancardimg}`,
-            state: true
-          })
-        }} className=" w-full overflow-hidden cursor-pointer">
-          <div className=" bg-white p-2 text-black text-center">
-            <p>Pancard</p>
-          </div>
-          <Image src={images.pancardimg} alt="Self photo" height={100} width={100} className="w-full h-full object-cover" />
-        </Card>
-        <Card onClick={() => {
-          setViewImage({
-            src: `${images.shopphoto}`,
-            state: true
-          })
-        }} className=" w-full overflow-hidden cursor-pointer">
-          <div className=" bg-white p-2 text-black text-center">
+          images.shopphoto &&
+            setViewImage({
+              src: `${images.shopphoto}`,
+              state: true
+            })
+        }} className=" w-full h-full cursor-pointer">
+          <div className=" bg-white h-[20%] p-2 text-black text-center">
             <p>Shop Photo</p>
           </div>
-          <Image src={images.shopphoto} alt="Self photo" height={100} width={100} className="w-full h-full object-cover" />
+          <div className="flex items-center justify-center w-full h-[80%]">
+            {
+              images.shopphoto ?
+                <Image src={images.shopphoto} alt="Shop photo" height={100} width={100} className="w-full h-full object-cover" /> : (
+                  <ImageOff size={28} />
+                )
+            }
+          </div>
+        </Card>
+        <Card onClick={() => {
+          images.aadharcardimgback &&
+            setViewImage({
+              src: `${images.aadharcardimgback}`,
+              state: true
+            })
+        }} className=" w-full h-full cursor-pointer">
+          <div className=" bg-white h-[20%] p-2 text-black text-center">
+            <p>Aadharcard Back</p>
+          </div>
+          <div className="flex items-center justify-center w-full h-[80%]">
+            {
+              images.aadharcardimgback ?
+                <Image src={images.aadharcardimgback} alt="Aadharcard Back" height={100} width={100} className="w-full h-full object-cover" /> : (
+                  <ImageOff size={28} />
+                )
+            }
+          </div>
+        </Card>
+        <Card onClick={() => {
+          images.aadharcardimgfront &&
+            setViewImage({
+              src: `${images.aadharcardimgfront}`,
+              state: true
+            })
+        }} className=" w-full h-full cursor-pointer">
+          <div className=" bg-white h-[20%] p-2 text-black text-center">
+            <p>Aadharcard front</p>
+          </div>
+          <div className="flex items-center justify-center w-full h-[80%]">
+            {
+              images.aadharcardimgfront ?
+                <Image src={images.aadharcardimgfront} alt="Aadharcardimg Front" height={100} width={100} className="w-full h-full object-cover" /> : (
+                  <ImageOff size={28} />
+                )
+            }
+          </div>
+        </Card>
+        <Card onClick={() => {
+          images.pancardimg &&
+            setViewImage({
+              src: `${images.pancardimg}`,
+              state: true
+            })
+        }} className=" w-full h-full cursor-pointer">
+          <div className=" bg-white h-[20%] p-2 text-black text-center">
+            <p>Pancard Image</p>
+          </div>
+          <div className="flex items-center justify-center w-full h-[80%]">
+            {
+              images.pancardimg ?
+                <Image src={images.pancardimg} alt="Pancard Image" height={100} width={100} className="w-full h-full object-cover" /> : (
+                  <ImageOff size={28} />
+                )
+            }
+          </div>
         </Card>
       </div>
       {

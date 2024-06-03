@@ -110,21 +110,18 @@ export function SheetDemo({
                         <Label className="flex items-center gap-2">
                           <span className={`${editMaxLead ? ' w-20 rounded-md p-1 border-white border' : ''} duration-300 transition-all ease-in-out`} contentEditable={editMaxLead}>{SelectedRow.maxleads}</span>
                           <span className=" mx-1 cursor-pointer group">
-                            <Pencil onClick={() => {
-                              setEditMaxLead(true)
-                            }} size={14} className=" group-hover:text-yellow-400" />
+                            {
+                              !editMaxLead ? (
+                                <Pencil onClick={() => {
+                                  setEditMaxLead(true)
+                                }} size={14} className=" group-hover:text-yellow-400" />
+                              ) : (
+                                <Check onClick={() => {
+                                  setEditMaxLead(false)
+                                }} size={18} className=" text-green-400 group-hover:text-green-500" />
+                              )}
                           </span>
-                          {
-                            editMaxLead &&
-                            <span className=" cursor-pointer group">
-                              <Check onClick={() => {
-                                setEditMaxLead(false)
-                              }} size={18} className=" text-green-400 group-hover:text-green-500" />
-                            </span>
-                          }
                         </Label>
-
-
                       </div>
                       <div className=" grid grid-cols-2 gap-2">
                         <Label>Vendor Type :</Label>
@@ -243,12 +240,12 @@ export function SheetDemo({
                       </button>
 
                     </>
-                    
+
                   )}
-                       <button className="bg-[#dee042] px-4 py-2">
-                        {" "}
-                        Hold{" "}
-                      </button>
+                  <button className="bg-[#dee042] px-4 py-2">
+                    {" "}
+                    Hold{" "}
+                  </button>
                 </div>
               </div>
 
