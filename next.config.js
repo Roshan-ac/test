@@ -9,14 +9,11 @@ const nextConfig = {
         protocol: "https",
         hostname: "cashkr.blr1.cdn.digitaloceanspaces.com",
       },
-    ],
-    remotePatterns: [
       {
         protocol: "https",
         hostname: "www.cashkr.com",
       },
-    ],
-    remotePatterns: [
+
       {
         protocol: "http",
         hostname: "api.cashkr.com",

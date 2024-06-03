@@ -20,6 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
+import { ScrollArea } from "@/components/ui/scroll-area";
 const PincodeTextArea = ({ vendorId }: { vendorId: string }) => {
   const [pincodes, setPincodes] = useState<string[]>();
   const FormSchema = z.object({
@@ -52,7 +53,7 @@ const PincodeTextArea = ({ vendorId }: { vendorId: string }) => {
     });
     const result = await res.json();
     if (res.ok) {
-      setFetchPincode(prev=>!prev);
+      setFetchPincode(prev => !prev);
       form.reset()
       toast({
         description: (
@@ -88,11 +89,6 @@ const PincodeTextArea = ({ vendorId }: { vendorId: string }) => {
 
   return (
     <div className=" w-[60%] space-y-4 text-white">
-      <Progress
-        hidden={!isLoading}
-        value={progress}
-        className=" absolute  right-0 top-0 z-[90] h-[2px]"
-      />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -124,46 +120,48 @@ const PincodeTextArea = ({ vendorId }: { vendorId: string }) => {
                     )}
                   </FormDescription>
                 </div>
-                <div className=" grid grid-cols-4 gap-4 bg-tertiaryBackground p-4 max-h-52 overflow-x-hidden overflow-y-scroll">
-                  {pincodes?.map((item) => (
-                    <FormField
-                      key={item}
-                      control={form.control}
-                      name="pincodes"
-                      render={({ field }) => {
-                        return (
-                          <FormItem
-                            key={item}
-                            className="flex flex-row items-start space-x-3 space-y-0 rounded-xl bg-secondaryBackground p-2 px-3"
-                          >
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value?.includes(item)}
-                                onCheckedChange={(checked) => {
-                                  return checked
-                                    ? field.onChange([...field.value, item])
-                                    : field.onChange(
+                <ScrollArea className=" h-60">
+                  <div className=" grid grid-cols-4 h-full gap-4 bg-tertiaryBackground p-4 ">
+                    {pincodes?.map((item) => (
+                      <FormField
+                        key={item}
+                        control={form.control}
+                        name="pincodes"
+                        render={({ field }) => {
+                          return (
+                            <FormItem
+                              key={item}
+                              className="flex flex-row items-start space-x-3 space-y-0 rounded-xl bg-secondaryBackground p-2 px-3"
+                            >
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value?.includes(item)}
+                                  onCheckedChange={(checked) => {
+                                    return checked
+                                      ? field.onChange([...field.value, item])
+                                      : field.onChange(
                                         field.value?.filter(
                                           (value) => value !== item,
                                         ),
                                       );
-                                }}
-                              />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                              {item}
-                            </FormLabel>
-                          </FormItem>
-                        );
-                      }}
-                    />
-                  ))}
-                  {!pincodes && (
-                    <p className=" w-max">
-                      No pincode found. Please add new pincode below
-                    </p>
-                  )}
-                </div>
+                                  }}
+                                />
+                              </FormControl>
+                              <FormLabel className="font-normal">
+                                {item}
+                              </FormLabel>
+                            </FormItem>
+                          );
+                        }}
+                      />
+                    ))}
+                    {!pincodes && (
+                      <p className=" w-max">
+                        No pincode found. Please add new pincode below
+                      </p>
+                    )}
+                  </div>
+                </ScrollArea>
                 <FormMessage />
               </FormItem>
             )}
