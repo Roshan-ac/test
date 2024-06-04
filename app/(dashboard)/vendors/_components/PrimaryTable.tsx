@@ -79,7 +79,7 @@ export function PrimaryTable<TData, TValue>({
                     setIsOpen((prev) => !prev);
                   }}
                   data-state={row.getIsSelected() && "selected"}
-                  className={` ${selectedRow.id === row.original.id ? " bg-hoverColor text-black" : ""} group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60`}
+                  className={` ${selectedRow?.id === row.original.id ? " bg-hoverColor text-black" : ""} group cursor-pointer border border-tableSeperator text-sm transition-all duration-300 ease-in-out hover:text-black dark:hover:bg-hoverColor dark:hover:bg-opacity-60`}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell

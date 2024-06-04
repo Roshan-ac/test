@@ -41,7 +41,7 @@ export type vendorDetails = {
 
 const BasePage = () => {
   const columns = useMemo(() => getVendorTableColumns(), []);
-  const { data, table, SelectedRow, filterQueries,isApplied,setIsApplied,setFilterQueries, isLoading, SetSelectedRow, setIsOpen, isOpen } = useVendorTable({
+  const { data, table, SelectedRow, filterQueries, isApplied, setIsApplied, setFilterQueries, isLoading, SetSelectedRow, setIsOpen, isOpen } = useVendorTable({
     columns,
   })
 
@@ -88,6 +88,7 @@ const BasePage = () => {
             }}
           />
         )}
+
         <SheetDemo
           SelectedRow={SelectedRow}
           setIsOpen={setIsOpen}

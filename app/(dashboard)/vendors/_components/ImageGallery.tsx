@@ -131,7 +131,7 @@ const ImageGallery = ({
           }} className=" fixed  right-8 z-50 top-8 text-white cursor-pointer hover:text-red-400" />
           <div className=" w-1/2 h-[80%] aspect-square p-1 rounded-md ">
 
-            <Image src={images.selfphoto} alt="Self photo" height={100} width={100} className="m-auto w-full h-full aspect-square  bg-slate-200 p-2 object-contain" />
+            <Image src={images.selfphoto} alt="Self photo" height={100} width={100} className="m-auto w-full h-full aspect-square p-2 object-contain" />
           </div>
         </Card>
       }

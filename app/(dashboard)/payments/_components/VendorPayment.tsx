@@ -25,6 +25,9 @@ import { Button } from "@/components/ui/button";
 import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import { DataTableSkeleton } from "@/components/data-table-skeleton";
+import { Card } from "@/components/ui/card";
+import Image from "next/image";
+import { X } from "lucide-react";
 interface VendorPaymentInterface {
   id: number;
   vendorId: number;
@@ -40,7 +43,13 @@ const VendorPayment = () => {
     useState<VendorPaymentInterface[]>();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [viewImage, setViewImage] = useState<{
+    state: boolean,
+    src: string
+  }>({
+    state: false,
+    src: ''
+  })
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
@@ -89,6 +98,19 @@ const VendorPayment = () => {
   return (
     <div className="p-4 my-2">
       {
+        viewImage.state &&
+        <Card className=" absolute left-0 h-full bg-black w-full z-50 top-0 flex items-center justify-center">
+          <X onClick={() => {
+            setViewImage({ state: false, src: '' })
+          }} className=" fixed  right-8 z-50 top-8 text-white cursor-pointer hover:text-red-400" />
+          <div className=" w-1/2 h-full aspect-square p-1 rounded-md ">
+
+            <Image src={viewImage.src} alt="Self photo" height={100} width={100} className="m-auto w-full h-full aspect-square p-2 object-contain" />
+          </div>
+        </Card>
+      }
+
+      {
         vendorPayment ? (<Table className="text-white">
           <TableHeader className=" !sticky left-0 top-0  z-[1] w-full !rounded-md dark:hover:bg-hoverColor">
             <TableRow className="bg-tertiaryBackground">
@@ -104,13 +126,14 @@ const VendorPayment = () => {
                 <TableCell> {item.vendorname} </TableCell>
                 <TableCell> {item.amount} </TableCell>
                 <TableCell>
-                  <PhotoProvider>
-                    <PhotoView src={item.screenshot}>
-                      <span className=" cursor-pointer text-sm font-semibold uppercase underline">
-                        view
-                      </span>
-                    </PhotoView>
-                  </PhotoProvider>
+                  <span onClick={() => {
+                    setViewImage({
+                      state: true,
+                      src: item.screenshot
+                    })
+                  }} className=" cursor-pointer text-sm font-semibold uppercase underline">
+                    view
+                  </span>
                 </TableCell>
                 <TableCell className="flex gap-2 text-black">
                   <AlertDialog>
