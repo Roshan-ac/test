@@ -199,7 +199,7 @@ export function SheetDemo({
             onClick={() => setIsOpen(false)}
             className="w-[30%] bg-black bg-opacity-60"
           ></div>
-          <div className=" h-full w-[70%]  rounded  !border-none !bg-secondaryBackground p-4">
+          <div className=" h-full w-[70%] mt-8  rounded  !border-none !bg-secondaryBackground p-4">
             <ScrollArea className="!h-[100vh] pb-6">
               {orderDetails && orderDetails.myBookings ? (
                 <div className=" my-4 space-y-4">

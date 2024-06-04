@@ -230,13 +230,8 @@ export function SheetDemo({
 
   return (
     <Sheet open={isOpen}>
-      {/* <Progress
-        hidden={!isLoading}
-        value={progress}
-        className=" absolute  -top-6 right-0 z-[80] h-[2px]"
-      /> */}
       <SheetContent
-        className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
+        className=" h-full rounded mt-8  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
         setIsOpen={setIsOpen}
       >
         <ScrollArea className="!h-[100vh] pb-6">

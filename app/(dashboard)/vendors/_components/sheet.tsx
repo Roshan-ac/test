@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { deviceType } from "@/interfaces";
-import { VendorsInterface } from "./BasePage";
+import { VendorsInterface, vendorDetails } from "./BasePage";
 import PincodeTextArea from "./PincodeTextArea";
 import SheetSkeleton from "@/components/sheetSkeleton";
 import ImageGallery from "./ImageGallery";
@@ -28,7 +28,7 @@ export function SheetDemo({
 }: {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  SelectedRow: VendorsInterface;
+  SelectedRow: vendorDetails;
 }) {
   const [progress, setProgress] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +57,7 @@ export function SheetDemo({
 
   return (
     <Sheet open={isOpen}>
-      <SheetContent setIsOpen={setIsOpen} className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]">
+      <SheetContent setIsOpen={setIsOpen} className=" h-full mt-8 rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]">
         <ScrollArea className="!h-[100vh] pb-6">
           {SelectedRow ? (
             <div className="my-4  w-full space-y-4">
