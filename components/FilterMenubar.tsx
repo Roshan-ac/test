@@ -164,6 +164,7 @@ export function FilterMenubar({
           </SelectContent>
         </Select>
         <DatePicker
+        
           isApplied={isApplied}
           selectQueries={selectQueries}
           name="fromDate"
