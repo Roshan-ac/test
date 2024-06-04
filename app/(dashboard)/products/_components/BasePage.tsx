@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { FilterMenubar } from "./filterMenubar";
 import { PrimaryTable } from "./PrimaryTable";
+import { DataTableSkeleton } from "@/components/data-table-skeleton";
 
 export interface InvoiceInterface {
   success: boolean;
@@ -44,7 +45,16 @@ const BasePage = () => {
           <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
             Available Products
           </h4>
-          <PrimaryTable
+          {
+            <DataTableSkeleton
+              columnCount={5}
+              searchableColumnCount={1}
+              filterableColumnCount={2}
+              cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem"]}
+              shrinkZero
+            />
+          }
+          {/* <PrimaryTable
             SetSelectedRow={SetSelectedRow}
             currentPage={1}
             totalPage={1}
@@ -52,7 +62,7 @@ const BasePage = () => {
             isLoading
             setIsOpen={null}
             setCurrentPage={null}
-          />
+          /> */}
         </div>
       </div>
     </div>

@@ -141,7 +141,7 @@ export interface InvoiceInterface<TData, TValue> {
   failedOrdersCount: number;
   assignedOrdersCount: number;
 }
-const BasePage = <TData, TValue>() => {
+const BasePage = () => {
   const columns = useMemo(() => getColumns(), []);
   const {
     table,

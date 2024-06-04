@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { CardContainer } from "./CardContainer";
 import { SheetDemo } from "./sheet";
@@ -8,7 +8,16 @@ import { TableSkeleton } from "@/components/Internals/tableSkeleton";
 import ImageGallery from "./ImageGallery";
 
 import { PhotoProvider } from "react-photo-view";
-export type VendorsInterface = {
+import { useVendorTable } from "@/hooks/use-vendor-tables";
+import { getVendorTableColumns } from "./vendorTableColumns";
+import { DataTableSkeleton } from "@/components/data-table-skeleton";
+import { FilterMenubar } from "@/components/FilterMenubar";
+export interface VendorsInterface<TData, TValue> {
+  success: boolean,
+  message: string,
+  vendorsDetails: TData[]
+};
+export type vendorDetails = {
   id: string;
   firebaseid: string;
   name: string;
@@ -28,42 +37,49 @@ export type VendorsInterface = {
   selfphoto: string | null;
   vendortype: string;
   deviceToken: string;
-};
+}
 
 const BasePage = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [invoices, setInvoices] = useState<VendorsInterface[]>();
-  const [SelectedRow, SetSelectedRow] = useState<VendorsInterface>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsLoading(true),
-      (async function () {
-        const res = await fetch("/api/getallvendors", {
-          method: "GET",
-        });
-        const data = await res.json();
-        setInvoices(data.vendorsDetails);
-        setIsLoading(false);
-      })();
-  }, []);
+  const columns = useMemo(() => getVendorTableColumns(), []);
+  const { data, table, SelectedRow, filterQueries,isApplied,setIsApplied,setFilterQueries, isLoading, SetSelectedRow, setIsOpen, isOpen } = useVendorTable({
+    columns,
+  })
 
   return (
     <div className=" w-full space-y-2 py-4 h-screen">
+      <FilterMenubar
+        isApplied={isApplied}
+        setIsApplied={setIsApplied}
+        isLoading={isLoading}
+        filterQueries={filterQueries}
+        setFilterQueries={setFilterQueries}
+      />
       <div className="space-y-6  px-8">
         <div className="w-full rounded-[12px]  bg-primaryBackground">
           <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
             All Vendors
           </h4>
-          <PrimaryTable
-            selectedRow={SelectedRow}
-            isLoading={isLoading}
-            SetSelectedRow={SetSelectedRow}
-            setIsOpen={setIsOpen}
-            invoices={invoices}
-          />
+
+          {data?.success ? (
+            <PrimaryTable
+              data={data}
+              selectedRow={SelectedRow}
+              isLoading={isLoading}
+              SetSelectedRow={SetSelectedRow}
+              setIsOpen={setIsOpen}
+              table={table}
+            />
+          ) : (
+            <DataTableSkeleton
+              columnCount={5}
+              searchableColumnCount={1}
+              filterableColumnCount={2}
+              cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem"]}
+              shrinkZero
+            />
+          )}
         </div>
-        {invoices && (
+        {data && (
           <CardContainer
             cardsValues={{
               acceptedLeads: 29,

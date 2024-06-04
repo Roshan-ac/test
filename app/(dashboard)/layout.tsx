@@ -14,7 +14,7 @@ export default function DashboardLayout({
       <Navbar />
       <div className="flex w-full justify-end">
         <Sidebar />
-        <main className="w-[82%] bg-secondaryBackground text-primaryText">
+        <main className="w-[82%] mt-10 bg-secondaryBackground text-primaryText">
           {children}
         </main>
       </div>

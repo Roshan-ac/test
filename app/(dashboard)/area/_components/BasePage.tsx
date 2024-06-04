@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { allDeviceType } from "@/interfaces/devicetype";
 import { toast } from "@/components/ui/use-toast";
+import { DataTableSkeleton } from "@/components/data-table-skeleton";
 export interface InvoiceInterface {
   success: boolean;
   pagelimit: number;
@@ -113,16 +114,27 @@ const BasePage = () => {
             <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
               Serviceable Pincodes
             </h4>
-            <PrimaryTable
-              currentPage={1}
-              totalPage={null}
-              invoices={invoice}
-              selectInvoice={selectInvoice}
-              isLoading={isLoading}
-              setSelectInvoice={setSelectInvoice}
-              setIsOpen={setIsOpen}
-              setCurrentPage={null}
-            />
+            {
+              invoice ?
+                <PrimaryTable
+                  currentPage={1}
+                  totalPage={null}
+                  invoices={invoice}
+                  selectInvoice={selectInvoice}
+                  isLoading={isLoading}
+                  setSelectInvoice={setSelectInvoice}
+                  setIsOpen={setIsOpen}
+                  setCurrentPage={null}
+                /> : (
+                  <DataTableSkeleton
+                    columnCount={5}
+                    searchableColumnCount={1}
+                    filterableColumnCount={2}
+                    cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem"]}
+                    shrinkZero
+                  />
+                )
+            }
           </div>
           <div className=" w-full">
             <div className="mb-4 space-y-3 rounded-lg bg-primaryBackground">
