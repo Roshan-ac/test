@@ -44,12 +44,12 @@ const VendorPayment = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [viewImage, setViewImage] = useState<{
-    state: boolean,
-    src: string
+    state: boolean;
+    src: string;
   }>({
     state: false,
-    src: ''
-  })
+    src: "",
+  });
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
@@ -66,7 +66,7 @@ const VendorPayment = () => {
       fetchData();
     }
   }, [vendorPayment]);
-  console.log(vendorPayment)
+  console.log(vendorPayment);
   const updateVendorPayment = async (
     paymentId: number,
     vendorid: number,
@@ -94,24 +94,31 @@ const VendorPayment = () => {
     }
     setIsLoading(false);
   };
-
+  console.log(viewImage.src);
   return (
-    <div className="p-4 my-2">
-      {
-        viewImage.state &&
-        <Card className=" absolute left-0 h-full bg-black w-full z-50 top-0 flex items-center justify-center">
-          <X onClick={() => {
-            setViewImage({ state: false, src: '' })
-          }} className=" fixed  right-8 z-50 top-8 text-white cursor-pointer hover:text-red-400" />
-          <div className=" w-1/2 h-full aspect-square p-1 rounded-md ">
-
-            <Image src={viewImage.src} alt="Self photo" height={100} width={100} className="m-auto w-full h-full aspect-square p-2 object-contain" />
+    <div className="my-2 p-4">
+      {viewImage.state && (
+        <Card className=" absolute left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black">
+          <X
+            onClick={() => {
+              setViewImage({ state: false, src: "" });
+            }}
+            className=" fixed  right-8 top-8 z-50 cursor-pointer text-white hover:text-red-400"
+          />
+          <div className=" aspect-square h-full w-1/2 rounded-md p-1 ">
+            <Image
+              src={viewImage.src}
+              alt="Self photo"
+              height={100}
+              width={100}
+              className="m-auto aspect-square h-full w-full object-contain p-2"
+            />
           </div>
         </Card>
-      }
+      )}
 
-      {
-        vendorPayment ? (<Table className="text-white">
+      {vendorPayment ? (
+        <Table className="text-white">
           <TableHeader className=" !sticky left-0 top-0  z-[1] w-full !rounded-md dark:hover:bg-hoverColor">
             <TableRow className="bg-tertiaryBackground">
               <TableHead className="w-max">Vendor Name</TableHead>
@@ -120,100 +127,100 @@ const VendorPayment = () => {
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
-          {
-            vendorPayment.map((item) => (
-              <TableBody key={item.id} className="">
-                <TableCell> {item.vendorname} </TableCell>
-                <TableCell> {item.amount} </TableCell>
-                <TableCell>
-                  <span onClick={() => {
+          {vendorPayment.map((item) => (
+            <TableBody key={item.id} className="">
+              <TableCell> {item.vendorname} </TableCell>
+              <TableCell> {item.amount} </TableCell>
+              <TableCell>
+                <span
+                  onClick={() => {
                     setViewImage({
                       state: true,
-                      src: item.screenshot
-                    })
-                  }} className=" cursor-pointer text-sm font-semibold uppercase underline">
-                    view
-                  </span>
-                </TableCell>
-                <TableCell className="flex gap-2 text-black">
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button className=" !h-max rounded-none !bg-[#82C43C] px-8 !text-white">
-                        Approve
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle className="text-white">
-                          Are you absolutely sure?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel className="text-white">
-                          Cancel
-                        </AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() =>
-                            updateVendorPayment(item.id, item.vendorId, "approve")
-                          }
-                        >
-                          Continue
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button className=" !h-max rounded-none !bg-[#82C43C] px-8 !text-white">
-                        Reject
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle className="text-white">
-                          Are you absolutely sure?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel className="text-white">
-                          Cancel
-                        </AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() =>
-                            updateVendorPayment(item.id, item.vendorId, "reject")
-                          }
-                        >
-                          Continue
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </TableCell>
-              </TableBody>
-            ))
-          }
+                      src: item.screenshot,
+                    });
+                  }}
+                  className=" cursor-pointer text-sm font-semibold uppercase underline"
+                >
+                  view
+                </span>
+              </TableCell>
+              <TableCell className="flex gap-2 text-black">
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button className=" !h-max rounded-none !bg-[#82C43C] px-8 !text-white">
+                      Approve
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className="text-white">
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="text-white">
+                        Cancel
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() =>
+                          updateVendorPayment(item.id, item.vendorId, "approve")
+                        }
+                      >
+                        Continue
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button className=" !h-max rounded-none !bg-[#82C43C] px-8 !text-white">
+                      Reject
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className="text-white">
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="text-white">
+                        Cancel
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() =>
+                          updateVendorPayment(item.id, item.vendorId, "reject")
+                        }
+                      >
+                        Continue
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </TableCell>
+            </TableBody>
+          ))}
           {vendorPayment?.length < 1 && (
             <div className="">
               <p className=" py-3 text-xl">No Search Results Found.</p>
             </div>
           )}
-        </Table>) : (
-          <DataTableSkeleton
-            columnCount={5}
-            searchableColumnCount={1}
-            filterableColumnCount={2}
-            cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem"]}
-            shrinkZero
-          />
-        )
-      }
-
+        </Table>
+      ) : (
+        <DataTableSkeleton
+          columnCount={5}
+          searchableColumnCount={1}
+          filterableColumnCount={2}
+          cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem"]}
+          shrinkZero
+        />
+      )}
     </div>
   );
 };
