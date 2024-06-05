@@ -97,7 +97,7 @@ const VendorPayment = () => {
   console.log(viewImage.src);
   return (
     <div className="my-2 p-4">
-      {viewImage.state && (
+      {viewImage.state && viewImage.src !== "" && (
         <Card className=" absolute left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black">
           <X
             onClick={() => {
