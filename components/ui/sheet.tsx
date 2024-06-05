@@ -63,7 +63,7 @@ const SheetContent = React.forwardRef<
     <SheetOverlay className=""  onClick={()=>setIsOpen(false)} />
     <SheetPrimitive.Content
       ref={ref}
-      className={cn(sheetVariants({ side }), className)}
+      className={cn(sheetVariants({ side }), className,'!border-tertiaryBackground !border-2')}
       {...props}
     >
       {children}

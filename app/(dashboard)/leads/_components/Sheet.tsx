@@ -67,7 +67,7 @@ export function SheetDemo({
   return (
     <Sheet open={isOpen}>
       <SheetContent
-        className=" h-full rounded mt-8  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
+        className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
         setIsOpen={setIsOpen}
       >
         <ScrollArea className="!h-[100vh] pb-6">

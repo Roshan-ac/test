@@ -125,7 +125,7 @@ const ImageGallery = ({
       </div>
       {
         viewImage.state &&
-        <Card className=" fixed h-full bg-black w-[80%] z-40 top-0 flex items-center justify-center">
+        <Card className=" fixed h-full mt-2 bg-black w-[80%] !z-[80] top-0 flex items-center justify-center">
           <X onClick={() => {
             setViewImage({ state: false, src: '' })
           }} className=" fixed  right-8 z-50 top-8 text-white cursor-pointer hover:text-red-400" />

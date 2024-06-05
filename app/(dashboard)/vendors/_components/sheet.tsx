@@ -57,7 +57,7 @@ export function SheetDemo({
 
   return (
     <Sheet open={isOpen}>
-      <SheetContent setIsOpen={setIsOpen} className=" h-full mt-8 rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]">
+      <SheetContent setIsOpen={setIsOpen} className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]">
         <ScrollArea className="!h-[100vh] pb-6">
           {SelectedRow ? (
             <div className="my-4  w-full space-y-4">
@@ -66,41 +66,6 @@ export function SheetDemo({
                 <div className="h-max w-[40%] space-y-4">
                   <div className="h-max w-full bg-tertiaryBackground px-6 py-4">
                     <div className="my-4 flex flex-col space-y-6 text-hoverColor">
-                      {/* <Label
-                        htmlFor="QuotedPrice"
-                        className=" flex w-full space-x-4  "
-                      >
-                        <span className="inline-block w-[80%]">
-                          Available Credits :
-                        </span>
-                        <span className="inline-block w-full">
-                          {SelectedRow.creditsavailable}
-                        </span>
-                      </Label>
-                      <Label
-                        htmlFor="terms"
-                        className=" flex w-full items-center gap-2 "
-                      >
-                        <span className="inline-block w-[45%]">
-                          Max Leads :
-                        </span>
-                        <p className={`${editMaxLead ? ' w-20 rounded-md p-1 border-white border' : ''} duration-300 transition-all ease-in-out`} contentEditable={editMaxLead}>
-                          {SelectedRow.maxleads}
-                        </p>
-                  
-
-                      </Label>
-                      <Label
-                        htmlFor="terms"
-                        className=" flex w-full gap-2"
-                      >
-                        <span className="inline-block !w-[80%]">
-                         
-                        </span>
-                        <span className="inline-block break-words pr-4">
-                          {SelectedRow.deviceassigned}
-                        </span>
-                      </Label> */}
                       <div className=" grid grid-cols-2 gap-2">
                         <Label>Available Credits :</Label>
                         <Label>{SelectedRow.creditsavailable}</Label>
