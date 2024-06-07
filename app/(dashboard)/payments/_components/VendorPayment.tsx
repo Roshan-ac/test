@@ -65,8 +65,8 @@ const VendorPayment = () => {
     if (!vendorPayment) {
       fetchData();
     }
-  }, [vendorPayment]);
-  console.log(vendorPayment);
+  }, []);
+
   const updateVendorPayment = async (
     paymentId: number,
     vendorid: number,
