@@ -129,6 +129,8 @@ const VendorPayment = () => {
           </TableHeader>
           {vendorPayment.map((item) => (
             <TableBody key={item.id} className="">
+            <TableRow>
+
               <TableCell> {item.vendorname} </TableCell>
               <TableCell> {item.amount} </TableCell>
               <TableCell>
@@ -204,6 +206,7 @@ const VendorPayment = () => {
                   </AlertDialogContent>
                 </AlertDialog>
               </TableCell>
+              </TableRow>
             </TableBody>
           ))}
           {vendorPayment?.length < 1 && (
