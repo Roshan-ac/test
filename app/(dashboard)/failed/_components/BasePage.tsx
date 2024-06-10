@@ -185,7 +185,7 @@ const BasePage = () => {
             <h4 className=" px-4 py-2 text-lg font-semibold tracking-wide">
               Failed Leads
             </h4>
-            {data ? (
+            {data && table ? (
               <PrimaryTable
                 table={table}
                 selectedRow={SelectedRow}

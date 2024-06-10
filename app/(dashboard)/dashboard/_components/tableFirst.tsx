@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CircularProgress } from "@nextui-org/progress";
+
 const invoices = [
   {
     No: "01",
@@ -52,7 +52,7 @@ export function TableFirst() {
               <TableCell>{invoice.Complete}</TableCell>
               <TableCell>{invoice.Reschedule}</TableCell>
               <TableCell className="flex text-right gap-2">
-                <CircularProgress
+                {/* <CircularProgress
                   classNames={{
                     svg: "w-4 h-4 drop-shadow-md",
                     indicator: "stroke-white",
@@ -63,7 +63,7 @@ export function TableFirst() {
                   value={70}
                   strokeWidth={4}
                   //   showValueLabel={true}
-                />
+                /> */}
                 {invoice.Rate}
               </TableCell>
             </TableRow>
