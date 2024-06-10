@@ -1,4 +1,3 @@
-import { Progress } from "@/components/ui/progress";
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
 
 type ProgressType = {
@@ -66,11 +65,11 @@ export function ProgressWrapper({ children }: { children: React.ReactNode }) {
 
   return (
     <ProgressContext.Provider value={{ showProgress }}>
-      <Progress
+      {/* <Progress
         hidden={!progress.state}
         value={progress.value}
         className=" fixed right-0 top-0 z-[80] h-[2px]"
-      />
+      /> */}
       {children}
     </ProgressContext.Provider>
   );
