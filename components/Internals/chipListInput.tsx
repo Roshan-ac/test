@@ -1,11 +1,10 @@
 "use client";
 import useChipList from "@/hooks/useChipList";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import Chip from "./chip";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
-import { Progress } from "../ui/progress";
 
 const ChipListInput = ({
   vendorId,

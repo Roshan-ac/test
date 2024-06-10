@@ -36,7 +36,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
 
 export const FormSchema = z.object({
   newpickupdate: z.date({
@@ -117,11 +116,6 @@ export function CreateLeadForm({ lead }: { lead: any }) {
   };
   return (
     <Form {...form}>
-      <Progress
-        hidden={!isLoading}
-        value={progress}
-        className=" fixed  right-0 top-0 z-[80] h-[2px]"
-      />
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         <FormField
           control={form.control}

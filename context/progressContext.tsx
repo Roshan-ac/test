@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 
 type ProgressType = {
   state: boolean;
@@ -24,9 +30,7 @@ export function ProgressWrapper({ children }: { children: React.ReactNode }) {
   const intervalTime = duration / totalSteps;
 
   const easeInOutQuad = (t: number) => {
-    return t < 0.5
-      ? 2 * t * t
-      : -1 + (4 - 2 * t) * t;
+    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
   };
 
   const showProgress = () => {

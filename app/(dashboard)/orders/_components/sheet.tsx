@@ -5,10 +5,7 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
-// import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { AssignDialog } from "./AssignDialog";
-import { useRouter } from "next/navigation";
 import { ReschedulePickup } from "./ReschedulePickup";
 import { FormSchema } from "./PickupNewDateTime";
 import { z } from "zod";
@@ -109,7 +106,6 @@ export function SheetDemo({
     devicetype: deviceType;
   };
 }) {
-  const [progress, setProgress] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [orderDetails, setOrderDetails] = useState<OrderDetails>();
   const [LogDetails, setLogDetails] = useState<LogDetails>();

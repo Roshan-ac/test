@@ -1,17 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
-// import { TabelPagination } from "@/components/Internals/TabelPagination";
-import { AssignDialog } from "./AssignDialog";
 import { useRouter } from "next/navigation";
-import { ReschedulePickup } from "./ReschedulePickup";
-import { FormSchema } from "./PickupNewDateTime";
-import { z } from "zod";
 import { toast } from "@/components/ui/use-toast";
 import EvaluationReport from "@/components/EvaluateReport/EvaluateReport";
 import { deviceType } from "@/interfaces";

@@ -5,8 +5,6 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
-// import { TabelPagination } from "@/components/Internals/TabelPagination";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { toast } from "@/components/ui/use-toast";
@@ -83,11 +81,6 @@ export function SheetDemo({
 
   return (
     <Sheet open={isOpen}>
-      <Progress
-        hidden={!isLoading}
-        value={progress}
-        className=" absolute  -top-6 right-0 z-[80] h-[2px]"
-      />
       <SheetContent
         className=" h-full rounded  !border-none  !bg-secondaryBackground sm:max-w-[80%]"
         setIsOpen={setIsOpen}

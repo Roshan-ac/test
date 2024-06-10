@@ -1,8 +1,6 @@
 "use client";
 import ChipListInput from "@/components/Internals/chipListInput";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
