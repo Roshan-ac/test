@@ -1,22 +1,18 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
-
+import React, { useMemo } from "react";
 import { CardContainer } from "./CardContainer";
 import { SheetDemo } from "./sheet";
 import { PrimaryTable } from "./PrimaryTable";
-import { TableSkeleton } from "@/components/Internals/tableSkeleton";
-import ImageGallery from "./ImageGallery";
-
-import { PhotoProvider } from "react-photo-view";
 import { useVendorTable } from "@/hooks/use-vendor-tables";
 import { getVendorTableColumns } from "./vendorTableColumns";
 import { DataTableSkeleton } from "@/components/data-table-skeleton";
 import { FilterMenubar } from "@/components/FilterMenubar";
+
 export interface VendorsInterface<TData, TValue> {
-  success: boolean,
-  message: string,
-  vendorsDetails: TData[]
-};
+  success: boolean;
+  message: string;
+  vendorsDetails: TData[];
+}
 export type vendorDetails = {
   id: string;
   firebaseid: string;
@@ -37,16 +33,28 @@ export type vendorDetails = {
   selfphoto: string | null;
   vendortype: string;
   deviceToken: string;
-}
+};
 
 const BasePage = () => {
   const columns = useMemo(() => getVendorTableColumns(), []);
-  const { data, table, SelectedRow, filterQueries, isApplied, setIsApplied, setFilterQueries, isLoading, SetSelectedRow, setIsOpen, isOpen } = useVendorTable({
+  const {
+    data,
+    table,
+    SelectedRow,
+    filterQueries,
+    isApplied,
+    setIsApplied,
+    setFilterQueries,
+    isLoading,
+    SetSelectedRow,
+    setIsOpen,
+    isOpen,
+  } = useVendorTable({
     columns,
-  })
+  });
 
   return (
-    <div className=" w-full space-y-2 py-4 h-screen">
+    <div className=" h-screen w-full space-y-2 py-4">
       <FilterMenubar
         isApplied={isApplied}
         setIsApplied={setIsApplied}

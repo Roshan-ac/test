@@ -9,7 +9,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main>
+    <main className="">
       <Toaster />
       <Navbar />
       <div className="flex w-full justify-end">

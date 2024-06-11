@@ -81,7 +81,6 @@ export function PrimaryTable({
             )}
           </TableBody>
         )}
-        {!invoices && isLoading && <TableSkeleton skeleton={4} />}
       </Table>
       {totalPage && (
         <div className="sticky bottom-0 flex w-full flex-col items-end border-t border-t-tableSeperator bg-primaryBackground">
