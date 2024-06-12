@@ -30,7 +30,7 @@ const VendorPayment = () => {
   const { data, table } = usePaymentsTable({
     columns,
   });
-  console.log(data);
+ 
   return (
     <div className="my-2  space-y-6 p-4 px-8">
       <div className="w-full rounded-[12px]  bg-primaryBackground">

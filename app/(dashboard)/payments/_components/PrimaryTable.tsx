@@ -36,58 +36,11 @@ interface DataTableProps<TData, TValue>
 export function PrimaryTable<TData, TValue>({
   table,
 }: DataTableProps<TData, TValue>) {
-  const [viewImage, setViewImage] = useState<{
-    state: boolean;
-    src: string;
-  }>({
-    state: false,
-    src: "",
-  });
-  const updateVendorPayment = async (
-    paymentId: number,
-    vendorid: number,
-    action: "approve" | "reject",
-  ) => {
-    const res = await fetch("/api/updatevendorpayment", {
-      method: "POST",
-      body: JSON.stringify({
-        id: paymentId?.toString(),
-        vendorid: vendorid,
-        action: action,
-      }),
-    });
 
-    const data = await res.json();
-    if ((await data.success) === true) {
-      toast({
-        title: "Success",
-        description: (
-          <p className=" text-green-500">Vendor Payements Status Changed</p>
-        ),
-      });
-    }
-  };
+ 
   return (
-    <div className={cn("w-full space-y-2.5 overflow-hidden")}>
-      {viewImage.state && viewImage.src !== "" && (
-        <Card className=" absolute left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black">
-          <X
-            onClick={() => {
-              setViewImage({ state: false, src: "" });
-            }}
-            className=" fixed  right-8 top-8 z-50 cursor-pointer text-white hover:text-red-400"
-          />
-          <div className=" aspect-square h-full w-1/2 rounded-md p-1 ">
-            <Image
-              src={viewImage.src}
-              alt="Self photo"
-              height={100}
-              width={100}
-              className="m-auto aspect-square h-full w-full object-contain p-2"
-            />
-          </div>
-        </Card>
-      )}
+    <div className={cn("w-full overflow-hidden")}>
+    
       <div className="rounded-md">
         <Table>
           <TableHeader className=" !sticky left-0  top-0 z-[1] w-full dark:hover:bg-hoverColor">

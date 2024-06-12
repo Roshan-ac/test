@@ -1,6 +1,8 @@
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { Date } from "./PrimaryTable";
 import { ColumnDef } from "@tanstack/react-table";
+import PaymentImageViewer from "./PaymentImageViewer";
+import PaymentActions from "./PaymentActions";
 
 export function getPaymentTableColumns(): ColumnDef<any>[] {
   return [
@@ -11,7 +13,7 @@ export function getPaymentTableColumns(): ColumnDef<any>[] {
       ),
       cell: ({ row }) => (
         <div className="flex space-x-2">
-          <span className="max-w-[31.25rem] truncate font-medium">
+          <span className="max-w-[20rem] truncate font-medium">
             {row.getValue("vendorname")}
           </span>
         </div>
@@ -27,25 +29,30 @@ export function getPaymentTableColumns(): ColumnDef<any>[] {
       cell: ({ row }) => {
         return (
           <div className="flex space-x-2">
-            <span className="w-[10.25rem] truncate font-medium">
+            <span className="w-[8rem] truncate font-medium">
               {row.getValue("amount")}
             </span>
           </div>
         );
       },
     },
-    {
-      accessorKey: "screenshot",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="screenshot" />
-      ),
-      cell: ({ row }) => {
-        return (
-          <div className="flex w-[6.25rem] items-center">
-            <span>{row.getValue("screenshot")}</span>
-          </div>
-        );
-      },
+  {
+    accessorKey: "screenshot",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="screenshot" />
+    ),
+    cell: ({ row }) => {
+      return <PaymentImageViewer src={row.getValue("screenshot")} />;
     },
-  ];
+  },
+  {
+    accessorKey: "id",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Actions" />
+    ),
+    cell: ({ row }) => {
+      return <PaymentActions vendorId={row.original.vendorId} id={row.original.id} />;
+    },
+  },
+    ];
 }
